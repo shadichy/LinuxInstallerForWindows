@@ -14,6 +14,18 @@ public class AssetManager
         CopyResource("LinuxInstaller.prebuilt.install.conf", Path.Combine(targetPath, "install.conf"));
     }
 
+    public void CopyBundledBootloader(string espPath)
+    {
+        string targetDir = Path.Combine(espPath, "EFI", "MyCustomInstaller");
+        Directory.CreateDirectory(targetDir);
+
+        // Placeholder resource names. These need to be added as embedded resources in the .csproj
+        // For dry-run, the CopyResource method will gracefully handle them not being found.
+        CopyResource("LinuxInstaller.Resources.shimx64.efi", Path.Combine(targetDir, "shimx64.efi"));
+        CopyResource("LinuxInstaller.Resources.grubx64.efi", Path.Combine(targetDir, "grubx64.efi"));
+        CopyResource("LinuxInstaller.Resources.mmx64.efi", Path.Combine(targetDir, "mmx64.efi"));
+    }
+
     private void CopyResource(string resourceName, string destinationPath)
     {
         using (var resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName))

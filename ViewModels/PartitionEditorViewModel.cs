@@ -1,46 +1,54 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.IO;
+using LinuxInstaller.Models;
+using LinuxInstaller.Services;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using System.Diagnostics;
-using System;
 
 namespace LinuxInstaller.ViewModels;
 
 public partial class PartitionEditorViewModel : ObservableObject
 {
+    private readonly PartitionService _partitionService;
+
     [ObservableProperty]
-    private string _driveLetter = "C";
+    private ObservableCollection<Disk> _disks;
+
+    [ObservableProperty]
+    private ObservableCollection<Partition> _partitions;
+
+    [ObservableProperty]
+    private Disk _selectedDisk;
 
     [ObservableProperty]
     private int _shrinkSizeInMB = 50000;
 
+    public PartitionEditorViewModel()
+    {
+        _partitionService = new PartitionService();
+        Disks = _partitionService.GetAvailableDisks();
+        if (Disks.Count > 0)
+        {
+            SelectedDisk = Disks[0];
+            OnSelectedDiskChanged(SelectedDisk);
+        }
+    }
+
+    partial void OnSelectedDiskChanged(Disk value)
+    {
+        if (value != null)
+        {
+            Partitions = _partitionService.GetPartitions(value.Id);
+        }
+    }
+
     [RelayCommand]
     private async Task Shrink()
     {
-        await ShrinkPartition(DriveLetter, ShrinkSizeInMB);
-    }
-
-    public async Task<bool> ShrinkPartition(string driveLetter, int sizeInMB)
-    {
-        string scriptFile = Path.Combine(Path.GetTempPath(), "shrink.txt");
-        string script = $"select volume {driveLetter}\nshrink desired={sizeInMB}\n";
-        await File.WriteAllTextAsync(scriptFile, script);
-
-        var startInfo = new ProcessStartInfo("diskpart.exe", $"/s \"{scriptFile}\"")
+        if (SelectedDisk != null)
         {
-            UseShellExecute = false,
-            CreateNoWindow = true,
-            RedirectStandardError = true
-        };
-
-        using (var process = Process.Start(startInfo))
-        {
-            string error = await process.StandardError.ReadToEndAsync();
-            await process.WaitForExitAsync();
-            File.Delete(scriptFile);
-            if (process.ExitCode != 0) throw new Exception($"Diskpart failed: {error}");
-            return true;
+            await _partitionService.ShrinkPartition(SelectedDisk.Name, ShrinkSizeInMB);
+            // In a real app, you would refresh the partition list here
         }
     }
 }

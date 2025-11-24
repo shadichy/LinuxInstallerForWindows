@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Http.Json;
 using System.Threading.Tasks;
 using LinuxInstaller.Models;
 
@@ -8,18 +6,21 @@ namespace LinuxInstaller.Services;
 
 public class DistroService
 {
-    private readonly HttpClient _httpClient;
-    private readonly string _distrosUrl;
-
-    public DistroService(string distrosUrl)
+    public DistroService()
     {
-        _httpClient = new HttpClient();
-        _distrosUrl = distrosUrl;
     }
 
-    public async Task<IEnumerable<Distro>> GetDistrosAsync()
+    public Task<IEnumerable<Distro>> GetDistrosAsync()
     {
-        return await _httpClient.GetFromJsonAsync<List<Distro>>(_distrosUrl);
+        // Placeholder: Return example data
+        var distros = new List<Distro>
+        {
+            new Distro { Name = "Ubuntu", Description = "The leading Linux distribution for desktop and server.", Size = 4_000_000_000 },
+            new Distro { Name = "Fedora", Description = "A polished, easy to use operating system for laptops and desktops.", Size = 2_000_000_000 },
+            new Distro { Name = "Debian", Description = "The Universal Operating System.", Size = 1_200_000_000 },
+            new Distro { Name = "Arch Linux", Description = "A lightweight and flexible Linux distribution.", Size = 800_000_000 }
+        };
+        return Task.FromResult<IEnumerable<Distro>>(distros);
     }
 }
 
