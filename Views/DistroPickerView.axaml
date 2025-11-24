@@ -1,0 +1,32 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:LinuxInstaller.ViewModels"
+             mc:Ignorable="d"
+             x:Class="LinuxInstaller.Views.DistroPickerView"
+             d:DesignWidth="400" d:DesignHeight="600">
+    <Design.DataContext>
+        <vm:DistroPickerViewModel/>
+    </Design.DataContext>
+    <Grid RowDefinitions="Auto,*,Auto" Classes="Card">
+        <StackPanel Grid.Row="0" Margin="16">
+            <TextBlock Text="Select a Distribution" Classes="HeadlineMedium"/>
+            <TextBox Watermark="Search..." Margin="0,8,0,0"/>
+        </StackPanel>
+        <ScrollViewer Grid.Row="1" Margin="16,0">
+            <ItemsControl>
+                <!-- DistroListItemControl will go here -->
+                <StackPanel Orientation="Vertical" Spacing="4">
+                    <TextBlock Text="Distro 1" Classes="BodyLarge"/>
+                    <TextBlock Text="Distro 2" Classes="BodyLarge"/>
+                    <TextBlock Text="Distro 3" Classes="BodyLarge"/>
+                </StackPanel>
+            </ItemsControl>
+        </ScrollViewer>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="16">
+            <Button Content="Cancel" Classes="Text"/>
+            <Button Content="Next" Classes="Filled" Margin="8,0,0,0"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

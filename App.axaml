@@ -1,0 +1,17 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="LinuxInstaller.App"
+             RequestedThemeVariant="Default">
+             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+
+    <Application.Styles>
+        <FluentTheme />
+        <StyleInclude Source="avares://LinuxInstaller/Themes/MaterialTheme.axaml"/>
+        <StyleInclude Source="avares://LinuxInstaller/Themes/Button.axaml"/>
+        <StyleInclude Source="avares://LinuxInstaller/Themes/Card.axaml"/>
+        <StyleInclude Source="avares://LinuxInstaller/Themes/CheckBox.axaml"/>
+        <StyleInclude Source="avares://LinuxInstaller/Themes/ListBox.axaml"/>
+        <StyleInclude Source="avares://LinuxInstaller/Themes/Slider.axaml"/>
+        <StyleInclude Source="avares://LinuxInstaller/Themes/TextBox.axaml"/>
+    </Application.Styles>
+</Application>

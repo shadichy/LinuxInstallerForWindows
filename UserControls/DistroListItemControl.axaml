@@ -1,0 +1,14 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="LinuxInstaller.UserControls.DistroListItemControl">
+    <Border Classes="Card" Padding="10" Margin="0,5" CornerRadius="12"
+            Background="{Binding IsSelected, Converter={StaticResource BoolToBrushConverter}}">
+        <StackPanel Orientation="Horizontal" Spacing="10">
+            <Image Source="{Binding IconSource}" Width="32" Height="32"/>
+            <TextBlock Text="{Binding DistroName}" VerticalAlignment="Center" Classes="BodyLarge"/>
+        </StackPanel>
+    </Border>
+</UserControl>

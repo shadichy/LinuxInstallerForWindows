@@ -1,0 +1,57 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:LinuxInstaller.ViewModels"
+        xmlns:views="using:LinuxInstaller.Views"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+        x:Class="LinuxInstaller.Views.MainView"
+        Title="Linux Installer">
+
+    <Design.DataContext>
+        <vm:MainViewModel/>
+    </Design.DataContext>
+
+    <Grid RowDefinitions="*,Auto">
+        <Border Classes="Card" Grid.Row="0" Margin="16">
+            <Carousel Items="{Binding Pages}" SelectedIndex="{Binding CurrentPageIndex}">
+                <Carousel.DataTemplates>
+                    <DataTemplate DataType="vm:WorkflowSelectionViewModel">
+                        <views:WorkflowSelectionView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="vm:PreFlightCheckViewModel">
+                        <views:PreFlightCheckView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="vm:DistroPickerViewModel">
+                        <views:DistroPickerView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="vm:PartitionOptionPickerViewModel">
+                        <views:PartitionOptionPickerView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="vm:PartitionEditorViewModel">
+                        <views:PartitionEditorView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="vm:UserCreationViewModel">
+                        <views:UserCreationView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="vm:InstallationSummaryViewModel">
+                        <views:InstallationSummaryView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="vm:InstallationProgressViewModel">
+                        <views:InstallationProgressView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="vm:LoadingViewModel">
+                        <views:LoadingView/>
+                    </DataTemplate>
+                </Carousel.DataTemplates>
+            </Carousel>
+        </Border>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+            <Button Classes="Text" Content="Previous" Command="{Binding PreviousPageCommand}" IsVisible="{Binding CanGoBack}"/>
+            <Button Classes="Filled" Content="Next" Command="{Binding NextPageCommand}" IsVisible="{Binding CanGoNext}"/>
+            <Button Classes="Filled" Content="Finish" Command="{Binding FinishCommand}" IsVisible="{Binding IsFinishVisible}"/>
+        </StackPanel>
+    </Grid>
+
+</Window>
