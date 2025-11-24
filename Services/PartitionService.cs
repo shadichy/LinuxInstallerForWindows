@@ -4,17 +4,19 @@ using System.Threading.Tasks;
 
 namespace LinuxInstaller.Services;
 
+// TODO: Replace all placeholder logic in this service with real system calls (e.g., Diskpart, WMI).
 public class PartitionService
 {
     public Task<bool> ShrinkPartition(string driveLetter, int sizeInMB)
     {
-        // Placeholder: Assume shrink is successful
+        // TODO: Use a real diskpart wrapper (like DiskpartService) to shrink the partition.
         return Task.FromResult(true);
     }
 
     public ObservableCollection<Disk> GetAvailableDisks()
     {
-        // Placeholder: Return example data
+        // TODO: Implement real enumeration of disks on the system, for example by parsing `diskpart list disk`
+        // or by using WMI (`Win32_DiskDrive`).
         return new ObservableCollection<Disk>
         {
             new Disk { Id = "disk0", Name = "SAMSUNG 970 EVO Plus 1TB", Size = 1_000_000_000_000, IsBootable = true },
@@ -24,7 +26,8 @@ public class PartitionService
 
     public ObservableCollection<Partition> GetPartitions(string diskId)
     {
-        // Placeholder: Return example data
+        // TODO: Implement real enumeration of partitions for a given disk, for example by parsing `diskpart list partition`
+        // or by using WMI (`Win32_DiskPartition`).
         if (diskId == "disk0")
         {
             return new ObservableCollection<Partition>

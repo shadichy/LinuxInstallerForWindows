@@ -1,13 +1,16 @@
 using LinuxInstaller.Models;
 using System.Collections.Generic;
+using System.Text.Json; // Add for future use
 
 namespace LinuxInstaller.Services;
 
+// TODO: Replace all placeholder logic in this service with real config generation based on user input and system state.
 public class ConfigGeneratorService
 {
     public string GenerateGrubStage1Config(string stage2MarkerPath)
     {
-        // Placeholder: Return example grub.cfg content
+        // TODO: This config is mostly static, but ensure the search path is correct.
+        // The placeholder is likely sufficient for most cases.
         return @"
 set timeout=5
 echo ""Searching for My Linux Installer (Stage 2)...""
@@ -25,7 +28,8 @@ fi
 
     public string GenerateGrubStage2Config(string isoPath)
     {
-        // Placeholder: Return example grub.cfg content for stage 2
+        // TODO: Dynamically generate this config based on the selected workflow (ISO vs. Automated)
+        // and the actual paths/names of kernel/initrd files or ISOs.
         return @"
 set timeout=10
 
@@ -46,7 +50,16 @@ menuentry ""Start Ubuntu 24.04 ISO"" {
 
     public string GenerateInstallConf(string diskGuid, List<PartitionPlan> plan)
     {
-        // Placeholder: Return example install.conf JSON content
+        // TODO: Serialize the actual user-defined partition plan and other settings into a JSON string.
+        // Example of a real implementation:
+        // var config = new {
+        //   install_mode = "manual",
+        //   target_disk_guid = diskGuid,
+        //   rootfs_file = "ubuntu.rootfs",
+        //   partition_plan = plan
+        // };
+        // return JsonSerializer.Serialize(config);
+
         return @"
 {
   ""install_mode"": ""manual"",

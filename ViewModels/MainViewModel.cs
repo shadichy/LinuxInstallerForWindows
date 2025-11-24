@@ -15,6 +15,8 @@ public partial class MainViewModel : ObservableObject
     {
         Pages = new ObservableCollection<ObservableObject>
         {
+            // TODO: The order and inclusion of pages should be dynamic based on user choices
+            // (e.g., skip partition editor if automatic partitioning is chosen).
             new WorkflowSelectionViewModel(),
             new PreFlightCheckViewModel(),
             new DistroPickerViewModel(),
@@ -23,10 +25,12 @@ public partial class MainViewModel : ObservableObject
             new UserCreationViewModel(),
             new InstallationSummaryViewModel(),
             new InstallationProgressViewModel(),
-            new LoadingViewModel()
+            new LoadingViewModel() // This might be better as a separate, overlay view rather than a page in the carousel.
         };
     }
 
+    // TODO: The CanGoNext and CanGoBack logic should be more sophisticated.
+    // For example, it should check if the current page's tasks are complete before allowing the user to proceed.
     public bool CanGoBack => CurrentPageIndex > 0;
     public bool CanGoNext => CurrentPageIndex < Pages.Count - 1;
     public bool IsFinishVisible => CurrentPageIndex == Pages.Count - 1;
@@ -58,7 +62,12 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     private void Finish()
     {
-        // Finish logic here
+        // TODO: Implement the finalization logic.
+        // This should trigger the core installation process:
+        // 1. Generate final configs (grub.cfg, install.conf) using ConfigGeneratorService.
+        // 2. Place bootloaders (shim, grub) and configs on the appropriate partitions (ESP and staging area) using AssetManager and BootManagerService.
+        // 3. Create the BCD entry using BootManagerService.
+        // 4. Prompt the user to reboot.
     }
 }
 

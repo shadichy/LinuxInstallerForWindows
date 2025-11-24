@@ -1,34 +1,38 @@
 namespace LinuxInstaller.Services;
 
+// TODO: Replace all placeholder logic in this service with real system calls (e.g., WMI, P/Invoke).
 public class SystemAnalysisService
 {
     public bool IsRunningAsAdmin()
     {
-        // Placeholder: Assume admin rights for dry-run
+        // TODO: Implement a real check for administrator privileges.
+        // The original implementation from PreFlightCheckViewModel can be used here.
         return true;
     }
 
     public void RelaunchAsAdmin()
     {
-        // Placeholder: No-op for dry-run
+        // TODO: Implement the logic to relaunch the application with administrator privileges.
+        // The original implementation from PreFlightCheckViewModel can be used here.
     }
 
     public int GetBitLockerStatus(string driveLetter = "C:")
     {
+        // TODO: Implement a real WMI call to get BitLocker status for the given drive.
+        // The original implementation from PreFlightCheckViewModel can be used here.
         // Placeholder: 0=Unencrypted, 1=Encrypted (Protection On), 2=Encrypted (Protection Off)
-        // Assume unencrypted for dry-run
         return 0;
     }
 
     public string GetBootMode()
     {
-        // Placeholder: Assume UEFI for dry-run
+        // TODO: Implement a real check for the system's boot mode (UEFI or Legacy BIOS).
         return "UEFI";
     }
 
     public bool GetSecureBootStatus()
     {
-        // Placeholder: Assume Secure Boot is enabled for dry-run
+        // TODO: Implement a real check for the Secure Boot status.
         return true;
     }
 }

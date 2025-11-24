@@ -1,8 +1,18 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:uc="using:LinuxInstaller.UserControls"
              x:Class="LinuxInstaller.App"
              RequestedThemeVariant="Default">
-             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+    <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+
+    <Application.Resources>
+        <!-- TODO: Define PathIcon resources used in the views, e.g., IconLogo, IconInstall, IconPartition, etc. -->
+        <!-- Example: <StreamGeometry x:Key="IconLogo">M ... Z</StreamGeometry> -->
+
+        <!-- TODO: Register the value converters as static resources so they can be used in bindings. -->
+        <uc:ProgressConverter x:Key="ProgressConverter"/>
+        <uc:BoolToBrushConverter x:Key="BoolToBrushConverter"/>
+    </Application.Resources>
 
     <Application.Styles>
         <FluentTheme />

@@ -25,19 +25,22 @@ public partial class PartitionEditorViewModel : ObservableObject
 
     public PartitionEditorViewModel()
     {
+        // TODO: In a real app, services should be injected via Dependency Injection
+        // instead of being instantiated directly.
         _partitionService = new PartitionService();
         Disks = _partitionService.GetAvailableDisks();
         if (Disks.Count > 0)
         {
             SelectedDisk = Disks[0];
-            OnSelectedDiskChanged(SelectedDisk);
         }
     }
 
+    // TODO: This should be async Task and await the service call.
     partial void OnSelectedDiskChanged(Disk value)
     {
         if (value != null)
         {
+            // This is using placeholder data. A real implementation would await GetPartitions.
             Partitions = _partitionService.GetPartitions(value.Id);
         }
     }
@@ -48,8 +51,12 @@ public partial class PartitionEditorViewModel : ObservableObject
         if (SelectedDisk != null)
         {
             await _partitionService.ShrinkPartition(SelectedDisk.Name, ShrinkSizeInMB);
-            // In a real app, you would refresh the partition list here
+            // TODO: Refresh the partition list from the service after shrinking.
         }
     }
+
+    // TODO: Add commands for creating, deleting, and editing partitions.
+    // These commands would manipulate a "PartitionPlan" object that gets passed to the summary view
+    // and ultimately to the ConfigGeneratorService.
 }
 

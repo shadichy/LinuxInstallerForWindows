@@ -13,7 +13,7 @@ public class DiskpartService
     {
         string script = $"select volume {driveLetter}\nshrink desired={sizeInMB}";
         var result = await ExecuteScriptAsync(script);
-        // A real implementation would check for specific success messages in result.stdout
+        // TODO: A real implementation should parse stdout to confirm success, not just rely on exit code.
         return result.exitCode == 0 && string.IsNullOrEmpty(result.stdErr);
     }
     
@@ -25,7 +25,7 @@ public class DiskpartService
             throw new System.Exception($"Diskpart failed to list disks: {stdErr}");
         }
         
-        // Placeholder parsing logic. A real implementation would parse the 'stdout' string.
+        // TODO: Implement real parsing of the 'stdout' string from diskpart to build the List<Disk>.
         return new List<Disk>
         {
             new Disk { Id = "disk0", Name = "Disk 0", Size = 1_000_204_886_016, IsBootable = true },
@@ -41,7 +41,7 @@ public class DiskpartService
             throw new System.Exception($"Diskpart failed to list volumes: {stdErr}");
         }
         
-        // Placeholder parsing logic. A real implementation would parse the 'stdout' string.
+        // TODO: Implement real parsing of the 'stdout' string from diskpart to build a structured list of volumes.
         return new List<string>
         {
             "Volume 0, C, NTFS, Partition, 931 GB",
@@ -52,6 +52,8 @@ public class DiskpartService
 
     public async Task<(int exitCode, string stdout, string stdErr)> ExecuteScriptAsync(string scriptContent)
     {
+        // This is a functional wrapper, but running diskpart has security implications
+        // and requires administrator privileges.
         string scriptFile = Path.Combine(Path.GetTempPath(), $"diskpart_{Path.GetRandomFileName()}.txt");
         await File.WriteAllTextAsync(scriptFile, scriptContent);
 

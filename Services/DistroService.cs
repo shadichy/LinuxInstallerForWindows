@@ -8,11 +8,13 @@ public class DistroService
 {
     public DistroService()
     {
+        // TODO: In a real implementation, this constructor might take an HttpClient or a config object
+        // with the URL for the distro list.
     }
 
     public Task<IEnumerable<Distro>> GetDistrosAsync()
     {
-        // Placeholder: Return example data
+        // TODO: Replace this placeholder with a real HTTP request to fetch the distro list from a remote URL.
         var distros = new List<Distro>
         {
             new Distro { Name = "Ubuntu", Description = "The leading Linux distribution for desktop and server.", Size = 4_000_000_000 },

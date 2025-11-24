@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:LinuxInstaller.ViewModels"
+             xmlns:uc="using:LinuxInstaller.UserControls"
              mc:Ignorable="d"
              x:Class="LinuxInstaller.Views.DistroPickerView"
              d:DesignWidth="400" d:DesignHeight="600">
@@ -12,16 +13,17 @@
     <Grid RowDefinitions="Auto,*,Auto" Classes="Card">
         <StackPanel Grid.Row="0" Margin="16">
             <TextBlock Text="Select a Distribution" Classes="HeadlineMedium"/>
-            <TextBox Watermark="Search..." Margin="0,8,0,0"/>
+            <TextBox Watermark="Search..." Text="{Binding SearchText, Mode=TwoWay}" Margin="0,8,0,0"/>
         </StackPanel>
         <ScrollViewer Grid.Row="1" Margin="16,0">
-            <ItemsControl>
-                <!-- DistroListItemControl will go here -->
-                <StackPanel Orientation="Vertical" Spacing="4">
-                    <TextBlock Text="Distro 1" Classes="BodyLarge"/>
-                    <TextBlock Text="Distro 2" Classes="BodyLarge"/>
-                    <TextBlock Text="Distro 3" Classes="BodyLarge"/>
-                </StackPanel>
+            <!-- TODO: Replace the placeholder StackPanel with an ItemsControl bound to the Distros collection in the ViewModel. -->
+            <!-- Use a DataTemplate with the DistroListItemControl. -->
+            <ItemsControl ItemsSource="{Binding Distros}" SelectedItem="{Binding SelectedDistro}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <uc:DistroListItemControl DistroName="{Binding Name}" IsSelected="{Binding IsSelected}" Margin="0,2"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="16">

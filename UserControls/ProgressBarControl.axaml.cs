@@ -7,18 +7,18 @@ using System.Globalization;
 
 namespace LinuxInstaller.UserControls;
 
+// TODO: This converter is a placeholder. A real implementation should properly calculate the width of the progress bar
+// based on the parent container's width and the provided percentage value.
+// It should be registered as a static resource in App.axaml to be used application-wide.
 public class ProgressConverter : IValueConverter
 {
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         if (value is double progressValue && targetType == typeof(double))
         {
-            // Assuming the progress value is between 0 and 100
-            // and the control's actual width can be obtained from its parent or itself.
-            // For simplicity, let's assume a fixed width for now or bind to ActualWidth
-            // In a real scenario, you'd bind to the parent's ActualWidth or a specific target width.
-            // This converter would then return (progressValue / 100) * ActualWidth.
-            // For now, returning the raw value as a placeholder.
+            // This is incorrect for a real implementation.
+            // It should be bound to the parent's ActualWidth and the value should be a percentage.
+            // For example: `return (progressValue / 100.0) * parentWidth;`
             return progressValue;
         }
         return 0.0;

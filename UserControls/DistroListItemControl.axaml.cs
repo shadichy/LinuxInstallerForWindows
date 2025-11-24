@@ -8,13 +8,17 @@ using System.Globalization;
 
 namespace LinuxInstaller.UserControls;
 
+// TODO: This converter is a placeholder. It should use brushes from the application's theme resources
+// (e.g., PrimaryContainerBrush for selected, Transparent or SurfaceBrush for not selected).
+// It should be registered as a static resource in App.axaml to be used application-wide.
 public class BoolToBrushConverter : IValueConverter
 {
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        if (value is bool b && targetType == typeof(IBrush))
+        if (value is bool b && targetType.IsAssignableTo(typeof(IBrush)))
         {
-            return b ? Brushes.LightBlue : Brushes.Transparent; // Placeholder brushes
+            // Placeholder brushes. Replace with theme resources.
+            return b ? Brushes.LightBlue : Brushes.Transparent; 
         }
         return Brushes.Transparent;
     }
@@ -27,43 +31,34 @@ public class BoolToBrushConverter : IValueConverter
 
 public partial class DistroListItemControl : UserControl
 {
-    public static readonly DirectProperty<DistroListItemControl, ImageSource> IconSourceProperty =
-        AvaloniaProperty.RegisterDirect<DistroListItemControl, ImageSource>(
-            nameof(IconSource),
-            o => o.IconSource,
-            (o, v) => o.IconSource = v);
+    // TODO: The 'IsSelected' property should be properly bound and updated when the item is clicked.
+    // This typically involves handling input events (e.g., PointerPressed) on the control.
+    // Also, the IconSource should be bound to an actual image path or resource.
+    public static readonly StyledProperty<IImage> IconSourceProperty =
+        AvaloniaProperty.Register<DistroListItemControl, IImage>(nameof(IconSource));
 
-    public static readonly DirectProperty<DistroListItemControl, string> DistroNameProperty =
-        AvaloniaProperty.RegisterDirect<DistroListItemControl, string>(
-            nameof(DistroName),
-            o => o.DistroName,
-            (o, v) => o.DistroName = v);
+    public static readonly StyledProperty<string> DistroNameProperty =
+        AvaloniaProperty.Register<DistroListItemControl, string>(nameof(DistroName));
 
-    public static readonly DirectProperty<DistroListItemControl, bool> IsSelectedProperty =
-        AvaloniaProperty.RegisterDirect<DistroListItemControl, bool>(
-            nameof(IsSelected),
-            o => o.IsSelected,
-            (o, v) => o.IsSelected = v);
+    public static readonly StyledProperty<bool> IsSelectedProperty =
+        AvaloniaProperty.Register<DistroListItemControl, bool>(nameof(IsSelected));
 
-    private ImageSource _iconSource;
-    public ImageSource IconSource
+    public IImage IconSource
     {
-        get => _iconSource;
-        set => SetAndRaise(IconSourceProperty, ref _iconSource, value);
+        get => GetValue(IconSourceProperty);
+        set => SetValue(IconSourceProperty, value);
     }
 
-    private string _distroName;
     public string DistroName
     {
-        get => _distroName;
-        set => SetAndRaise(DistroNameProperty, ref _distroName, value);
+        get => GetValue(DistroNameProperty);
+        set => SetValue(DistroNameProperty, value);
     }
 
-    private bool _isSelected;
     public bool IsSelected
     {
-        get => _isSelected;
-        set => SetAndRaise(IsSelectedProperty, ref _isSelected, value);
+        get => GetValue(IsSelectedProperty);
+        set => SetValue(IsSelectedProperty, value);
     }
 
     public DistroListItemControl()
