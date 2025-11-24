@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:LinuxInstaller.ViewModels"
+             xmlns:uc="using:LinuxInstaller.UserControls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="LinuxInstaller.Views.WorkflowSelectionView">
     <Design.DataContext>
@@ -10,15 +11,10 @@
     </Design.DataContext>
     <StackPanel>
         <TextBlock Text="Select a Distribution" FontSize="24" HorizontalAlignment="Center" Margin="20"/>
-        <ListBox Items="{Binding Distros}" SelectedItem="{Binding SelectedDistro}">
+        <ListBox ItemsSource="{Binding Distros}" SelectedItem="{Binding SelectedDistro}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Border Classes="Card" Margin="5" Padding="10">
-                        <StackPanel>
-                            <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
-                            <TextBlock Text="{Binding Description}"/>
-                        </StackPanel>
-                    </Border>
+                    <uc:DistroListItemControl DistroName="{Binding Name}" IsSelected="{Binding IsSelected}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

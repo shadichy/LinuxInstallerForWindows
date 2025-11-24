@@ -6,11 +6,17 @@ using LinuxInstaller.Themes;
 using System;
 using System.Drawing;
 using Avalonia.Media;
+using Microsoft.Extensions.DependencyInjection;
+using Splat;
+using Splat.Microsoft.Extensions.DependencyInjection;
+using LinuxInstaller.ViewModels;
 
 namespace LinuxInstaller;
 
 public partial class App : Application
 {
+    public static IServiceProvider? ServiceProvider { get; private set; }
+
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
@@ -18,9 +24,18 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
+        var services = new ServiceCollection();
+        SplatRegistrations.Register(services);
+        ServiceProvider = services.BuildAndRegister();
+        Locator.SetLocator(ServiceProvider.GetRequiredService<IMutableDependencyResolver>());
+
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            desktop.MainWindow = new MainView();
+            var mainViewModel = ServiceProvider.GetRequiredService<MainViewModel>();
+            desktop.MainWindow = new MainView
+            {
+                DataContext = mainViewModel
+            };
         }
 
         CreateAndApplyTheme();

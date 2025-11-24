@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:LinuxInstaller.ViewModels"
              xmlns:uc="using:LinuxInstaller.UserControls"
+             xmlns:models="using:LinuxInstaller.Models"
              mc:Ignorable="d"
              x:Class="LinuxInstaller.Views.InstallationSummaryView"
              d:DesignWidth="800" d:DesignHeight="600">
@@ -18,19 +19,41 @@
 
         <ScrollViewer Grid.Row="1" Margin="16,0">
             <StackPanel Orientation="Vertical" Spacing="16">
-                <!-- SummaryCardControl examples -->
-                <uc:SummaryCardControl Title="Distribution" IconData="{StaticResource IconDistro}" >
+                <!-- Distribution Summary -->
+                <uc:SummaryCardControl Title="Distribution" IconData="{StaticResource IconDistro}" IsVisible="{Binding SelectedDistro, Converter={x:Static BoolToBrushConverter}}">
                     <uc:SummaryCardControl.Details>
-                        <uc:DetailItem Label="Name" Value="Ubuntu 22.04 LTS"/>
-                        <uc:DetailItem Label="Version" Value="22.04.3"/>
+                        <uc:DetailItem Label="Name" Value="{Binding SelectedDistro.Name}"/>
+                        <uc:DetailItem Label="Description" Value="{Binding SelectedDistro.Description}"/>
+                        <uc:DetailItem Label="Size" Value="{Binding SelectedDistro.Size, StringFormat='{}{0} bytes'}"/>
                     </uc:SummaryCardControl.Details>
                 </uc:SummaryCardControl>
-                <uc:SummaryCardControl Title="Partitions" IconData="{StaticResource IconPartition}" >
+
+                <!-- Workflow Type Summary -->
+                <uc:SummaryCardControl Title="Installation Type" IconData="{StaticResource IconInstall}" IsVisible="{Binding SelectedWorkflow, Converter={x:Static BoolToBrushConverter}}">
                     <uc:SummaryCardControl.Details>
-                        <uc:DetailItem Label="Root" Value="/dev/sda3 (ext4, 50GB)"/>
-                        <uc:DetailItem Label="Swap" Value="/dev/sda4 (swap, 8GB)"/>
+                        <uc:DetailItem Label="Type" Value="{Binding SelectedWorkflow}"/>
                     </uc:SummaryCardControl.Details>
                 </uc:SummaryCardControl>
+
+                <!-- User Account Summary -->
+                <uc:SummaryCardControl Title="User Account" IconData="{StaticResource IconHourglass}" IsVisible="{Binding UserInfo.Username, Converter={x:Static BoolToBrushConverter}}">
+                    <uc:SummaryCardControl.Details>
+                        <uc:DetailItem Label="Full Name" Value="{Binding UserInfo.FullName}"/>
+                        <uc:DetailItem Label="Username" Value="{Binding UserInfo.Username}"/>
+                        <uc:DetailItem Label="Auto Login" Value="{Binding UserInfo.AutoLogin}"/>
+                        <uc:DetailItem Label="Require Password" Value="{Binding UserInfo.RequirePasswordOnLogin}"/>
+                    </uc:SummaryCardControl.Details>
+                </uc:SummaryCardControl>
+
+                <!-- Partitions Summary -->
+                <uc:SummaryCardControl Title="Partitions" IconData="{StaticResource IconPartition}" IsVisible="{Binding PartitionPlan.TargetDisk, Converter={x:Static BoolToBrushConverter}}">
+                    <uc:SummaryCardControl.Details>
+                        <uc:DetailItem Label="Target Disk" Value="{Binding PartitionPlan.TargetDisk.Name}"/>
+                        <uc:DetailItem Label="Shrink Size" Value="{Binding PartitionPlan.ShrinkSizeInMB, StringFormat='{}{0} MB'}"/>
+                        <!-- TODO: Display planned Linux partitions from PartitionPlan.LinuxPartitions -->
+                    </uc:SummaryCardControl.Details>
+                </uc:SummaryCardControl>
+
                 <Border Background="{StaticResource ErrorContainerBrush}" Padding="8" CornerRadius="4" Margin="0,16,0,0">
                     <TextBlock Text="Warning: This action will modify your disk partitions. Data loss may occur if interrupted." Foreground="{StaticResource OnErrorContainerBrush}" TextWrapping="Wrap"/>
                 </Border>

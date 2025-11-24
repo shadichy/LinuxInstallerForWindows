@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:LinuxInstaller.ViewModels"
+             xmlns:models="using:LinuxInstaller.Models" <!-- Add this line -->
              mc:Ignorable="d"
              x:Class="LinuxInstaller.Views.PartitionOptionPickerView"
              d:DesignWidth="800" d:DesignHeight="600">
@@ -16,8 +17,10 @@
         </StackPanel>
 
         <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="16">
-            <Button Content="Automatic Partitioning" Classes="Filled" Width="250"/>
-            <Button Content="Manual Partitioning" Classes="Filled" Width="250"/>
+            <Button Content="Automatic Partitioning" Classes="Filled" Width="250"
+                    Command="{Binding SelectWorkflowCommand}" CommandParameter="{x:Static models:WorkflowType.Automatic}"/>
+            <Button Content="Manual Partitioning" Classes="Filled" Width="250"
+                    Command="{Binding SelectWorkflowCommand}" CommandParameter="{x:Static models:WorkflowType.Manual}"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="16">

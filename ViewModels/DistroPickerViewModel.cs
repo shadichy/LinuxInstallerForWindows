@@ -6,28 +6,31 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
+using LinuxInstaller.ViewModels.Interfaces; // Add this using directive
 
 namespace LinuxInstaller.ViewModels;
 
-public partial class DistroPickerViewModel : ObservableObject
+public partial class DistroPickerViewModel : ObservableObject, INavigatableViewModel
 {
     private readonly DistroService _distroService;
+    private readonly InstallationConfigService _installationConfigService; // Injected service
 
     [ObservableProperty]
     private ObservableCollection<Distro> _distros;
 
     [ObservableProperty]
-    private Distro _selectedDistro;
+    private Distro? _selectedDistro; // Made nullable
 
     [ObservableProperty]
     private string _searchText;
 
     private List<Distro> _allDistros;
+    private Distro? _previouslySelectedDistro; // Track previously selected distro
 
-    public DistroPickerViewModel()
+    public DistroPickerViewModel(DistroService distroService, InstallationConfigService installationConfigService)
     {
-        // TODO: In a real app, services should be injected via Dependency Injection.
-        _distroService = new DistroService();
+        _distroService = distroService;
+        _installationConfigService = installationConfigService;
         _ = LoadDistros();
     }
 
@@ -51,6 +54,33 @@ public partial class DistroPickerViewModel : ObservableObject
         }
     }
 
+    partial void OnSelectedDistroChanged(Distro? value) // Made nullable
+    {
+        // Deselect previous
+        if (_previouslySelectedDistro != null)
+        {
+            _previouslySelectedDistro.IsSelected = false;
+        }
+
+        // Select new
+        if (value != null)
+        {
+            value.IsSelected = true;
+            _installationConfigService.SelectedDistro = value;
+        } else {
+            _installationConfigService.SelectedDistro = null;
+        }
+        
+        _previouslySelectedDistro = value;
+    }
+
+    // INavigatableViewModel Implementation
+    public bool CanProceed => SelectedDistro != null;
+    public bool CanGoBack => true;
+
     // TODO: A command should be implemented to handle the "Next" button click,
     // which would pass the _selectedDistro to a central state management service or the MainViewModel.
 }
+
+
+

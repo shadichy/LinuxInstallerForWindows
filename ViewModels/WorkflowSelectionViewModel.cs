@@ -4,27 +4,35 @@ using LinuxInstaller.Services;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using LinuxInstaller.ViewModels.Interfaces; // Add this using directive
 
 namespace LinuxInstaller.ViewModels;
 
-public partial class WorkflowSelectionViewModel : ObservableObject
+public partial class WorkflowSelectionViewModel : ObservableObject, INavigatableViewModel
 {
+    private readonly DistroService _distroService;
+
     public ObservableCollection<Distro> Distros { get; } = new();
 
-    public WorkflowSelectionViewModel()
+    public WorkflowSelectionViewModel(DistroService distroService)
     {
+        _distroService = distroService;
         _ = LoadDistrosAsync();
     }
 
     private async Task LoadDistrosAsync()
     {
-        var distroService = new DistroService("https://raw.githubusercontent.com/your-username/your-repo/main/prebuilt/distros.json");
-        var distros = await distroService.GetDistrosAsync();
+        var distros = await _distroService.GetDistrosAsync();
         foreach (var distro in distros)
         {
             Distros.Add(distro);
         }
     }
+
+    // INavigatableViewModel Implementation
+    public bool CanProceed => true; // For now, assume always can proceed
+    public bool CanGoBack => true; // For now, assume always can go back
 }
+
 
 

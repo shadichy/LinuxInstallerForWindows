@@ -4,12 +4,15 @@ using LinuxInstaller.Models;
 using LinuxInstaller.Services;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using LinuxInstaller.ViewModels.Interfaces;
+using System.Linq;
 
 namespace LinuxInstaller.ViewModels;
 
-public partial class PartitionEditorViewModel : ObservableObject
+public partial class PartitionEditorViewModel : ObservableObject, INavigatableViewModel
 {
     private readonly PartitionService _partitionService;
+    private readonly InstallationConfigService _installationConfigService;
 
     [ObservableProperty]
     private ObservableCollection<Disk> _disks;
@@ -17,31 +20,81 @@ public partial class PartitionEditorViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<Partition> _partitions;
 
-    [ObservableProperty]
-    private Disk _selectedDisk;
-
-    [ObservableProperty]
-    private int _shrinkSizeInMB = 50000;
-
-    public PartitionEditorViewModel()
+    // SelectedDisk is now managed by InstallationConfigService.PartitionPlan.TargetDisk
+    public Disk? SelectedDisk
     {
-        // TODO: In a real app, services should be injected via Dependency Injection
-        // instead of being instantiated directly.
-        _partitionService = new PartitionService();
-        Disks = _partitionService.GetAvailableDisks();
-        if (Disks.Count > 0)
+        get => _installationConfigService.PartitionPlan.TargetDisk;
+        set
         {
-            SelectedDisk = Disks[0];
+            if (_installationConfigService.PartitionPlan.TargetDisk != value)
+            {
+                _installationConfigService.PartitionPlan.TargetDisk = value;
+                OnPropertyChanged(); // Notify UI that SelectedDisk has changed
+                _ = RefreshPartitionsForSelectedDiskAsync(value);
+            }
         }
     }
 
-    // TODO: This should be async Task and await the service call.
-    partial void OnSelectedDiskChanged(Disk value)
+    // ShrinkSizeInMB is now managed by InstallationConfigService.PartitionPlan.ShrinkSizeInMB
+    public int ShrinkSizeInMB
     {
-        if (value != null)
+        get => _installationConfigService.PartitionPlan.ShrinkSizeInMB;
+        set
         {
-            // This is using placeholder data. A real implementation would await GetPartitions.
-            Partitions = _partitionService.GetPartitions(value.Id);
+            if (_installationConfigService.PartitionPlan.ShrinkSizeInMB != value)
+            {
+                _installationConfigService.PartitionPlan.ShrinkSizeInMB = value;
+                OnPropertyChanged(); // Notify UI that ShrinkSizeInMB has changed
+            }
+        }
+    }
+
+
+    public PartitionEditorViewModel(PartitionService partitionService, InstallationConfigService installationConfigService)
+    {
+        _partitionService = partitionService;
+        _installationConfigService = installationConfigService;
+        
+        // Initialize ShrinkSizeInMB if it's default
+        if (ShrinkSizeInMB == 0) // Default value from PartitionPlan's constructor
+        {
+            ShrinkSizeInMB = 50000; // Set a default initial value
+        }
+
+        // Load initial data
+        _ = RefreshDisksAndPartitionsAsync();
+    }
+
+    private async Task RefreshDisksAndPartitionsAsync()
+    {
+        var availableDisks = _partitionService.GetAvailableDisks();
+        Disks = new ObservableCollection<Disk>(availableDisks);
+
+        if (Disks.Count > 0 && SelectedDisk == null)
+        {
+            SelectedDisk = Disks.First(); // Automatically select the first disk
+        }
+
+        if (SelectedDisk != null)
+        {
+            await RefreshPartitionsForSelectedDiskAsync(SelectedDisk);
+        }
+        
+        // Re-evaluate CanProceed when disks/partitions are refreshed
+        OnPropertyChanged(nameof(CanProceed));
+    }
+
+    private async Task RefreshPartitionsForSelectedDiskAsync(Disk? disk)
+    {
+        if (disk != null)
+        {
+            // Assuming GetPartitions can be made async or wraps an async operation
+            // For now, if GetPartitions returns a concrete list, we will just assign it.
+            // If PartitionService itself is updated to return Task<IEnumerable<Partition>>,
+            // this part would need adjustment.
+            Partitions = new ObservableCollection<Partition>(await _partitionService.GetPartitionsAsync(disk.Id));
+        } else {
+            Partitions = new ObservableCollection<Partition>();
         }
     }
 
@@ -51,12 +104,15 @@ public partial class PartitionEditorViewModel : ObservableObject
         if (SelectedDisk != null)
         {
             await _partitionService.ShrinkPartition(SelectedDisk.Name, ShrinkSizeInMB);
-            // TODO: Refresh the partition list from the service after shrinking.
+            await RefreshDisksAndPartitionsAsync(); // Refresh the partition list after shrinking
         }
     }
+
+    // INavigatableViewModel Implementation
+    public bool CanProceed => _installationConfigService.PartitionPlan.IsValid;
+    public bool CanGoBack => true;
 
     // TODO: Add commands for creating, deleting, and editing partitions.
     // These commands would manipulate a "PartitionPlan" object that gets passed to the summary view
     // and ultimately to the ConfigGeneratorService.
 }
-

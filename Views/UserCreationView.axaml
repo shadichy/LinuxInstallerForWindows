@@ -17,14 +17,14 @@
         </StackPanel>
 
         <StackPanel Grid.Row="1" Margin="16" Spacing="16">
-            <uc:FormInputControl Label="Full Name" Watermark="e.g., John Doe"/>
-            <uc:FormInputControl Label="Username" Watermark="e.g., johndoe"/>
-            <uc:FormInputControl Label="Password" Watermark="Enter password" />
-            <uc:FormInputControl Label="Confirm Password" Watermark="Confirm password"/>
+            <uc:FormInputControl Label="Full Name" Watermark="e.g., John Doe" Text="{Binding User.FullName}"/>
+            <uc:FormInputControl Label="Username" Watermark="e.g., johndoe" Text="{Binding User.Username}"/>
+            <uc:FormInputControl Label="Password" Watermark="Enter password" Text="{Binding User.Password}"/>
+            <uc:FormInputControl Label="Confirm Password" Watermark="Confirm password" Text="{Binding User.ConfirmPassword}"/>
             
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,16,0,0">
-                <CheckBox Content="Log in automatically" Margin="0,0,8,0"/>
-                <CheckBox Content="Require password to log in" IsChecked="True"/>
+                <CheckBox Content="Log in automatically" Margin="0,0,8,0" IsChecked="{Binding User.AutoLogin}"/>
+                <CheckBox Content="Require password to log in" IsChecked="{Binding User.RequirePasswordOnLogin}"/>
             </StackPanel>
         </StackPanel>
 
