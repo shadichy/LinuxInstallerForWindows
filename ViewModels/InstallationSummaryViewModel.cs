@@ -10,15 +10,25 @@ public partial class InstallationSummaryViewModel : ObservableObject, INavigatab
 {
     private readonly InstallationConfigService _installationConfigService;
 
+    // This constructor is used by the designer.
+    public InstallationSummaryViewModel() : this(new())
+    {
+    }
+
     public InstallationSummaryViewModel(InstallationConfigService installationConfigService)
     {
         _installationConfigService = installationConfigService;
     }
 
-    public Distro? SelectedDistro => _installationConfigService.SelectedDistro;
-    public WorkflowType SelectedWorkflow => _installationConfigService.SelectedWorkflow;
-    public UserInfo UserInfo => _installationConfigService.UserInfo;
-    public PartitionPlan PartitionPlan => _installationConfigService.PartitionPlan;
+    public Distro? SelectedDistro { get => _installationConfigService.SelectedDistro; }
+    public WorkflowType SelectedWorkflow { get => _installationConfigService.SelectedWorkflow; }
+    public UserInfo UserInfo { get => _installationConfigService.UserInfo; }
+    public PartitionPlan PartitionPlan { get => _installationConfigService.PartitionPlan; }
+
+    public bool IsDistroSelected => SelectedDistro != null;
+    public bool IsWorkflowSelected => SelectedWorkflow != default;
+    public bool IsUserInfoAvailable => UserInfo != null;
+    public bool IsPartitionPlanAvailable => PartitionPlan != null;
 
     // INavigatableViewModel Implementation
     public bool CanProceed => true; // Assume always can proceed to start installation

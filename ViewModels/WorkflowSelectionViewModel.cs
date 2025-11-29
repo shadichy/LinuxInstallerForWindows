@@ -12,6 +12,9 @@ public partial class WorkflowSelectionViewModel : ObservableObject, INavigatable
 {
     private readonly DistroService _distroService;
 
+    [ObservableProperty]
+    private Distro? _selectedDistro;
+
     public ObservableCollection<Distro> Distros { get; } = new();
 
     public WorkflowSelectionViewModel(DistroService distroService)

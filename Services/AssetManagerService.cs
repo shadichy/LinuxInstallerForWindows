@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace LinuxInstaller.Services;
 
-public class AssetManager
+public class AssetManagerService
 {
     public void CopyPrebuiltConfigs(string targetPath)
     {

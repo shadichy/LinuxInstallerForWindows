@@ -6,6 +6,7 @@
         xmlns:views="using:LinuxInstaller.Views"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
         x:Class="LinuxInstaller.Views.MainView"
+        x:DataType="vm:MainViewModel"
         Title="Linux Installer">
 
     <Design.DataContext>
@@ -14,7 +15,7 @@
 
     <Grid RowDefinitions="*,Auto">
         <Border Classes="Card" Grid.Row="0" Margin="16">
-            <Carousel Items="{Binding Pages}" SelectedIndex="{Binding CurrentPageIndex}">
+            <Carousel ItemsSource="{Binding Pages}" SelectedIndex="{Binding CurrentPageIndex}">
                 <Carousel.DataTemplates>
                     <DataTemplate DataType="vm:WorkflowSelectionViewModel">
                         <views:WorkflowSelectionView/>

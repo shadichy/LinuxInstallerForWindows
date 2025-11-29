@@ -31,6 +31,9 @@ public partial class DistroPickerViewModel : ObservableObject, INavigatableViewM
     {
         _distroService = distroService;
         _installationConfigService = installationConfigService;
+        _distros = new ObservableCollection<Distro>();
+        _searchText = string.Empty;
+        _allDistros = new List<Distro>();
         _ = LoadDistros();
     }
 

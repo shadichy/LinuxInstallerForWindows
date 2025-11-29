@@ -93,15 +93,29 @@ public partial class MainViewModel : ObservableObject
         // 1. Generate final configs (grub.cfg, install.conf) using ConfigGeneratorService.
         // Example: Accessing selected distro for config generation
         Console.WriteLine($"Generating config for: {_installationConfigService.SelectedDistro?.Name}");
-        _configGeneratorService.GenerateGrubConfig(); // Placeholder call
-        _configGeneratorService.GenerateInstallConfig(); // Placeholder call
+        
+        var grubConfig = _configGeneratorService.GenerateGrubStage1Config("/.myinstaller/stage2.cfg");
+        // TODO: Save grubConfig to a file.
+
+        if (_installationConfigService.PartitionPlan.TargetDisk != null)
+        {
+            var installConfig = _configGeneratorService.GenerateInstallConf(
+                _installationConfigService.PartitionPlan.TargetDisk.Id, 
+                new System.Collections.Generic.List<Models.PartitionPlan> { _installationConfigService.PartitionPlan });
+            // TODO: Save installConfig to a file.
+        }
 
         // 2. Place bootloaders (shim, grub) and configs on the appropriate partitions (ESP and staging area) using AssetManager and BootManagerService.
-        _assetManagerService.ExtractBootloaders(); // Placeholder call
-        _bootManagerService.PlaceBootloaders(); // Placeholder call
+        var espPath = _bootManagerService.MountEsp();
+        if (!string.IsNullOrEmpty(espPath))
+        {
+            _assetManagerService.CopyBundledBootloader(espPath);
 
-        // 3. Create the BCD entry using BootManagerService.
-        _bootManagerService.CreateBcdEntry(); // Placeholder call
+            // 3. Create the BCD entry using BootManagerService.
+            _bootManagerService.CreateBcdEntry(espPath, "EFI\\MyCustomInstaller\\shimx64.efi");
+
+            _bootManagerService.UnmountEsp();
+        }
 
         // 4. Prompt the user to reboot. (This would involve UI interaction, not directly here)
         Console.WriteLine("Installation Finished. Please reboot."); // Placeholder for now

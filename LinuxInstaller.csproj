@@ -14,8 +14,8 @@
     <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.6" />
     <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.6" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
-    <PackageReference Include="Splat.Microsoft.Extensions.DependencyInjection" Version="14.8.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.9" />
+    <PackageReference Include="Splat.Microsoft.Extensions.DependencyInjection" Version="17.1.1" />
     <PackageReference Include="System.Management" Version="8.0.0" />
     <PackageReference Include="System.Net.Http.Json" Version="8.0.0" />
     <PackageReference Include="System.Drawing.Common" Version="8.0.0" />
@@ -26,23 +26,15 @@
     </PackageReference>
   </ItemGroup>
     
-  <ItemGroup>
-    <Compile Update="UserControls\**\*.axaml.cs">
-      <DependentUpon>%(Filename)</DependentUpon>
-    </Compile>
-    <AvaloniaXaml Include="UserControls\**\*.axaml">
-      <SubType>Designer</SubType>
-    </AvaloniaXaml>
-  </ItemGroup>
-    
+
   <ItemGroup>
     <EmbeddedResource Include="../prebuilt/stage1.cfg" />
     <EmbeddedResource Include="../prebuilt/stage2.cfg" />
     <EmbeddedResource Include="../prebuilt/install.conf" />
     <!-- TODO: Place these bootloader files in the 'prebuilt/bootloaders' directory. -->
-    <EmbeddedResource Include="../prebuilt/bootloaders/shimx64.efi" />
-    <EmbeddedResource Include="../prebuilt/bootloaders/grubx64.efi" />
-    <EmbeddedResource Include="../prebuilt/bootloaders/mmx64.efi" />
+    <!-- <EmbeddedResource Include="../prebuilt/bootloaders/shimx64.efi" /> -->
+    <!-- <EmbeddedResource Include="../prebuilt/bootloaders/grubx64.efi" /> -->
+    <!-- <EmbeddedResource Include="../prebuilt/bootloaders/mmx64.efi" /> -->
   </ItemGroup>
 </Project>
 

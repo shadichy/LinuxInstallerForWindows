@@ -3,9 +3,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:LinuxInstaller.ViewModels"
-             xmlns:models="using:LinuxInstaller.Models" <!-- Add this line -->
+             xmlns:models="using:LinuxInstaller.Models"
              mc:Ignorable="d"
              x:Class="LinuxInstaller.Views.PartitionOptionPickerView"
+             x:DataType="vm:PartitionOptionPickerViewModel"
              d:DesignWidth="800" d:DesignHeight="600">
     <Design.DataContext>
         <vm:PartitionOptionPickerViewModel/>

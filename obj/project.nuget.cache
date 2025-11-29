@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "N+O1UJE5F4w=",
+  "dgSpecHash": "w9QNb7Bq2fI=",
   "success": true,
   "projectFilePath": "/home/shadichy/Documents/college/linux_installer/LinuxInstaller/LinuxInstaller.csproj",
   "expectedPackageFiles": [
@@ -26,37 +26,28 @@
     "/home/shadichy/.nuget/packages/harfbuzzsharp.nativeassets.webassembly/8.3.1.1/harfbuzzsharp.nativeassets.webassembly.8.3.1.1.nupkg.sha512",
     "/home/shadichy/.nuget/packages/harfbuzzsharp.nativeassets.win32/8.3.1.1/harfbuzzsharp.nativeassets.win32.8.3.1.1.nupkg.sha512",
     "/home/shadichy/.nuget/packages/microcom.runtime/0.11.0/microcom.runtime.0.11.0.nupkg.sha512",
-    "/home/shadichy/.nuget/packages/microsoft.extensions.dependencyinjection/8.0.0/microsoft.extensions.dependencyinjection.8.0.0.nupkg.sha512",
-    "/home/shadichy/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/8.0.0/microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
+    "/home/shadichy/.nuget/packages/microsoft.extensions.dependencyinjection/9.0.9/microsoft.extensions.dependencyinjection.9.0.9.nupkg.sha512",
+    "/home/shadichy/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/9.0.9/microsoft.extensions.dependencyinjection.abstractions.9.0.9.nupkg.sha512",
     "/home/shadichy/.nuget/packages/microsoft.win32.systemevents/8.0.0/microsoft.win32.systemevents.8.0.0.nupkg.sha512",
     "/home/shadichy/.nuget/packages/skiasharp/2.88.9/skiasharp.2.88.9.nupkg.sha512",
     "/home/shadichy/.nuget/packages/skiasharp.nativeassets.linux/2.88.9/skiasharp.nativeassets.linux.2.88.9.nupkg.sha512",
     "/home/shadichy/.nuget/packages/skiasharp.nativeassets.macos/2.88.9/skiasharp.nativeassets.macos.2.88.9.nupkg.sha512",
     "/home/shadichy/.nuget/packages/skiasharp.nativeassets.webassembly/2.88.9/skiasharp.nativeassets.webassembly.2.88.9.nupkg.sha512",
     "/home/shadichy/.nuget/packages/skiasharp.nativeassets.win32/2.88.9/skiasharp.nativeassets.win32.2.88.9.nupkg.sha512",
-    "/home/shadichy/.nuget/packages/splat/14.8.6/splat.14.8.6.nupkg.sha512",
-    "/home/shadichy/.nuget/packages/splat.microsoft.extensions.dependencyinjection/14.8.6/splat.microsoft.extensions.dependencyinjection.14.8.6.nupkg.sha512",
+    "/home/shadichy/.nuget/packages/splat.core/17.1.1/splat.core.17.1.1.nupkg.sha512",
+    "/home/shadichy/.nuget/packages/splat.microsoft.extensions.dependencyinjection/17.1.1/splat.microsoft.extensions.dependencyinjection.17.1.1.nupkg.sha512",
     "/home/shadichy/.nuget/packages/system.codedom/8.0.0/system.codedom.8.0.0.nupkg.sha512",
     "/home/shadichy/.nuget/packages/system.drawing.common/8.0.0/system.drawing.common.8.0.0.nupkg.sha512",
     "/home/shadichy/.nuget/packages/system.io.pipelines/8.0.0/system.io.pipelines.8.0.0.nupkg.sha512",
     "/home/shadichy/.nuget/packages/system.management/8.0.0/system.management.8.0.0.nupkg.sha512",
     "/home/shadichy/.nuget/packages/system.net.http.json/8.0.0/system.net.http.json.8.0.0.nupkg.sha512",
+    "/home/shadichy/.nuget/packages/system.reactive/6.0.2/system.reactive.6.0.2.nupkg.sha512",
     "/home/shadichy/.nuget/packages/system.text.encodings.web/8.0.0/system.text.encodings.web.8.0.0.nupkg.sha512",
     "/home/shadichy/.nuget/packages/system.text.json/8.0.0/system.text.json.8.0.0.nupkg.sha512",
-    "/home/shadichy/.nuget/packages/tmds.dbus.protocol/0.21.2/tmds.dbus.protocol.0.21.2.nupkg.sha512"
+    "/home/shadichy/.nuget/packages/tmds.dbus.protocol/0.21.2/tmds.dbus.protocol.0.21.2.nupkg.sha512",
+    "/home/shadichy/.nuget/packages/microsoft.netcore.app.runtime.win-x64/9.0.10/microsoft.netcore.app.runtime.win-x64.9.0.10.nupkg.sha512",
+    "/home/shadichy/.nuget/packages/microsoft.aspnetcore.app.runtime.win-x64/9.0.10/microsoft.aspnetcore.app.runtime.win-x64.9.0.10.nupkg.sha512",
+    "/home/shadichy/.nuget/packages/microsoft.netcore.app.host.win-x64/9.0.10/microsoft.netcore.app.host.win-x64.9.0.10.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1603",
-      "level": "Warning",
-      "message": "LinuxInstaller depends on Splat.Microsoft.Extensions.DependencyInjection (>= 14.8.1) but Splat.Microsoft.Extensions.DependencyInjection 14.8.1 was not found. Splat.Microsoft.Extensions.DependencyInjection 14.8.6 was resolved instead.",
-      "projectPath": "/home/shadichy/Documents/college/linux_installer/LinuxInstaller/LinuxInstaller.csproj",
-      "warningLevel": 1,
-      "filePath": "/home/shadichy/Documents/college/linux_installer/LinuxInstaller/LinuxInstaller.csproj",
-      "libraryId": "Splat.Microsoft.Extensions.DependencyInjection",
-      "targetGraphs": [
-        "net9.0"
-      ]
-    }
-  ]
+  "logs": []
 }

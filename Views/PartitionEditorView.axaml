@@ -4,13 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:LinuxInstaller.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="LinuxInstaller.Views.PartitionEditorView">
+             x:Class="LinuxInstaller.Views.PartitionEditorView"
+             x:DataType="vm:PartitionEditorViewModel">
     <Design.DataContext>
         <vm:PartitionEditorViewModel/>
     </Design.DataContext>
     <StackPanel>
         <TextBlock Text="Partition Editor" FontSize="24" HorizontalAlignment="Center" Margin="20"/>
-        <TextBox Text="{Binding DriveLetter}" Margin="10"/>
+        <TextBlock Text="{Binding SelectedDisk.Name}" Margin="10"/>
         <Slider Minimum="10000" Maximum="100000" Value="{Binding ShrinkSizeInMB}" Margin="10"/>
         <TextBlock Text="{Binding ShrinkSizeInMB, StringFormat={}{0} MB}" HorizontalAlignment="Center"/>
         <Button Classes="Filled" Content="Shrink" Command="{Binding ShrinkCommand}" Margin="10"/>

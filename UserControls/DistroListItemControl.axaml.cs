@@ -1,33 +1,10 @@
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Data.Converters;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
-using System;
-using System.Globalization;
+using LinuxInstaller.Converters;
 
 namespace LinuxInstaller.UserControls;
-
-// TODO: This converter is a placeholder. It should use brushes from the application's theme resources
-// (e.g., PrimaryContainerBrush for selected, Transparent or SurfaceBrush for not selected).
-// It should be registered as a static resource in App.axaml to be used application-wide.
-public class BoolToBrushConverter : IValueConverter
-{
-    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
-    {
-        if (value is bool b && targetType.IsAssignableTo(typeof(IBrush)))
-        {
-            // Placeholder brushes. Replace with theme resources.
-            return b ? Brushes.LightBlue : Brushes.Transparent; 
-        }
-        return Brushes.Transparent;
-    }
-
-    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
-    {
-        throw new NotImplementedException();
-    }
-}
 
 public partial class DistroListItemControl : UserControl
 {

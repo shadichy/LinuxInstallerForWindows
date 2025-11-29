@@ -54,6 +54,8 @@ public partial class PartitionEditorViewModel : ObservableObject, INavigatableVi
     {
         _partitionService = partitionService;
         _installationConfigService = installationConfigService;
+        _disks = new ObservableCollection<Disk>();
+        _partitions = new ObservableCollection<Partition>();
         
         // Initialize ShrinkSizeInMB if it's default
         if (ShrinkSizeInMB == 0) // Default value from PartitionPlan's constructor
@@ -67,7 +69,7 @@ public partial class PartitionEditorViewModel : ObservableObject, INavigatableVi
 
     private async Task RefreshDisksAndPartitionsAsync()
     {
-        var availableDisks = _partitionService.GetAvailableDisks();
+        var availableDisks = await _partitionService.GetAvailableDisksAsync();
         Disks = new ObservableCollection<Disk>(availableDisks);
 
         if (Disks.Count > 0 && SelectedDisk == null)

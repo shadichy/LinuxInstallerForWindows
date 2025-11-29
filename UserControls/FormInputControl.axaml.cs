@@ -48,6 +48,9 @@ public partial class FormInputControl : UserControl
     public FormInputControl()
     {
         InitializeComponent();
+        _label = string.Empty;
+        _text = string.Empty;
+        _watermark = string.Empty;
     }
 
     private void InitializeComponent()

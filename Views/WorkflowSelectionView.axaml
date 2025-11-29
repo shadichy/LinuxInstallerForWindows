@@ -4,8 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:LinuxInstaller.ViewModels"
              xmlns:uc="using:LinuxInstaller.UserControls"
+             xmlns:models="using:LinuxInstaller.Models"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="LinuxInstaller.Views.WorkflowSelectionView">
+             x:Class="LinuxInstaller.Views.WorkflowSelectionView"
+             x:DataType="vm:WorkflowSelectionViewModel">
     <Design.DataContext>
         <vm:WorkflowSelectionViewModel/>
     </Design.DataContext>
@@ -13,7 +15,7 @@
         <TextBlock Text="Select a Distribution" FontSize="24" HorizontalAlignment="Center" Margin="20"/>
         <ListBox ItemsSource="{Binding Distros}" SelectedItem="{Binding SelectedDistro}">
             <ListBox.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate x:DataType="models:Distro">
                     <uc:DistroListItemControl DistroName="{Binding Name}" IsSelected="{Binding IsSelected}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>

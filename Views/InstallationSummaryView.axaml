@@ -7,6 +7,7 @@
              xmlns:models="using:LinuxInstaller.Models"
              mc:Ignorable="d"
              x:Class="LinuxInstaller.Views.InstallationSummaryView"
+             x:DataType="vm:InstallationSummaryViewModel"
              d:DesignWidth="800" d:DesignHeight="600">
     <Design.DataContext>
         <vm:InstallationSummaryViewModel/>
@@ -20,38 +21,38 @@
         <ScrollViewer Grid.Row="1" Margin="16,0">
             <StackPanel Orientation="Vertical" Spacing="16">
                 <!-- Distribution Summary -->
-                <uc:SummaryCardControl Title="Distribution" IconData="{StaticResource IconDistro}" IsVisible="{Binding SelectedDistro, Converter={x:Static BoolToBrushConverter}}">
-                    <uc:SummaryCardControl.Details>
-                        <uc:DetailItem Label="Name" Value="{Binding SelectedDistro.Name}"/>
-                        <uc:DetailItem Label="Description" Value="{Binding SelectedDistro.Description}"/>
-                        <uc:DetailItem Label="Size" Value="{Binding SelectedDistro.Size, StringFormat='{}{0} bytes'}"/>
-                    </uc:SummaryCardControl.Details>
+                <uc:SummaryCardControl Title="Distribution" IconData="{StaticResource IconDistro}" IsVisible="{Binding IsDistroSelected}">
+                    <StackPanel Spacing="4">
+                        <StackPanel Orientation="Horizontal" Spacing="8"><TextBlock FontWeight="Bold" Text="Name:"/><TextBlock Text="{Binding SelectedDistro.Name}"/></StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="8"><TextBlock FontWeight="Bold" Text="Description:"/><TextBlock Text="{Binding SelectedDistro.Description}"/></StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="8"><TextBlock FontWeight="Bold" Text="Size:"/><TextBlock Text="{Binding SelectedDistro.Size, StringFormat='{}{0} bytes'}"/></StackPanel>
+                    </StackPanel>
                 </uc:SummaryCardControl>
 
                 <!-- Workflow Type Summary -->
-                <uc:SummaryCardControl Title="Installation Type" IconData="{StaticResource IconInstall}" IsVisible="{Binding SelectedWorkflow, Converter={x:Static BoolToBrushConverter}}">
-                    <uc:SummaryCardControl.Details>
-                        <uc:DetailItem Label="Type" Value="{Binding SelectedWorkflow}"/>
-                    </uc:SummaryCardControl.Details>
+                <uc:SummaryCardControl Title="Installation Type" IconData="{StaticResource IconInstall}" IsVisible="{Binding IsWorkflowSelected}">
+                    <StackPanel Spacing="4">
+                        <StackPanel Orientation="Horizontal" Spacing="8"><TextBlock FontWeight="Bold" Text="Type:"/><TextBlock Text="{Binding SelectedWorkflow}"/></StackPanel>
+                    </StackPanel>
                 </uc:SummaryCardControl>
 
                 <!-- User Account Summary -->
-                <uc:SummaryCardControl Title="User Account" IconData="{StaticResource IconHourglass}" IsVisible="{Binding UserInfo.Username, Converter={x:Static BoolToBrushConverter}}">
-                    <uc:SummaryCardControl.Details>
-                        <uc:DetailItem Label="Full Name" Value="{Binding UserInfo.FullName}"/>
-                        <uc:DetailItem Label="Username" Value="{Binding UserInfo.Username}"/>
-                        <uc:DetailItem Label="Auto Login" Value="{Binding UserInfo.AutoLogin}"/>
-                        <uc:DetailItem Label="Require Password" Value="{Binding UserInfo.RequirePasswordOnLogin}"/>
-                    </uc:SummaryCardControl.Details>
+                <uc:SummaryCardControl Title="User Account" IconData="{StaticResource IconHourglass}" IsVisible="{Binding IsUserInfoAvailable}">
+                    <StackPanel Spacing="4">
+                        <StackPanel Orientation="Horizontal" Spacing="8"><TextBlock FontWeight="Bold" Text="Full Name:"/><TextBlock Text="{Binding UserInfo.FullName}"/></StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="8"><TextBlock FontWeight="Bold" Text="Username:"/><TextBlock Text="{Binding UserInfo.Username}"/></StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="8"><TextBlock FontWeight="Bold" Text="Auto Login:"/><TextBlock Text="{Binding UserInfo.AutoLogin}"/></StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="8"><TextBlock FontWeight="Bold" Text="Require Password:"/><TextBlock Text="{Binding UserInfo.RequirePasswordOnLogin}"/></StackPanel>
+                    </StackPanel>
                 </uc:SummaryCardControl>
 
                 <!-- Partitions Summary -->
-                <uc:SummaryCardControl Title="Partitions" IconData="{StaticResource IconPartition}" IsVisible="{Binding PartitionPlan.TargetDisk, Converter={x:Static BoolToBrushConverter}}">
-                    <uc:SummaryCardControl.Details>
-                        <uc:DetailItem Label="Target Disk" Value="{Binding PartitionPlan.TargetDisk.Name}"/>
-                        <uc:DetailItem Label="Shrink Size" Value="{Binding PartitionPlan.ShrinkSizeInMB, StringFormat='{}{0} MB'}"/>
+                <uc:SummaryCardControl Title="Partitions" IconData="{StaticResource IconPartition}" IsVisible="{Binding IsPartitionPlanAvailable}">
+                    <StackPanel Spacing="4">
+                        <StackPanel Orientation="Horizontal" Spacing="8"><TextBlock FontWeight="Bold" Text="Target Disk:"/><TextBlock Text="{Binding PartitionPlan.TargetDisk.Name}"/></StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="8"><TextBlock FontWeight="Bold" Text="Shrink Size:"/><TextBlock Text="{Binding PartitionPlan.ShrinkSizeInMB, StringFormat='{}{0} MB'}"/></StackPanel>
                         <!-- TODO: Display planned Linux partitions from PartitionPlan.LinuxPartitions -->
-                    </uc:SummaryCardControl.Details>
+                    </StackPanel>
                 </uc:SummaryCardControl>
 
                 <Border Background="{StaticResource ErrorContainerBrush}" Padding="8" CornerRadius="4" Margin="0,16,0,0">

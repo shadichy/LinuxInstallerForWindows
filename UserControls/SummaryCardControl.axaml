@@ -2,24 +2,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:uc="using:LinuxInstaller.UserControls"
              mc:Ignorable="d"
-             x:Class="LinuxInstaller.UserControls.SummaryCardControl">
+             x:Class="LinuxInstaller.UserControls.SummaryCardControl"
+             x:DataType="uc:SummaryCardControl">
     <Border Classes="Card" Padding="16" CornerRadius="12">
         <StackPanel Spacing="8">
             <StackPanel Orientation="Horizontal" Spacing="8">
-                <PathIcon Data="{Binding IconData}" Width="24" Height="24"/>
-                <TextBlock Text="{Binding Title}" Classes="HeadlineSmall"/>
+                <PathIcon Data="{Binding IconData, RelativeSource={RelativeSource AncestorType=uc:SummaryCardControl}}" Width="24" Height="24"/>
+                <TextBlock Text="{Binding Title, RelativeSource={RelativeSource AncestorType=uc:SummaryCardControl}}" Classes="HeadlineSmall"/>
             </StackPanel>
-            <ItemsControl ItemsSource="{Binding Details}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal" Spacing="4">
-                            <TextBlock Text="{Binding Label}" Classes="BodyMedium" FontWeight="Bold"/>
-                            <TextBlock Text="{Binding Value}" Classes="BodyMedium"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+            <ContentPresenter Content="{Binding Content, RelativeSource={RelativeSource AncestorType=uc:SummaryCardControl}}"/>
             <Button Content="Edit" HorizontalAlignment="Right" Classes="Text"/>
         </StackPanel>
     </Border>

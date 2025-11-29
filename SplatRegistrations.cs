@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Extensions.DependencyInjection;
 using Splat;
 using Splat.Microsoft.Extensions.DependencyInjection;
@@ -38,11 +39,5 @@ namespace LinuxInstaller
             services.AddTransient<WorkflowSelectionViewModel>();
         }
 
-        public static IServiceProvider BuildAndRegister(this IServiceCollection services)
-        {
-            var serviceProvider = services.BuildServiceProvider();
-            serviceProvider.UseMicrosoftDependencyInjection();
-            return serviceProvider;
-        }
     }
 }

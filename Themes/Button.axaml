@@ -28,7 +28,6 @@
         <Setter Property="Height" Value="40"/>
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="FontWeight" Value="Medium"/>
-        <Setter Property="BoxShadow" Value="0 2 4 0 #1F000000"/>
     </Style>
 
     <!-- Outlined Button -->
