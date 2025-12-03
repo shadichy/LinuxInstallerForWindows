@@ -1,0 +1,19 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="LinuxInstaller.UserControls.FooterControl"
+             d:DesignWidth="800" d:DesignHeight="50">
+    <Grid ColumnDefinitions="*,*" VerticalAlignment="Center" Margin="16">
+        <StackPanel Orientation="Horizontal" Grid.Column="0">
+            <!-- Left-aligned content, e.g., status messages -->
+            <TextBlock Text="Status: Ready" Classes="Caption"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1">
+            <!-- Right-aligned navigation buttons -->
+            <Button Content="Back" Margin="4,0"/>
+            <Button Content="Next" Classes="Filled" Margin="4,0"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

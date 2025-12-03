@@ -1,0 +1,19 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:LinuxInstaller.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="LinuxInstaller.Views.PartitionEditorView"
+             x:DataType="vm:PartitionEditorViewModel">
+    <Design.DataContext>
+        <vm:PartitionEditorViewModel/>
+    </Design.DataContext>
+    <StackPanel>
+        <TextBlock Text="Partition Editor" FontSize="24" HorizontalAlignment="Center" Margin="20"/>
+        <TextBlock Text="{Binding SelectedDisk.Name}" Margin="10"/>
+        <Slider Minimum="10000" Maximum="100000" Value="{Binding ShrinkSizeInMB}" Margin="10"/>
+        <TextBlock Text="{Binding ShrinkSizeInMB, StringFormat={}{0} MB}" HorizontalAlignment="Center"/>
+        <Button Classes="Filled" Content="Shrink" Command="{Binding ShrinkCommand}" Margin="10"/>
+    </StackPanel>
+</UserControl>

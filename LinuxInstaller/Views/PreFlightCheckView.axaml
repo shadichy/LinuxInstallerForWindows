@@ -1,0 +1,20 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:LinuxInstaller.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="LinuxInstaller.Views.PreFlightCheckView"
+             x:DataType="vm:PreFlightCheckViewModel">
+    <Design.DataContext>
+        <vm:PreFlightCheckViewModel/>
+    </Design.DataContext>
+    <StackPanel>
+        <TextBlock Text="Pre-Flight Check" FontSize="24" HorizontalAlignment="Center" Margin="20"/>
+        <CheckBox Content="Admin Rights" IsChecked="{Binding IsAdmin}" IsEnabled="False"/>
+        <CheckBox Content="UEFI Boot Mode" IsChecked="{Binding IsUefi}" IsEnabled="False"/>
+        <CheckBox Content="Secure Boot Status" IsChecked="{Binding IsSecureBootEnabled}" IsEnabled="False"/>
+        <CheckBox Content="BitLocker Status" IsChecked="{Binding IsBitLockerEnabled}" IsEnabled="False"/>
+        <Button Classes="Filled" Content="Relaunch as Admin" IsVisible="{Binding !IsAdmin}" Command="{Binding RelaunchAsAdminCommand}"/>
+    </StackPanel>
+</UserControl>

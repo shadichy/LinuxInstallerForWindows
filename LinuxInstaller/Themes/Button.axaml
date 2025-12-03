@@ -1,0 +1,92 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<!-- Global -->
+	<Style Selector="Button">
+		<Setter Property="HorizontalContentAlignment" Value="Stretch" />
+		<Setter Property="VerticalContentAlignment" Value="Center" />
+		<Setter Property="Margin" Value="8 0" />
+		<Setter Property="Padding" Value="16 0" />
+		<Setter Property="ClipToBounds" Value="False" />
+	</Style>
+	
+    <!-- Filled Button -->
+    <Style Selector="Button.Filled">
+        <Setter Property="Background" Value="{DynamicResource PrimaryBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource OnPrimaryBrush}"/>
+        <Setter Property="CornerRadius" Value="20"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+    </Style>
+
+    <!-- Tonal Button -->
+    <Style Selector="Button.Tonal">
+        <Setter Property="Background" Value="{DynamicResource SecondaryContainerBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource OnSecondaryContainerBrush}"/>
+        <Setter Property="CornerRadius" Value="20"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+    </Style>
+
+    <!-- Elevated Button -->
+    <Style Selector="Button.Elevated">
+        <Setter Property="Background" Value="{DynamicResource SurfaceBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}"/>
+        <Setter Property="CornerRadius" Value="20"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+    </Style>
+
+    <!-- Outlined Button -->
+    <Style Selector="Button.Outlined">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource OutlineBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius" Value="20"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+    </Style>
+
+    <!-- Text Button -->
+    <Style Selector="Button.Text">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+    
+    <!-- Toggle Button -->
+    <Style Selector="Button:checked">
+        <Setter Property="Background" Value="{DynamicResource TertiaryBrush}"/>
+    </Style>
+
+    <!-- Sizes -->
+    <Style Selector="Button.ExtraSmall">
+        <Setter Property="Height" Value="24"/>
+        <Setter Property="FontSize" Value="12"/>
+    </Style>
+    <Style Selector="Button.Small">
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="FontSize" Value="13"/>
+    </Style>
+    <Style Selector="Button.Medium">
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="FontSize" Value="14"/>
+    </Style>
+    <Style Selector="Button.Large">
+        <Setter Property="Height" Value="48"/>
+        <Setter Property="FontSize" Value="15"/>
+    </Style>
+    <Style Selector="Button.ExtraLarge">
+        <Setter Property="Height" Value="56"/>
+        <Setter Property="FontSize" Value="16"/>
+    </Style>
+
+    <!-- Shapes -->
+    <Style Selector="Button.Square">
+        <Setter Property="CornerRadius" Value="0"/>
+    </Style>
+</Styles>

@@ -1,0 +1,43 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<Style>
+		<Style.Resources>
+			<SolidColorBrush x:Key="PrimaryBrush" Color="#000" />
+			<SolidColorBrush x:Key="OnPrimaryBrush" Color="#000" />
+			<SolidColorBrush x:Key="PrimaryContainerBrush" Color="#000" />
+			<SolidColorBrush x:Key="OnPrimaryContainerBrush" Color="#000" />
+			<SolidColorBrush x:Key="SecondaryBrush" Color="#000" />
+			<SolidColorBrush x:Key="OnSecondaryBrush" Color="#000" />
+			<SolidColorBrush x:Key="SecondaryContainerBrush" Color="#000" />
+			<SolidColorBrush x:Key="OnSecondaryContainerBrush" Color="#000" />
+			<SolidColorBrush x:Key="TertiaryBrush" Color="#000" />
+			<SolidColorBrush x:Key="OnTertiaryBrush" Color="#000" />
+			<SolidColorBrush x:Key="TertiaryContainerBrush" Color="#000" />
+			<SolidColorBrush x:Key="OnTertiaryContainerBrush" Color="#000" />
+			<SolidColorBrush x:Key="ErrorBrush" Color="#000" />
+			<SolidColorBrush x:Key="OnErrorBrush" Color="#000" />
+			<SolidColorBrush x:Key="ErrorContainerBrush" Color="#000" />
+			<SolidColorBrush x:Key="OnErrorContainerBrush" Color="#000" />
+			<SolidColorBrush x:Key="BackgroundBrush" Color="#000" />
+			<SolidColorBrush x:Key="OnBackgroundBrush" Color="#000" />
+			<SolidColorBrush x:Key="SurfaceBrush" Color="#000" />
+			<SolidColorBrush x:Key="OnSurfaceBrush" Color="#000" />
+			<SolidColorBrush x:Key="SurfaceLowestBrush" Color="#000" />
+			<SolidColorBrush x:Key="OnSurfaceLowestBrush" Color="#000" />
+			<SolidColorBrush x:Key="SurfaceLowBrush" Color="#000" />
+			<SolidColorBrush x:Key="OnSurfaceLowBrush" Color="#000" />
+			<SolidColorBrush x:Key="SurfaceHighBrush" Color="#000" />
+			<SolidColorBrush x:Key="OnSurfaceHighBrush" Color="#000" />
+			<SolidColorBrush x:Key="SurfaceHighestBrush" Color="#000" />
+			<SolidColorBrush x:Key="OnSurfaceHighestBrush" Color="#000" />
+			<SolidColorBrush x:Key="SurfaceVariantBrush" Color="#000" />
+			<SolidColorBrush x:Key="OnSurfaceVariantBrush" Color="#000" />
+			<SolidColorBrush x:Key="OutlineBrush" Color="#000" />
+			<SolidColorBrush x:Key="OutlineVariantBrush" Color="#000" />
+			<SolidColorBrush x:Key="ScrimBrush" Color="#000" />
+			<SolidColorBrush x:Key="InverseSurfaceBrush" Color="#000" />
+			<SolidColorBrush x:Key="InverseOnSurfaceBrush" Color="#000" />
+			<SolidColorBrush x:Key="InversePrimaryBrush" Color="#000" />
+		</Style.Resources>
+	</Style>
+</Styles>
