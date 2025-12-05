@@ -1,61 +1,93 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-	<!-- Global -->
-	<Style Selector="Button">
-		<Setter Property="HorizontalContentAlignment" Value="Stretch" />
-		<Setter Property="VerticalContentAlignment" Value="Center" />
-		<Setter Property="Margin" Value="8 0" />
-		<Setter Property="Padding" Value="16 0" />
-		<Setter Property="ClipToBounds" Value="False" />
-	</Style>
-	
-    <!-- Filled Button -->
+    <!-- Global -->
+    <Style Selector="Button">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Margin" Value="8 0" />
+        <Setter Property="Padding" Value="16 0" />
+        <Setter Property="ClipToBounds" Value="False" />
+        <Setter Property="CornerRadius" Value="20"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+    </Style>
+
+    <!-- Combination Categories -->
+
+    <!-- 1. Elevated Button -->
+    <Style Selector="Button.Elevated">
+        <Setter Property="Background" Value="{DynamicResource SurfaceLowBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}"/>
+        <!-- Note: Elevation shadow requires a container with shadow support, e.g. Border with BoxShadow -->
+    </Style>
+    <Style Selector="Button.Elevated:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource SurfaceBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}"/>
+    </Style>
+    <Style Selector="Button.Elevated:disabled /template/ ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource SurfaceHighestBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource SurfaceLowBrush}"/>
+    </Style>
+
+    <!-- 2. Filled Button -->
     <Style Selector="Button.Filled">
         <Setter Property="Background" Value="{DynamicResource PrimaryBrush}"/>
         <Setter Property="Foreground" Value="{DynamicResource OnPrimaryBrush}"/>
-        <Setter Property="CornerRadius" Value="20"/>
-        <Setter Property="Height" Value="40"/>
-        <Setter Property="FontSize" Value="14"/>
-        <Setter Property="FontWeight" Value="Medium"/>
+    </Style>
+    <Style Selector="Button.Filled:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource PrimaryBrush}"/>
+        <Setter Property="Opacity" Value="0.9"/>
+    </Style>
+    <Style Selector="Button.Filled:disabled /template/ ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource SurfaceHighestBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource SurfaceLowBrush}"/>
     </Style>
 
-    <!-- Tonal Button -->
+    <!-- 3. Tonal Button -->
     <Style Selector="Button.Tonal">
         <Setter Property="Background" Value="{DynamicResource SecondaryContainerBrush}"/>
         <Setter Property="Foreground" Value="{DynamicResource OnSecondaryContainerBrush}"/>
-        <Setter Property="CornerRadius" Value="20"/>
-        <Setter Property="Height" Value="40"/>
-        <Setter Property="FontSize" Value="14"/>
-        <Setter Property="FontWeight" Value="Medium"/>
+    </Style>
+    <Style Selector="Button.Tonal:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource SecondaryContainerBrush}"/>
+        <Setter Property="Opacity" Value="0.9"/>
+    </Style>
+    <Style Selector="Button.Tonal:disabled /template/ ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource SurfaceHighestBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource SurfaceLowBrush}"/>
     </Style>
 
-    <!-- Elevated Button -->
-    <Style Selector="Button.Elevated">
-        <Setter Property="Background" Value="{DynamicResource SurfaceBrush}"/>
-        <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}"/>
-        <Setter Property="CornerRadius" Value="20"/>
-        <Setter Property="Height" Value="40"/>
-        <Setter Property="FontSize" Value="14"/>
-        <Setter Property="FontWeight" Value="Medium"/>
-    </Style>
-
-    <!-- Outlined Button -->
+    <!-- 4. Outlined Button -->
     <Style Selector="Button.Outlined">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource OutlineBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="CornerRadius" Value="20"/>
-        <Setter Property="Height" Value="40"/>
-        <Setter Property="FontSize" Value="14"/>
-        <Setter Property="FontWeight" Value="Medium"/>
+    </Style>
+    <Style Selector="Button.Outlined:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource OutlineBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}"/>
+    </Style>
+    <Style Selector="Button.Outlined:disabled /template/ ContentPresenter">
+        <Setter Property="BorderBrush" Value="{DynamicResource SurfaceHighestBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource SurfaceLowBrush}"/>
     </Style>
 
-    <!-- Text Button -->
+    <!-- 5. Text Button -->
     <Style Selector="Button.Text">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}"/>
         <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="12 0"/>
+    </Style>
+    <Style Selector="Button.Text:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}"/>
+    </Style>
+    <Style Selector="Button.Text:disabled /template/ ContentPresenter">
+        <Setter Property="Foreground" Value="{DynamicResource SurfaceLowBrush}"/>
     </Style>
     
     <!-- Toggle Button -->
@@ -67,26 +99,48 @@
     <Style Selector="Button.ExtraSmall">
         <Setter Property="Height" Value="24"/>
         <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Padding" Value="8 0"/>
+        <Setter Property="CornerRadius" Value="12"/>
     </Style>
     <Style Selector="Button.Small">
         <Setter Property="Height" Value="32"/>
         <Setter Property="FontSize" Value="13"/>
+        <Setter Property="Padding" Value="12 0"/>
+        <Setter Property="CornerRadius" Value="16"/>
     </Style>
     <Style Selector="Button.Medium">
         <Setter Property="Height" Value="40"/>
         <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Padding" Value="16 0"/>
+        <Setter Property="CornerRadius" Value="20"/>
     </Style>
     <Style Selector="Button.Large">
         <Setter Property="Height" Value="48"/>
         <Setter Property="FontSize" Value="15"/>
+        <Setter Property="Padding" Value="20 0"/>
+        <Setter Property="CornerRadius" Value="24"/>
     </Style>
     <Style Selector="Button.ExtraLarge">
         <Setter Property="Height" Value="56"/>
         <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Padding" Value="24 0"/>
+        <Setter Property="CornerRadius" Value="28"/>
     </Style>
 
     <!-- Shapes -->
     <Style Selector="Button.Square">
-        <Setter Property="CornerRadius" Value="0"/>
+        <Setter Property="CornerRadius" Value="16"/>
+    </Style>
+    <Style Selector="Button.Square.ExtraSmall">
+        <Setter Property="CornerRadius" Value="12"/>
+    </Style>
+    <Style Selector="Button.Square.Small">
+        <Setter Property="CornerRadius" Value="12"/>
+    </Style>
+    <Style Selector="Button.Square.Large">
+        <Setter Property="CornerRadius" Value="28"/>
+    </Style>
+    <Style Selector="Button.Square.ExtraLarge">
+        <Setter Property="CornerRadius" Value="28"/>
     </Style>
 </Styles>

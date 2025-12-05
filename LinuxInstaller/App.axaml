@@ -43,6 +43,7 @@
         <StyleInclude Source="avares://LinuxInstaller/Themes/ListBox.axaml"/>
         <StyleInclude Source="avares://LinuxInstaller/Themes/Slider.axaml"/>
         <StyleInclude Source="avares://LinuxInstaller/Themes/TextBox.axaml"/>
+        <StyleInclude Source="avares://LinuxInstaller/Themes/ProgressBar.axaml"/>
     </Application.Styles>
 
 </Application>

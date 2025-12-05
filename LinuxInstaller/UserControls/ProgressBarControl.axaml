@@ -2,16 +2,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:uc="using:LinuxInstaller.UserControls"
-             mc:Ignorable="d"
-             x:Class="LinuxInstaller.UserControls.ProgressBarControl"
-             x:DataType="uc:ProgressBarControl">
-    <UserControl.Resources>
-        <uc:ProgressConverter x:Key="ProgressConverter" />
-    </UserControl.Resources>
-    <Grid>
-        <Border Background="{DynamicResource PrimaryContainerColor}" Height="8" CornerRadius="4"/>
-        <Border Background="{DynamicResource PrimaryColor}" Height="8" CornerRadius="4" HorizontalAlignment="Left"
-                Width="{Binding Value, Mode=OneWay, Converter={StaticResource ProgressConverter}}"/>
-    </Grid>
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="LinuxInstaller.UserControls.ProgressBarControl">
+    <ProgressBar Value="{Binding Value, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                 IsIndeterminate="{Binding IsIndeterminate, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                 HorizontalAlignment="Stretch"
+                 VerticalAlignment="Center"/>
 </UserControl>

@@ -43,6 +43,7 @@ public partial class MainViewModel : ObservableObject
 
         Pages = new ObservableCollection<ObservableObject>
         {
+            ILoadingViewModel,
             IWorkflowSelectionViewModel,
             IPreFlightCheckViewModel,
             IDistroPickerViewModel,
@@ -51,8 +52,6 @@ public partial class MainViewModel : ObservableObject
             IUserCreationViewModel,
             IInstallationSummaryViewModel,
             IInstallationProgressViewModel,
-            ILoadingViewModel,
-
         };
 
         //CurrentContent = Pages[CurrentPageIndex];

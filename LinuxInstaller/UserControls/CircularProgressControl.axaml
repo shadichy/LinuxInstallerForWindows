@@ -1,0 +1,50 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="using:LinuxInstaller.Converters"
+             xmlns:shapes="clr-namespace:Avalonia.Controls.Shapes;assembly=Avalonia.Controls"
+             mc:Ignorable="d" d:DesignWidth="48" d:DesignHeight="48"
+             x:Class="LinuxInstaller.UserControls.CircularProgressControl"
+             Width="48" Height="48">
+    
+    <UserControl.Resources>
+        <converters:PercentageToAngleConverter x:Key="PercentageToAngleConverter"/>
+    </UserControl.Resources>
+
+    <Grid>
+        <!-- Track -->
+        <shapes:Arc Width="{Binding $parent[UserControl].Width}" 
+             Height="{Binding $parent[UserControl].Height}"
+             StartAngle="0" 
+             SweepAngle="360" 
+             Stroke="{DynamicResource SecondaryContainerBrush}" 
+             StrokeThickness="{Binding StrokeThickness, RelativeSource={RelativeSource AncestorType=UserControl}}">
+        </shapes:Arc>
+        
+        <!-- Active Indicator -->
+        <shapes:Arc Name="Indicator"
+             Width="{Binding $parent[UserControl].Width}" 
+             Height="{Binding $parent[UserControl].Height}"
+             StartAngle="270" 
+             SweepAngle="{Binding Value, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource PercentageToAngleConverter}}" 
+             Stroke="{DynamicResource PrimaryBrush}" 
+             StrokeThickness="{Binding StrokeThickness, RelativeSource={RelativeSource AncestorType=UserControl}}"
+             StrokeLineCap="Round">
+             <shapes:Arc.Styles>
+                 <Style Selector="shapes|Arc[Tag=Indeterminate]">
+                    <Style.Animations>
+                        <Animation Duration="0:0:1.5" IterationCount="Infinite">
+                            <KeyFrame Cue="0%">
+                                <Setter Property="RotateTransform.Angle" Value="0"/>
+                            </KeyFrame>
+                            <KeyFrame Cue="100%">
+                                <Setter Property="RotateTransform.Angle" Value="360"/>
+                            </KeyFrame>
+                        </Animation>
+                    </Style.Animations>
+                 </Style>
+             </shapes:Arc.Styles>
+        </shapes:Arc>
+    </Grid>
+</UserControl>

@@ -17,4 +17,5 @@ public class NavigationService
 
     public void Next() => _pageIndex++;
     public void Previous() => _pageIndex--;
+    public void Goto(int index) => _pageIndex = index;
 }
