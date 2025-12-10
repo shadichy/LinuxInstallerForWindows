@@ -6,25 +6,43 @@ using LinuxInstaller.Services; // Add this using directive
 
 namespace LinuxInstaller.ViewModels;
 
-public partial class UserCreationViewModel : ObservableObject, INavigatableViewModel
+public partial class UserCreationViewModel : NavigatableViewModelBase
 {
     private readonly InstallationConfigService _installationConfigService;
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(CanProceed))]
     private UserInfo _user;
 
-    public UserCreationViewModel(InstallationConfigService installationConfigService)
+    public UserCreationViewModel(NavigationService navigationService, InstallationConfigService installationConfigService) : base(navigationService)
     {
         _installationConfigService = installationConfigService;
         _user = _installationConfigService.UserInfo; // Use the shared UserInfo instance
+        _user.PropertyChanged += OnUserPropertyChanged;
+    }
+
+    private void OnUserPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        OnPropertyChanged(nameof(CanProceed));
     }
 
     // INavigatableViewModel Implementation
-    public bool CanProceed =>
-        !string.IsNullOrWhiteSpace(User.FullName) &&
+    public override bool CanProceed =>
         !string.IsNullOrWhiteSpace(User.Username) &&
         !string.IsNullOrWhiteSpace(User.Password) &&
         User.Password == User.ConfirmPassword;
 
-    public bool CanGoBack => true;
+    public override bool CanGoBack => true;
+
+    [RelayCommand]
+    private void Next()
+    {
+        Navigation.Next();
+    }
+
+    [RelayCommand]
+    private void Back()
+    {
+        Navigation.Previous();
+    }
 }

@@ -1,0 +1,22 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:uc="using:LinuxInstaller.UserControls"
+             x:Class="LinuxInstaller.UserControls.ButtonControl"
+             x:Name="self">
+    <Button Content="{Binding Content, ElementName=self}"
+            Command="{Binding Command, ElementName=self}"
+            CommandParameter="{Binding CommandParameter, ElementName=self}"
+            Classes.Elevated="{Binding IsElevated, ElementName=self}"
+            Classes.Filled="{Binding IsFilled, ElementName=self}"
+            Classes.Tonal="{Binding IsTonal, ElementName=self}"
+            Classes.Outlined="{Binding IsOutlined, ElementName=self}"
+            Classes.Text="{Binding IsText, ElementName=self}"
+            Classes.ExtraSmall="{Binding IsExtraSmall, ElementName=self}"
+            Classes.Small="{Binding IsSmall, ElementName=self}"
+            Classes.Medium="{Binding IsMedium, ElementName=self}"
+            Classes.Large="{Binding IsLarge, ElementName=self}"
+            Classes.ExtraLarge="{Binding IsExtraLarge, ElementName=self}"
+            Classes.Pill="{Binding IsPill, ElementName=self}"
+            Classes.Square="{Binding IsSquare, ElementName=self}"
+            />
+</UserControl>

@@ -2,7 +2,7 @@ namespace LinuxInstaller.Models;
 
 public class Partition
 {
-    public string Id { get; set; } = string.Empty;
+    public string Id { get; set; } = string.Empty; // 128-byte partiton uuid
     public string Name { get; set; } = string.Empty;
     public long Size { get; set; } // in bytes
     public string FileSystem { get; set; } = string.Empty;

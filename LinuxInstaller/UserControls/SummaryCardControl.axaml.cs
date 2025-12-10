@@ -9,13 +9,13 @@ namespace LinuxInstaller.UserControls;
 
 public partial class SummaryCardControl : UserControl
 {
-    public static readonly StyledProperty<PathGeometry> IconDataProperty =
-        AvaloniaProperty.Register<SummaryCardControl, PathGeometry>(nameof(IconData));
+    public static readonly StyledProperty<Geometry> IconDataProperty =
+        AvaloniaProperty.Register<SummaryCardControl, Geometry>(nameof(IconData));
 
     public static readonly StyledProperty<string> TitleProperty =
         AvaloniaProperty.Register<SummaryCardControl, string>(nameof(Title));
 
-    public PathGeometry IconData
+    public Geometry IconData
     {
         get => GetValue(IconDataProperty);
         set => SetValue(IconDataProperty, value);

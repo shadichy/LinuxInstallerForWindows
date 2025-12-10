@@ -1,11 +1,12 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using LinuxInstaller.Services;
-using LinuxInstaller.ViewModels.Interfaces; // Add this using directive
+using LinuxInstaller.ViewModels.Interfaces;
+using System.Threading.Tasks; // Add this using directive
 
 namespace LinuxInstaller.ViewModels;
 
-public partial class PreFlightCheckViewModel : ObservableObject, INavigatableViewModel
+public partial class PreFlightCheckViewModel : NavigatableViewModelBase
 {
     private readonly SystemAnalysisService _systemAnalysisService;
 
@@ -21,22 +22,22 @@ public partial class PreFlightCheckViewModel : ObservableObject, INavigatableVie
     [ObservableProperty]
     private bool _isBitLockerEnabled;
 
-    public PreFlightCheckViewModel(SystemAnalysisService systemAnalysisService)
+    public PreFlightCheckViewModel(NavigationService navigationService, SystemAnalysisService systemAnalysisService) : base(navigationService)
     {
         _systemAnalysisService = systemAnalysisService;
-        IsAdmin = _systemAnalysisService.IsRunningAsAdmin();
-        IsUefi = _systemAnalysisService.GetBootMode() == "UEFI";
-        IsSecureBootEnabled = _systemAnalysisService.GetSecureBootStatus(); // TODO: Determine if this should block or warn
-        IsBitLockerEnabled = _systemAnalysisService.GetBitLockerStatus() == 1; // TODO: Determine if this should block or warn
+        //IsAdmin = _systemAnalysisService.IsRunningAsAdmin();
+        //IsUefi = _systemAnalysisService.GetBootMode() == "UEFI";
+        //IsSecureBootEnabled = _systemAnalysisService.GetSecureBootStatus(); // TODO: Determine if this should block or warn
+        //IsBitLockerEnabled = _systemAnalysisService.GetBitLockerStatus() == 1; // TODO: Determine if this should block or warn
     }
 
     [RelayCommand]
-    private void RelaunchAsAdmin()
+    private async Task RelaunchAsAdmin()
     {
-        _systemAnalysisService.RelaunchAsAdmin();
+       await _systemAnalysisService.RelaunchAsAdmin();
     }
 
     // INavigatableViewModel Implementation
-    public bool CanProceed => IsAdmin && IsUefi; // Critical checks for proceeding
-    public bool CanGoBack => true;
+    public override bool CanProceed => IsAdmin && IsUefi; // Critical checks for proceeding
+    public override bool CanGoBack => true;
 }

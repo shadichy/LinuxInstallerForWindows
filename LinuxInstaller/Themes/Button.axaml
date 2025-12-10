@@ -37,6 +37,7 @@
     </Style>
     <Style Selector="Button.Filled:pointerover /template/ ContentPresenter">
         <Setter Property="Background" Value="{DynamicResource PrimaryBrush}"/>
+		<Setter Property="Foreground" Value="{DynamicResource OnPrimaryBrush}"/>
         <Setter Property="Opacity" Value="0.9"/>
     </Style>
     <Style Selector="Button.Filled:disabled /template/ ContentPresenter">
@@ -51,6 +52,7 @@
     </Style>
     <Style Selector="Button.Tonal:pointerover /template/ ContentPresenter">
         <Setter Property="Background" Value="{DynamicResource SecondaryContainerBrush}"/>
+		<Setter Property="Foreground" Value="{DynamicResource OnSecondaryContainerBrush}"/>
         <Setter Property="Opacity" Value="0.9"/>
     </Style>
     <Style Selector="Button.Tonal:disabled /template/ ContentPresenter">

@@ -1,4 +1,5 @@
-﻿using Avalonia;
+using Avalonia;
+using Avalonia.Media;
 using LinuxInstaller.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -19,5 +20,6 @@ class Program
         => AppBuilder.Configure<App>()
             .UsePlatformDetect()
             .WithInterFont()
+            .WithAppFonts()
             .LogToTrace();
 }

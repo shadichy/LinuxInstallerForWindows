@@ -1,0 +1,36 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:uc="using:LinuxInstaller.UserControls"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="LinuxInstaller.UserControls.TextFieldControl"
+             x:DataType="uc:TextFieldControl"
+             x:Name="self">
+    <Grid RowDefinitions="Auto,Auto">
+		<Border Classes.TextField="True" Classes.Outlined="{Binding IsOutlined, ElementName=self}" Grid.Row="0" CornerRadius="{Binding ICornerRadius, ElementName=self}">
+			<Grid ColumnDefinitions="Auto,*,Auto">
+				<TextBlock Classes="Icon" Text="{Binding LeadingIcon, ElementName=self}" IsVisible="{Binding LeadingIcon, ElementName=self, Converter={StaticResource IsNotEmptyConverter}}" VerticalAlignment="Center" Margin="12,0,0,0" Foreground="{DynamicResource OnSurfaceVariantBrush}" FontSize="24"/>
+				<TextBox
+					Grid.Column="1"
+					Classes.TextField="True"
+					Classes.Outlined="{Binding IsOutlined, ElementName=self}"
+					Text="{Binding Text, ElementName=self, Mode=TwoWay}"
+					Watermark="{Binding Label, ElementName=self}"
+					UseFloatingWatermark="True"
+					PasswordChar="{Binding PasswordChar, ElementName=self, Mode=OneWay}"
+					Classes.error="{Binding Error, ElementName=self, Converter={StaticResource IsNotEmptyConverter}}"
+					Classes.leading="{Binding LeadingIcon, ElementName=self, Converter={StaticResource IsNotEmptyConverter}}"
+					Classes.trailing="{Binding TrailingIcon, ElementName=self, Converter={StaticResource IsNotEmptyConverter}}"/>
+				<TextBlock Grid.Column="2" Classes="Icon" Text="{Binding TrailingIcon, ElementName=self}" IsVisible="{Binding TrailingIcon, ElementName=self, Converter={StaticResource IsNotEmptyConverter}}" VerticalAlignment="Center" Margin="0,0,12,0" Foreground="{DynamicResource OnSurfaceVariantBrush}"/>
+			</Grid>
+		</Border>
+        <TextBlock 
+            Grid.Row="1"
+            Text="{Binding Error, ElementName=self}" 
+            IsVisible="{Binding Error, ElementName=self, Converter={StaticResource IsNotEmptyConverter}}"
+            Foreground="{DynamicResource ErrorBrush}"
+            FontSize="12"
+            Margin="16,4,0,0"/>
+    </Grid>
+</UserControl>

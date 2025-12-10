@@ -1,0 +1,113 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:uc="using:LinuxInstaller.UserControls">
+	<Styles.Resources>
+		<ControlTheme x:Key="{x:Type uc:SwitchControl}" TargetType="uc:SwitchControl">
+			<Setter Property="Width" Value="52"/>
+			<Setter Property="Height" Value="32"/>
+			<Setter Property="Template">
+				<ControlTemplate>
+					<Panel>
+						<Grid Width="52" Height="32" x:Name="Control">
+							<!-- Track -->
+							<Border x:Name="Track"
+									Width="48"
+									Height="28"
+									CornerRadius="16"
+									BorderThickness="2"
+									Background="{DynamicResource SurfaceContainerHighestBrush}"
+									BorderBrush="{DynamicResource OutlineBrush}">
+								<Border.Transitions>
+									<Transitions>
+										<BrushTransition Property="Background" Duration="0:0:0.2"/>
+										<BrushTransition Property="BorderBrush" Duration="0:0:0.2"/>
+									</Transitions>
+								</Border.Transitions>
+							</Border>
+
+							<!-- Thumb Wrapper (moves horizontally) -->
+							<Border x:Name="ThumbWrapper"
+									Width="28" Height="28"
+									HorizontalAlignment="Left"
+									VerticalAlignment="Center"
+									RenderTransform="translateX(2px)">
+								<Border.Transitions>
+									<Transitions>
+										<TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.2"/>
+									</Transitions>
+								</Border.Transitions>
+
+								<!-- Visual Thumb (changes size within wrapper) -->
+								<Border x:Name="ThumbVisual"
+										Width="16" Height="16"
+										Margin="6"
+										CornerRadius="8"
+										Background="{DynamicResource OutlineBrush}">
+									<Border.Transitions>
+										<Transitions>
+											<BrushTransition Property="Background" Duration="0:0:0.2"/>
+											<DoubleTransition Property="Width" Duration="0:0:0.2"/>
+											<DoubleTransition Property="Height" Duration="0:0:0.2"/>
+											<CornerRadiusTransition Property="CornerRadius" Duration="0:0:0.2"/>
+											<ThicknessTransition Property="Margin" Duration="0:0:0.2"/>
+										</Transitions>
+									</Border.Transitions>
+
+									<!-- State Overlay (inside visual Thumb) -->
+									<Border x:Name="StateOverlay"
+											Background="{DynamicResource OnSurfaceBrush}"
+											Opacity="0"
+											Width="24" Height="24"
+											CornerRadius="20"
+											Margin="2">
+										<Border.Transitions>
+											<Transitions>
+												<DoubleTransition Property="Opacity" Duration="0:0:0.1"/>
+											</Transitions>
+										</Border.Transitions>
+									</Border>
+								</Border>
+							</Border>
+						</Grid>
+						<!-- Focus Border -->
+						<Border Width="52" Height="32" BorderThickness="0" Background="Transparent"></Border>
+					</Panel>
+				</ControlTemplate>
+			</Setter>
+		</ControlTheme>
+	</Styles.Resources>
+
+	<!-- States based on ToggleButton's PseudoClasses -->
+	<Style Selector="uc|SwitchControl:checked /template/ Border#Track">
+		<Setter Property="Background" Value="{DynamicResource PrimaryBrush}"/>
+		<Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"/>
+	</Style>
+	<Style Selector="uc|SwitchControl:checked /template/ Border#ThumbWrapper">
+		<Setter Property="RenderTransform" Value="translateX(22px)" />
+	</Style>
+	<Style Selector="uc|SwitchControl /template/ Border#ThumbWrapper:pointerover">
+		<Setter Property="Background" Value="Transparent"/>
+	</Style>
+	<Style Selector="uc|SwitchControl:checked /template/ Border#ThumbVisual">
+		<Setter Property="Background" Value="{DynamicResource OnPrimaryBrush}"/>
+		<Setter Property="Width" Value="24"/>
+		<Setter Property="Height" Value="24"/>
+		<Setter Property="CornerRadius" Value="12"/>
+		<Setter Property="Margin" Value="2"/>
+	</Style>
+	<Style Selector="uc|SwitchControl:checked /template/ Border#StateOverlay">
+		<Setter Property="Background" Value="{DynamicResource PrimaryBrush}"/>
+	</Style>
+
+	<Style Selector="uc|SwitchControl:pointerover /template/ Border#StateOverlay">
+		<Setter Property="Opacity" Value="0.08"/>
+	</Style>
+
+	<Style Selector="uc|SwitchControl:pressed /template/ Border#StateOverlay">
+		<Setter Property="Opacity" Value="0.12"/>
+	</Style>
+
+	<Style Selector="uc|SwitchControl:disabled">
+		<Setter Property="Opacity" Value="0.38"/>
+	</Style>
+</Styles>

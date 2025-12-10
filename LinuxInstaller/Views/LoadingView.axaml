@@ -6,17 +6,26 @@
              xmlns:uc="using:LinuxInstaller.UserControls"
              mc:Ignorable="d"
              x:Class="LinuxInstaller.Views.LoadingView"
+			 x:DataType="vm:LoadingViewModel"
              d:DesignWidth="400" d:DesignHeight="300">
     <Design.DataContext>
         <vm:LoadingViewModel/>
     </Design.DataContext>
     <Grid Classes="Card" HorizontalAlignment="Center" VerticalAlignment="Center">
         <StackPanel Spacing="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="32">
-            <PathIcon Data="{StaticResource IconHourglass}" Width="64" Height="64" HorizontalAlignment="Center"/>
-            <TextBlock Text="Loading System Information..." Classes="HeadlineMedium" HorizontalAlignment="Center"/>
-            <TextBlock Text="This may take a moment." Classes="BodyMedium" HorizontalAlignment="Center"/>
-            <!-- uc:ProgressBarControl will go here -->
-            <uc:ProgressBarControl Value="50"/>
-        </StackPanel>
+            <Border CornerRadius="100" Background="{StaticResource PrimaryContainerBrush}" Padding="16" Width="80" Height="80">
+                <Image Source="avares://LinuxInstaller/Assets/Icons/Logo.png" Width="48" Height="48"/>
+            </Border>
+            <TextBlock Text="Linux Installer" Classes="HeadlineLarge" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Foreground="{StaticResource OnSurfaceBrush}" />
+			<ProgressBar
+				Height="4"
+				CornerRadius="2"
+				IsIndeterminate="True"
+				HorizontalAlignment="Stretch"
+				VerticalAlignment="Center"
+				IsVisible="True"
+				Foreground="{StaticResource PrimaryBrush}"/>
+            <TextBlock Text="{Binding StatusText}" Classes="HeadlineMedium" HorizontalAlignment="Center" Foreground="{StaticResource OnSurfaceVariantBrush}" />
+        </StackPanel> 
     </Grid>
 </UserControl>

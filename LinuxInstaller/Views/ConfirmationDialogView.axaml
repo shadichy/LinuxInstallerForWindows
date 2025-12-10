@@ -1,0 +1,19 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:LinuxInstaller.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="200"
+        x:Class="LinuxInstaller.Views.ConfirmationDialogView"
+        x:DataType="vm:ConfirmationDialogViewModel"
+        Title="Confirm Installation"
+        CanResize="False" SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterOwner">
+    <Grid RowDefinitions="*,Auto" Margin="16">
+        <TextBlock Grid.Row="0" Text="{Binding Message}" TextWrapping="Wrap" Margin="0,0,0,24"/>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+            <Button Content="Cancel" Classes="Outlined" Command="{Binding CancelCommand}"/>
+            <Button Content="Confirm" Classes="Filled" Command="{Binding ConfirmCommand}"/>
+        </StackPanel>
+    </Grid>
+</Window>

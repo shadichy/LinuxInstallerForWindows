@@ -2,15 +2,37 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:viewModels="using:LinuxInstaller.ViewModels"
+			 xmlns:uc="using:LinuxInstaller.UserControls"
              mc:Ignorable="d"
              x:CompileBindings="False"
-             x:Class="LinuxInstaller.UserControls.DistroListItemControl">
-    <Border Classes="Card" Padding="10" Margin="0,5" CornerRadius="12"
-            Background="{Binding IsSelected, Converter={StaticResource BoolToBrushConverter}}">
-        <StackPanel Orientation="Horizontal" Spacing="10">
-            <Image Source="{Binding IconSource}" Width="32" Height="32"/>
-            <TextBlock Text="{Binding DistroName}" VerticalAlignment="Center" Classes="BodyLarge"/>
-        </StackPanel>
+             x:Class="LinuxInstaller.UserControls.DistroListItemControl"
+			 x:DataType="uc:DistroListItemControl"
+             x:Name="self">
+    <UserControl.Styles>
+        <Style Selector="TextBlock.selfSelected">
+            <Setter Property="Foreground" Value="{DynamicResource OnPrimaryContainerBrush}"/>
+        </Style>
+		<Style Selector="Border.Card:pointerover">
+			<Setter Property="Background" Value="{DynamicResource SecondaryContainerBrush}"/>
+			<Setter Property="BorderBrush" Value="#00000000"/>
+		</Style>
+		<Style Selector="Border.Card.selfSelected">
+			<Setter Property="Background" Value="{DynamicResource PrimaryContainerBrush}"/>
+			<Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"/>
+		</Style>
+    </UserControl.Styles>
+    <Border Classes="Card" Padding="10" Margin="10" CornerRadius="12"
+			Classes.selfSelected="{Binding IsSelected}"
+            DataContext="{Binding ElementName=self}" PointerPressed="Border_PointerPressed">
+        <Grid ColumnDefinitions="Auto,*,Auto">
+			<Border Padding="10" CornerRadius="50" Background="{DynamicResource PrimaryBrush}" Width="48" Height="48" Margin="0,0,10,0" BorderThickness="0">
+				<Image Grid.Column="0" Source="{Binding IconSource}" Width="28" Height="28" Classes="DistroIcon"/>
+			</Border>
+            <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
+                <TextBlock Text="{Binding Identifier}" Classes="BodyLarge" FontWeight="SemiBold"/>
+                <TextBlock Text="{Binding Description}" Classes="BodySmall" Foreground="{DynamicResource OnSurfaceVariantBrush}"/>
+            </StackPanel>
+            <TextBlock Grid.Column="2" Text="{Binding Size, Converter={StaticResource FileSizeConverter}}" VerticalAlignment="Center" Classes="BodyLarge"/>
+        </Grid>
     </Border>
 </UserControl>

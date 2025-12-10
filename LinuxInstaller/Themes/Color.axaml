@@ -2,42 +2,63 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 	<Style>
 		<Style.Resources>
-			<SolidColorBrush x:Key="PrimaryBrush" Color="#000" />
-			<SolidColorBrush x:Key="OnPrimaryBrush" Color="#000" />
-			<SolidColorBrush x:Key="PrimaryContainerBrush" Color="#000" />
-			<SolidColorBrush x:Key="OnPrimaryContainerBrush" Color="#000" />
-			<SolidColorBrush x:Key="SecondaryBrush" Color="#000" />
-			<SolidColorBrush x:Key="OnSecondaryBrush" Color="#000" />
-			<SolidColorBrush x:Key="SecondaryContainerBrush" Color="#000" />
-			<SolidColorBrush x:Key="OnSecondaryContainerBrush" Color="#000" />
-			<SolidColorBrush x:Key="TertiaryBrush" Color="#000" />
-			<SolidColorBrush x:Key="OnTertiaryBrush" Color="#000" />
-			<SolidColorBrush x:Key="TertiaryContainerBrush" Color="#000" />
-			<SolidColorBrush x:Key="OnTertiaryContainerBrush" Color="#000" />
-			<SolidColorBrush x:Key="ErrorBrush" Color="#000" />
-			<SolidColorBrush x:Key="OnErrorBrush" Color="#000" />
-			<SolidColorBrush x:Key="ErrorContainerBrush" Color="#000" />
-			<SolidColorBrush x:Key="OnErrorContainerBrush" Color="#000" />
-			<SolidColorBrush x:Key="BackgroundBrush" Color="#000" />
-			<SolidColorBrush x:Key="OnBackgroundBrush" Color="#000" />
-			<SolidColorBrush x:Key="SurfaceBrush" Color="#000" />
-			<SolidColorBrush x:Key="OnSurfaceBrush" Color="#000" />
-			<SolidColorBrush x:Key="SurfaceLowestBrush" Color="#000" />
-			<SolidColorBrush x:Key="OnSurfaceLowestBrush" Color="#000" />
-			<SolidColorBrush x:Key="SurfaceLowBrush" Color="#000" />
-			<SolidColorBrush x:Key="OnSurfaceLowBrush" Color="#000" />
-			<SolidColorBrush x:Key="SurfaceHighBrush" Color="#000" />
-			<SolidColorBrush x:Key="OnSurfaceHighBrush" Color="#000" />
-			<SolidColorBrush x:Key="SurfaceHighestBrush" Color="#000" />
-			<SolidColorBrush x:Key="OnSurfaceHighestBrush" Color="#000" />
-			<SolidColorBrush x:Key="SurfaceVariantBrush" Color="#000" />
-			<SolidColorBrush x:Key="OnSurfaceVariantBrush" Color="#000" />
-			<SolidColorBrush x:Key="OutlineBrush" Color="#000" />
-			<SolidColorBrush x:Key="OutlineVariantBrush" Color="#000" />
-			<SolidColorBrush x:Key="ScrimBrush" Color="#000" />
-			<SolidColorBrush x:Key="InverseSurfaceBrush" Color="#000" />
-			<SolidColorBrush x:Key="InverseOnSurfaceBrush" Color="#000" />
-			<SolidColorBrush x:Key="InversePrimaryBrush" Color="#000" />
+			<Color x:Key="Primary">#6750A4</Color>
+			<Color x:Key="OnPrimary">#FFFFFF</Color>
+			<Color x:Key="PrimaryContainer">#EADDFF</Color>
+			<Color x:Key="OnPrimaryContainer">#21005E</Color>
+			<Color x:Key="Secondary">#625B71</Color>
+			<Color x:Key="OnSecondary">#FFFFFF</Color>
+			<Color x:Key="SecondaryContainer">#E8DEF8</Color>
+			<Color x:Key="OnSecondaryContainer">#1E192B</Color>
+			<Color x:Key="Tertiary">#7D5260</Color>
+			<Color x:Key="OnTertiary">#FFFFFF</Color>
+			<Color x:Key="TertiaryContainer">#FFD8E4</Color>
+			<Color x:Key="OnTertiaryContainer">#370B1E</Color>
+			<Color x:Key="Error">#B3261E</Color>
+			<Color x:Key="OnError">#FFFFFF</Color>
+			<Color x:Key="ErrorContainer">#F9DEDC</Color>
+			<Color x:Key="OnErrorContainer">#410E0B</Color>
+			<Color x:Key="Background">#FFFBFE</Color>
+			<Color x:Key="OnBackground">#1C1B1F</Color>
+			<Color x:Key="Surface">#FFFBFE</Color>
+			<Color x:Key="OnSurface">#1C1B1F</Color>
+			<Color x:Key="SurfaceVariant">#E7E0EC</Color>
+			<Color x:Key="OnSurfaceVariant">#49454F</Color>
+			<Color x:Key="Outline">#79747E</Color>
+			<Color x:Key="OutlineVariant">#C4C7C5</Color>
+			<Color x:Key="Scrim">#000000</Color>
+			<Color x:Key="InverseSurface">#313033</Color>
+			<Color x:Key="InverseOnSurface">#F4EFF4</Color>
+			<Color x:Key="InversePrimary">#D0BCFF</Color>
+
+			<SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}" />
+			<SolidColorBrush x:Key="OnPrimaryBrush" Color="{StaticResource OnPrimary}" />
+			<SolidColorBrush x:Key="PrimaryContainerBrush" Color="{StaticResource PrimaryContainer}" />
+			<SolidColorBrush x:Key="OnPrimaryContainerBrush" Color="{StaticResource OnPrimaryContainer}" />
+			<SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}" />
+			<SolidColorBrush x:Key="OnSecondaryBrush" Color="{StaticResource OnSecondary}" />
+			<SolidColorBrush x:Key="SecondaryContainerBrush" Color="{StaticResource SecondaryContainer}" />
+			<SolidColorBrush x:Key="OnSecondaryContainerBrush" Color="{StaticResource OnSecondaryContainer}" />
+			<SolidColorBrush x:Key="TertiaryBrush" Color="{StaticResource Tertiary}" />
+			<SolidColorBrush x:Key="OnTertiaryBrush" Color="{StaticResource OnTertiary}" />
+			<SolidColorBrush x:Key="TertiaryContainerBrush" Color="{StaticResource TertiaryContainer}" />
+			<SolidColorBrush x:Key="OnTertiaryContainerBrush" Color="{StaticResource OnTertiaryContainer}" />
+			<SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource Error}" />
+			<SolidColorBrush x:Key="OnErrorBrush" Color="{StaticResource OnError}" />
+			<SolidColorBrush x:Key="ErrorContainerBrush" Color="{StaticResource ErrorContainer}" />
+			<SolidColorBrush x:Key="OnErrorContainerBrush" Color="{StaticResource OnErrorContainer}" />
+			<SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource Background}" />
+			<SolidColorBrush x:Key="OnBackgroundBrush" Color="{StaticResource OnBackground}" />
+			<SolidColorBrush x:Key="SurfaceBrush" Color="{StaticResource Surface}" />
+			<SolidColorBrush x:Key="OnSurfaceBrush" Color="{StaticResource OnSurface}" />
+			<SolidColorBrush x:Key="SurfaceVariantBrush" Color="{StaticResource SurfaceVariant}" />
+			<SolidColorBrush x:Key="OnSurfaceVariantBrush" Color="{StaticResource OnSurfaceVariant}" />
+			<SolidColorBrush x:Key="OutlineBrush" Color="{StaticResource Outline}" />
+			<SolidColorBrush x:Key="OutlineVariantBrush" Color="{StaticResource OutlineVariant}" />
+			<SolidColorBrush x:Key="ScrimBrush" Color="{StaticResource Scrim}" />
+			<SolidColorBrush x:Key="InverseSurfaceBrush" Color="{StaticResource InverseSurface}" />
+			<SolidColorBrush x:Key="InverseOnSurfaceBrush" Color="{StaticResource InverseOnSurface}" />
+			<SolidColorBrush x:Key="InversePrimaryBrush" Color="{StaticResource InversePrimary}" />
 		</Style.Resources>
 	</Style>
 </Styles>

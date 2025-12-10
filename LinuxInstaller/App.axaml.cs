@@ -40,7 +40,9 @@ public partial class App : Application
             var mainViewModel = ServiceProvider.GetRequiredService<MainViewModel>();
             desktop.MainWindow = new MainView
             {
-                DataContext = mainViewModel
+                DataContext = mainViewModel,
+                Width = 800, // Set the width here
+                Height = 520 // Set the height here
             };
         }
 
@@ -49,8 +51,7 @@ public partial class App : Application
 
     private void CreateAndApplyTheme()
     {
-        var random = new Random();
-        var seedColor = System.Drawing.Color.FromArgb(random.Next(0, 256), random.Next(0, 256), random.Next(0, 256));
+        var seedColor = System.Drawing.Color.LimeGreen;
         var colorScheme = new MaterialColorScheme(seedColor);
 
         var resources = new ResourceDictionary();
@@ -61,7 +62,7 @@ public partial class App : Application
             resources.Add(keypair.Key + "Brush", new SolidColorBrush(avaloniaColor));
             this.Resources[keypair.Key + "Brush"] = new SolidColorBrush(avaloniaColor);
         }
-        
+
         this.Resources.MergedDictionaries.Add(resources);
     }
 }

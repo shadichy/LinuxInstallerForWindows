@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace LinuxInstaller.ViewModels;
 
-public partial class PartitionEditorViewModel : ObservableObject, INavigatableViewModel
+public partial class PartitionEditorViewModel : NavigatableViewModelBase
 {
     private readonly PartitionService _partitionService;
     private readonly InstallationConfigService _installationConfigService;
@@ -50,7 +50,7 @@ public partial class PartitionEditorViewModel : ObservableObject, INavigatableVi
     }
 
 
-    public PartitionEditorViewModel(PartitionService partitionService, InstallationConfigService installationConfigService)
+    public PartitionEditorViewModel(NavigationService navigationService, PartitionService partitionService, InstallationConfigService installationConfigService) : base(navigationService)
     {
         _partitionService = partitionService;
         _installationConfigService = installationConfigService;
@@ -69,7 +69,7 @@ public partial class PartitionEditorViewModel : ObservableObject, INavigatableVi
 
     private async Task RefreshDisksAndPartitionsAsync()
     {
-        var availableDisks = await _partitionService.GetAvailableDisksAsync();
+        var availableDisks = await _partitionService.GetAvailableDisks();
         Disks = new ObservableCollection<Disk>(availableDisks);
 
         if (Disks.Count > 0 && SelectedDisk == null)
@@ -94,7 +94,7 @@ public partial class PartitionEditorViewModel : ObservableObject, INavigatableVi
             // For now, if GetPartitions returns a concrete list, we will just assign it.
             // If PartitionService itself is updated to return Task<IEnumerable<Partition>>,
             // this part would need adjustment.
-            Partitions = new ObservableCollection<Partition>(await _partitionService.GetPartitionsAsync(disk.Id));
+            Partitions = new ObservableCollection<Partition>(await _partitionService.GetPartitions(disk.Id));
         } else {
             Partitions = new ObservableCollection<Partition>();
         }
@@ -111,8 +111,8 @@ public partial class PartitionEditorViewModel : ObservableObject, INavigatableVi
     }
 
     // INavigatableViewModel Implementation
-    public bool CanProceed => _installationConfigService.PartitionPlan.IsValid;
-    public bool CanGoBack => true;
+    public override bool CanProceed => _installationConfigService.PartitionPlan.IsValid;
+    public override bool CanGoBack => true;
 
     // TODO: Add commands for creating, deleting, and editing partitions.
     // These commands would manipulate a "PartitionPlan" object that gets passed to the summary view

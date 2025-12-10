@@ -6,6 +6,13 @@ namespace LinuxInstaller.Services
     // This service will hold shared state/configuration for the installation process.
     public partial class InstallationConfigService : ObservableObject
     {
+        private InstallWorkflowType _selectedInstallWorkflow = InstallWorkflowType.None;
+        public InstallWorkflowType SelectedInstallWorkflow
+        {
+            get => _selectedInstallWorkflow;
+            set => SetProperty(ref _selectedInstallWorkflow, value);
+        }
+
         private Distro? _selectedDistro;
         public Distro? SelectedDistro
         {
@@ -13,21 +20,21 @@ namespace LinuxInstaller.Services
             set => SetProperty(ref _selectedDistro, value);
         }
 
-        private WorkflowType _selectedWorkflow = WorkflowType.None;
-        public WorkflowType SelectedWorkflow
+        private PartitionWorkflowType _selectedPartitionWorkflow = PartitionWorkflowType.None;
+        public PartitionWorkflowType SelectedPartitionWorkflow
         {
-            get => _selectedWorkflow;
-            set => SetProperty(ref _selectedWorkflow, value);
+            get => _selectedPartitionWorkflow;
+            set => SetProperty(ref _selectedPartitionWorkflow, value);
         }
 
-        private UserInfo _userInfo = new UserInfo();
+        private UserInfo _userInfo = new();
         public UserInfo UserInfo
         {
             get => _userInfo;
             set => SetProperty(ref _userInfo, value);
         }
 
-        private PartitionPlan _partitionPlan = new PartitionPlan();
+        private PartitionPlan _partitionPlan = new();
         public PartitionPlan PartitionPlan
         {
             get => _partitionPlan;

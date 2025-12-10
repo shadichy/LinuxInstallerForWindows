@@ -8,29 +8,54 @@
              mc:Ignorable="d"
              x:Class="LinuxInstaller.Views.DistroPickerView"
              x:DataType="vm:DistroPickerViewModel"
-             d:DesignWidth="400" d:DesignHeight="600">
+             d:DesignWidth="400" d:DesignHeight="600"
+             x:Name="distroPickerView">
     <Design.DataContext>
         <vm:DistroPickerViewModel/>
     </Design.DataContext>
-    <Grid RowDefinitions="Auto,*,Auto" Classes="Card">
+    <UserControl.Resources>
+        <DataTemplate x:Key="DistroItemTemplate" x:DataType="models:Distro">
+            <uc:DistroListItemControl DistroName="{Binding DistroName}"
+									  Version="{Binding Version}"
+                                      Description="{Binding Description}"
+                                      Size="{Binding Size}"
+                                      IconUrl="{Binding IconUrl}"
+                                      IsSelected="{Binding IsSelected}"
+                                      SelectCommand="{Binding DataContext.SelectDistroCommand, ElementName=distroPickerView}"/>
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid RowDefinitions="Auto,*,Auto" Classes="Card" Background="{StaticResource SurfaceContainerBrush}">
+        <!-- Header -->
         <StackPanel Grid.Row="0" Margin="16">
-            <TextBlock Text="Select a Distribution" Classes="HeadlineMedium"/>
-            <TextBox Watermark="Search..." Text="{Binding SearchText, Mode=TwoWay}" Margin="0,8,0,0"/>
+            <TextBlock Text="Select a Distribution" Classes="HeadlineMedium" FontSize="18" FontWeight="Bold" Foreground="{StaticResource OnSurfaceBrush}"/>
+			<TextBlock Text="Choose a Linux distribution to install on your machine." Classes="BodyMedium" Foreground="{StaticResource OnSurfaceVariantBrush}"/>
+            <!-- Search Box with Icon -->
+			<uc:TextFieldControl Variant="Outlined"
+								 LeadingIcon="&#xE8B6;"
+								 Label="Search for distributions (e.g., Ubuntu, Fedora...)"
+								 Text="{Binding SearchText, Mode=TwoWay}"
+								 Margin="0,8,0,0"
+								 BorderRadius="36"
+								 />
         </StackPanel>
-        <ScrollViewer Grid.Row="1" Margin="16,0">
-            <!-- TODO: Replace the placeholder StackPanel with an ItemsControl bound to the Distros collection in the ViewModel. -->
-            <!-- Use a DataTemplate with the DistroListItemControl. -->
-            <ListBox ItemsSource="{Binding Distros}" SelectedItem="{Binding SelectedDistro}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate x:DataType="models:Distro">
-                        <uc:DistroListItemControl DistroName="{Binding Name}" IsSelected="{Binding IsSelected}" Margin="0,2"/>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+
+        <!-- Distro List -->
+        <ScrollViewer Grid.Row="1" Margin="16,0" Classes="DistroListScrollViewer">
+            <ListBox ItemsSource="{Binding Distros}" SelectedItem="{Binding SelectedDistro, Mode=TwoWay}"
+                     SelectionMode="Single"
+                     ItemTemplate="{StaticResource DistroItemTemplate}">
+				<ListBox.Styles>
+					<Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+						<Setter Property="Background" Value="Transparent" />
+						<Setter Property="Foreground" Value="Transparent" />
+					</Style>
+				</ListBox.Styles>
+			</ListBox>
         </ScrollViewer>
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="16">
-            <Button Content="Cancel" Classes="Text"/>
-            <Button Content="Next" Classes="Filled" Margin="8,0,0,0"/>
+
+        <!-- Footer Buttons -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="16">
+            <Button Content="Back" Classes="Outlined" Foreground="{StaticResource PrimaryBrush}" Command="{Binding GoBackCommand}" HorizontalAlignment="Left"/>
         </StackPanel>
     </Grid>
 </UserControl>

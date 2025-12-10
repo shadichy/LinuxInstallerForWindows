@@ -1,40 +1,67 @@
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using LinuxInstaller.Models;
 using LinuxInstaller.Services;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using LinuxInstaller.ViewModels.Interfaces; // Add this using directive
+using LinuxInstaller.ViewModels.Interfaces;
 
 namespace LinuxInstaller.ViewModels;
 
-public partial class WorkflowSelectionViewModel : ObservableObject, INavigatableViewModel
+public partial class WorkflowSelectionViewModel : NavigatableViewModelBase
 {
-    private readonly DistroService _distroService;
+    private readonly InstallationConfigService _installationConfigService; // Injected service
 
     [ObservableProperty]
-    private Distro? _selectedDistro;
+    private InstallWorkflowType _selectedWorkflow = InstallWorkflowType.None; // Default to None
 
-    public ObservableCollection<Distro> Distros { get; } = new();
-
-    public WorkflowSelectionViewModel(DistroService distroService)
+    public WorkflowSelectionViewModel(NavigationService navigationService, InstallationConfigService installationConfigService) : base(navigationService)
     {
-        _distroService = distroService;
-        _ = LoadDistrosAsync();
+        _installationConfigService = installationConfigService;
     }
 
-    private async Task LoadDistrosAsync()
+    private string _hoverText = "Choose a distribution to download.";
+
+    public string HoverText
     {
-        var distros = await _distroService.GetDistrosAsync();
-        foreach (var distro in distros)
+        get => _hoverText;
+        set => SetProperty(ref _hoverText, value);
+    }
+
+    [RelayCommand]
+    private void SelectWorkflow(InstallWorkflowType workflowType)
+    {
+        SelectedWorkflow = workflowType;
+        _installationConfigService.SelectedInstallWorkflow = workflowType;
+
+        if (workflowType == InstallWorkflowType.Distro)
         {
-            Distros.Add(distro);
+            Navigation.Next();
+        }
+        else if (workflowType == InstallWorkflowType.Iso)
+        {
+            // TODO: Opens file dialog to select ISO and then navigates to ISO handling page
         }
     }
 
-    // INavigatableViewModel Implementation
-    public bool CanProceed => true; // For now, assume always can proceed
-    public bool CanGoBack => true; // For now, assume always can go back
+    [RelayCommand]
+    private void SelectDistro()
+    {
+        Navigation.Goto(2);
+    }
+
+    [RelayCommand]
+    private void SelectDistroHover()
+    {
+        HoverText = "Choose a distribution to download.";
+    }
+
+    [RelayCommand]
+    private void SelectIsoHover()
+    {
+        HoverText = "Pick your own ISO to boot.";
+    }
+    
+    public override bool CanProceed => true;
+    public override bool CanGoBack => true;
 }
 
 

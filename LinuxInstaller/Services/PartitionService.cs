@@ -15,19 +15,19 @@ public class PartitionService
         return Task.FromResult(true);
     }
 
-    public Task<ObservableCollection<Disk>> GetAvailableDisksAsync()
+    public Task<ObservableCollection<Disk>> GetAvailableDisks()
     {
         // TODO: Implement real enumeration of disks on the system, for example by parsing `diskpart list disk`
         // or by using WMI (`Win32_DiskDrive`).
         var disks = new ObservableCollection<Disk>
         {
-            new Disk { Id = "disk0", Name = "SAMSUNG 970 EVO Plus 1TB", Size = 1_000_000_000_000, IsBootable = true },
-            new Disk { Id = "disk1", Name = "Crucial MX500 2TB", Size = 2_000_000_000_000, IsBootable = false }
+            new() { Id = "disk0", Name = "SAMSUNG 970 EVO Plus 1TB", Size = 1_000_000_000_000, IsBootable = true },
+            new() { Id = "disk1", Name = "Crucial MX500 2TB", Size = 2_000_000_000_000, IsBootable = false }
         };
         return Task.FromResult(disks);
     }
 
-    public Task<ObservableCollection<Partition>> GetPartitionsAsync(string diskId)
+    public Task<ObservableCollection<Partition>> GetPartitions(string diskId)
     {
         // TODO: Implement real enumeration of partitions for a given disk, for example by parsing `diskpart list partition`
         // or by using WMI (`Win32_DiskPartition`).
@@ -35,9 +35,9 @@ public class PartitionService
         {
             var partitions = new ObservableCollection<Partition>
             {
-                new Partition { Id = "p1", Name = "ESP", Size = 500 * 1024 * 1024, FileSystem = "FAT32", IsBoot = true, IsSystem = true },
-                new Partition { Id = "p2", Name = "Windows (C:)", Size = 800_000_000_000, FileSystem = "NTFS", IsBoot = false, IsSystem = false },
-                new Partition { Id = "p3", Name = "Recovery", Size = 1_000_000_000, FileSystem = "NTFS", IsBoot = false, IsSystem = true }
+                new() { Id = "p1", Name = "ESP", Size = 500 * 1024 * 1024, FileSystem = "FAT32", IsBoot = true, IsSystem = true },
+                new() { Id = "p2", Name = "Windows (C:)", Size = 800_000_000_000, FileSystem = "NTFS", IsBoot = false, IsSystem = false },
+                new() { Id = "p3", Name = "Recovery", Size = 1_000_000_000, FileSystem = "NTFS", IsBoot = false, IsSystem = true }
             };
             return Task.FromResult(partitions);
         }

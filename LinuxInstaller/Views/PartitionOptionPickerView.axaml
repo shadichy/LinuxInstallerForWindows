@@ -8,25 +8,34 @@
              x:Class="LinuxInstaller.Views.PartitionOptionPickerView"
              x:DataType="vm:PartitionOptionPickerViewModel"
              d:DesignWidth="800" d:DesignHeight="600">
-    <Design.DataContext>
-        <vm:PartitionOptionPickerViewModel/>
-    </Design.DataContext>
-    <Grid RowDefinitions="Auto,*,Auto" Classes="Card">
-        <StackPanel Grid.Row="0" Margin="16">
-            <TextBlock Text="Partitioning Options" Classes="HeadlineMedium" HorizontalAlignment="Center"/>
-            <TextBlock Text="How would you like to manage your disk partitions?" Classes="BodyMedium" HorizontalAlignment="Center"/>
-        </StackPanel>
+	<Design.DataContext>
+		<vm:PartitionOptionPickerViewModel/>
+	</Design.DataContext>
+	<Grid RowDefinitions="Auto,*,Auto" Classes="Card">
+		<StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="16" Margin="16">
+			<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+				<TextBlock Text="Partitioning Options" Classes="HeadlineMedium" HorizontalAlignment="Center" FontWeight="Bold" FontSize="18"/>
+				<TextBlock Text="How would you like to manage your disk partitions?" Classes="BodyMedium" HorizontalAlignment="Center"/>
+			</StackPanel>
+			<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="8">
+				<Button Classes="Filled Large" Width="250"
+						Command="{Binding SelectWorkflowCommand}" CommandParameter="{x:Static models:PartitionWorkflowType.Automatic}" HorizontalAlignment="Center" VerticalAlignment="Center">
+					<TextBlock Text="Automatic Partitioning" Foreground="{StaticResource OnPrimaryBrush}" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+				</Button>
+				<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+					<Border Width="24" Height="1" Background="{StaticResource OnSurfaceVariantBrush}" Margin="8,0"/>
+					<TextBlock Text="OR" Classes="BodyMedium" Foreground="{StaticResource OnSurfaceVariantBrush}" VerticalAlignment="Center" FontSize="12"/>
+					<Border Width="24" Height="1" Background="{StaticResource OnSurfaceVariantBrush}" Margin="8,0"/>
+				</StackPanel>
+				<Button Classes="Tonal Large" Width="250"
+						Command="{Binding SelectWorkflowCommand}" CommandParameter="{x:Static models:PartitionWorkflowType.Manual}" HorizontalAlignment="Center" VerticalAlignment="Center">
+					<TextBlock Text="Manual Partitioning" Foreground="{StaticResource OnPrimaryContainerBrush}" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+				</Button>
+			</StackPanel>
+		</StackPanel>
 
-        <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="16">
-            <Button Content="Automatic Partitioning" Classes="Filled" Width="250"
-                    Command="{Binding SelectWorkflowCommand}" CommandParameter="{x:Static models:WorkflowType.Automatic}"/>
-            <Button Content="Manual Partitioning" Classes="Filled" Width="250"
-                    Command="{Binding SelectWorkflowCommand}" CommandParameter="{x:Static models:WorkflowType.Manual}"/>
-        </StackPanel>
-
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="16">
-            <Button Content="Back" Classes="Text"/>
-            <Button Content="Next" Classes="Filled" Margin="8,0,0,0"/>
-        </StackPanel>
-    </Grid>
+		<StackPanel Grid.Row="2" Orientation="Horizontal" Margin="16">
+			<Button Content="Back" Classes="Outlined" Command="{Binding BackCommand}" HorizontalAlignment="Left"/>
+		</StackPanel>
+	</Grid>
 </UserControl>

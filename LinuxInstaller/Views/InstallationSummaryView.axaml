@@ -9,61 +9,51 @@
              x:Class="LinuxInstaller.Views.InstallationSummaryView"
              x:DataType="vm:InstallationSummaryViewModel"
              d:DesignWidth="800" d:DesignHeight="600">
-    <Design.DataContext>
-        <vm:InstallationSummaryViewModel/>
-    </Design.DataContext>
-    <Grid RowDefinitions="Auto,*,Auto" Classes="Card">
-        <StackPanel Grid.Row="0" Margin="16">
-            <TextBlock Text="Installation Summary" Classes="HeadlineMedium" HorizontalAlignment="Center"/>
-            <TextBlock Text="Review your selections before proceeding." Classes="BodyMedium" HorizontalAlignment="Center"/>
+	<Design.DataContext>
+		<vm:InstallationSummaryViewModel/>
+	</Design.DataContext>
+	<Grid RowDefinitions="Auto,*,Auto, Auto" Classes="Card">
+		<StackPanel Grid.Row="0" Margin="16">
+			<TextBlock Text="Installation Summary" Classes="HeadlineMedium" HorizontalAlignment="Center" FontWeight="Bold" FontSize="24"/>
+			<TextBlock Text="Review your selections before proceeding." Classes="BodyMedium" HorizontalAlignment="Center"/>
+		</StackPanel>
+
+		<ScrollViewer Grid.Row="1" Margin="16,0">
+			<StackPanel Orientation="Vertical" Spacing="16">
+				<!-- Distribution Summary -->
+				<uc:TileCardControl Title="Distribution"
+                                    Icon="&#xE019;"
+                                    IsVisible="{Binding IsDistroSelected}"
+                                    Content="{Binding DistroSummaryContent}"/>
+
+				<!-- Workflow Type Summary -->
+				<uc:TileCardControl Title="Installation Type"
+                                    Icon="&#xE31E;"
+                                    IsVisible="{Binding IsWorkflowSelected}"
+                                    Content="{Binding WorkflowSummaryContent}"/>
+
+				<!-- User Account Summary -->
+				<uc:TileCardControl Title="User Account"
+                                    Icon="&#xE31E;"
+                                    IsVisible="{Binding IsUserInfoAvailable}"
+                                    Content="{Binding UserSummaryContent}"/>
+
+				<!-- Partitions Summary -->
+				<uc:TileCardControl Title="Partitions"
+                                    Icon="&#xE161;"
+                                    IsVisible="{Binding IsPartitionPlanAvailable}"
+                                    Content="{Binding PartitionSummaryContent}"/>
+
+			</StackPanel>
+		</ScrollViewer>
+		
+		<Border Grid.Row="2" Background="{StaticResource ErrorBrush}" Padding="8" CornerRadius="8" Margin="16">
+			<TextBlock Text="Warning: This action will modify your disk partitions. Data loss may occur if interrupted." Foreground="{StaticResource OnErrorBrush}" TextWrapping="Wrap"/>
+		</Border>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="16">
+            <Button Content="Back" Classes="Text" Command="{Binding GoBackCommand}" HorizontalAlignment="Left"/>
+            <Button Content="Install" Classes="Filled" Margin="8,0,0,0" Command="{Binding InstallCommand}" HorizontalAlignment="Right"/>
         </StackPanel>
-
-        <ScrollViewer Grid.Row="1" Margin="16,0">
-            <StackPanel Orientation="Vertical" Spacing="16">
-                <!-- Distribution Summary -->
-                <uc:SummaryCardControl Title="Distribution" IconData="{StaticResource IconDistro}" IsVisible="{Binding IsDistroSelected}">
-                    <StackPanel Spacing="4">
-                        <StackPanel Orientation="Horizontal" Spacing="8"><TextBlock FontWeight="Bold" Text="Name:"/><TextBlock Text="{Binding SelectedDistro.Name}"/></StackPanel>
-                        <StackPanel Orientation="Horizontal" Spacing="8"><TextBlock FontWeight="Bold" Text="Description:"/><TextBlock Text="{Binding SelectedDistro.Description}"/></StackPanel>
-                        <StackPanel Orientation="Horizontal" Spacing="8"><TextBlock FontWeight="Bold" Text="Size:"/><TextBlock Text="{Binding SelectedDistro.Size, StringFormat='{}{0} bytes'}"/></StackPanel>
-                    </StackPanel>
-                </uc:SummaryCardControl>
-
-                <!-- Workflow Type Summary -->
-                <uc:SummaryCardControl Title="Installation Type" IconData="{StaticResource IconInstall}" IsVisible="{Binding IsWorkflowSelected}">
-                    <StackPanel Spacing="4">
-                        <StackPanel Orientation="Horizontal" Spacing="8"><TextBlock FontWeight="Bold" Text="Type:"/><TextBlock Text="{Binding SelectedWorkflow}"/></StackPanel>
-                    </StackPanel>
-                </uc:SummaryCardControl>
-
-                <!-- User Account Summary -->
-                <uc:SummaryCardControl Title="User Account" IconData="{StaticResource IconHourglass}" IsVisible="{Binding IsUserInfoAvailable}">
-                    <StackPanel Spacing="4">
-                        <StackPanel Orientation="Horizontal" Spacing="8"><TextBlock FontWeight="Bold" Text="Full Name:"/><TextBlock Text="{Binding UserInfo.FullName}"/></StackPanel>
-                        <StackPanel Orientation="Horizontal" Spacing="8"><TextBlock FontWeight="Bold" Text="Username:"/><TextBlock Text="{Binding UserInfo.Username}"/></StackPanel>
-                        <StackPanel Orientation="Horizontal" Spacing="8"><TextBlock FontWeight="Bold" Text="Auto Login:"/><TextBlock Text="{Binding UserInfo.AutoLogin}"/></StackPanel>
-                        <StackPanel Orientation="Horizontal" Spacing="8"><TextBlock FontWeight="Bold" Text="Require Password:"/><TextBlock Text="{Binding UserInfo.RequirePasswordOnLogin}"/></StackPanel>
-                    </StackPanel>
-                </uc:SummaryCardControl>
-
-                <!-- Partitions Summary -->
-                <uc:SummaryCardControl Title="Partitions" IconData="{StaticResource IconPartition}" IsVisible="{Binding IsPartitionPlanAvailable}">
-                    <StackPanel Spacing="4">
-                        <StackPanel Orientation="Horizontal" Spacing="8"><TextBlock FontWeight="Bold" Text="Target Disk:"/><TextBlock Text="{Binding PartitionPlan.TargetDisk.Name}"/></StackPanel>
-                        <StackPanel Orientation="Horizontal" Spacing="8"><TextBlock FontWeight="Bold" Text="Shrink Size:"/><TextBlock Text="{Binding PartitionPlan.ShrinkSizeInMB, StringFormat='{}{0} MB'}"/></StackPanel>
-                        <!-- TODO: Display planned Linux partitions from PartitionPlan.LinuxPartitions -->
-                    </StackPanel>
-                </uc:SummaryCardControl>
-
-                <Border Background="{StaticResource ErrorContainerBrush}" Padding="8" CornerRadius="4" Margin="0,16,0,0">
-                    <TextBlock Text="Warning: This action will modify your disk partitions. Data loss may occur if interrupted." Foreground="{StaticResource OnErrorContainerBrush}" TextWrapping="Wrap"/>
-                </Border>
-            </StackPanel>
-        </ScrollViewer>
-
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="16">
-            <Button Content="Back" Classes="Text"/>
-            <Button Content="Install" Classes="Filled" Margin="8,0,0,0"/>
-        </StackPanel>
-    </Grid>
+	</Grid>
 </UserControl>

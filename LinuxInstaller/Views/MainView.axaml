@@ -14,44 +14,36 @@
 		<vm:MainViewModel/>
 	</Design.DataContext>
 
-	<Grid RowDefinitions="*,Auto">
-		<Carousel ItemsSource="{Binding Pages}" SelectedIndex="{Binding CurrentPageIndex}">
-			<Carousel.DataTemplates>
-				<DataTemplate DataType="vm:WorkflowSelectionViewModel">
-					<views:WorkflowSelectionView/>
-				</DataTemplate>
-				<DataTemplate DataType="vm:PreFlightCheckViewModel">
-					<views:PreFlightCheckView/>
-				</DataTemplate>
-				<DataTemplate DataType="vm:DistroPickerViewModel">
-					<views:DistroPickerView/>
-				</DataTemplate>
-				<DataTemplate DataType="vm:PartitionOptionPickerViewModel">
-					<views:PartitionOptionPickerView/>
-				</DataTemplate>
-				<DataTemplate DataType="vm:PartitionEditorViewModel">
-					<views:PartitionEditorView/>
-				</DataTemplate>
-				<DataTemplate DataType="vm:UserCreationViewModel">
-					<views:UserCreationView/>
-				</DataTemplate>
-				<DataTemplate DataType="vm:InstallationSummaryViewModel">
-					<views:InstallationSummaryView/>
-				</DataTemplate>
-				<DataTemplate DataType="vm:InstallationProgressViewModel">
-					<views:InstallationProgressView/>
-				</DataTemplate>
-				<DataTemplate DataType="vm:LoadingViewModel">
-					<views:LoadingView/>
-				</DataTemplate>
-			</Carousel.DataTemplates>
-		</Carousel>
-
-		<StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-			<Button Classes="Text" Content="Previous" Command="{Binding PreviousPageCommand}" IsVisible="{Binding CanGoBack}"/>
-			<Button Classes="Filled" Content="Next" Command="{Binding NextPageCommand}" IsVisible="{Binding CanGoNext}"/>
-			<Button Classes="Filled" Content="Finish" Command="{Binding FinishCommand}" IsVisible="{Binding IsFinishVisible}"/>
-		</StackPanel>
-	</Grid>
+	<ContentControl Content="{Binding CurrentContent}">
+		<ContentControl.DataTemplates>
+			<DataTemplate DataType="vm:WorkflowSelectionViewModel">
+				<views:WorkflowSelectionView/>
+			</DataTemplate>
+			<DataTemplate DataType="vm:PreFlightCheckViewModel">
+				<views:PreFlightCheckView/>
+			</DataTemplate>
+			<DataTemplate DataType="vm:DistroPickerViewModel">
+				<views:DistroPickerView/>
+			</DataTemplate>
+			<DataTemplate DataType="vm:PartitionOptionPickerViewModel">
+				<views:PartitionOptionPickerView/>
+			</DataTemplate>
+			<DataTemplate DataType="vm:PartitionEditorViewModel">
+				<views:PartitionEditorView/>
+			</DataTemplate>
+			<DataTemplate DataType="vm:UserCreationViewModel">
+				<views:UserCreationView/>
+			</DataTemplate>
+			<DataTemplate DataType="vm:InstallationSummaryViewModel">
+				<views:InstallationSummaryView/>
+			</DataTemplate>
+			<DataTemplate DataType="vm:InstallationProgressViewModel">
+				<views:InstallationProgressView/>
+			</DataTemplate>
+			<DataTemplate DataType="vm:LoadingViewModel">
+				<views:LoadingView/>
+			</DataTemplate>
+		</ContentControl.DataTemplates>
+	</ContentControl>
 
 </Window>

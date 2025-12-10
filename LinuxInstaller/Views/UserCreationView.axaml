@@ -12,26 +12,28 @@
         <vm:UserCreationViewModel/>
     </Design.DataContext>
     <Grid RowDefinitions="Auto,*,Auto" Classes="Card">
-        <StackPanel Grid.Row="0" Margin="16">
-            <TextBlock Text="Create User Account" Classes="HeadlineMedium" HorizontalAlignment="Center"/>
-            <TextBlock Text="Set up your primary user account for Linux." Classes="BodyMedium" HorizontalAlignment="Center"/>
-        </StackPanel>
-
-        <StackPanel Grid.Row="1" Margin="16" Spacing="16">
-            <uc:FormInputControl Label="Full Name" Watermark="e.g., John Doe" Text="{Binding User.FullName}"/>
-            <uc:FormInputControl Label="Username" Watermark="e.g., johndoe" Text="{Binding User.Username}"/>
-            <uc:FormInputControl Label="Password" Watermark="Enter password" Text="{Binding User.Password}"/>
-            <uc:FormInputControl Label="Confirm Password" Watermark="Confirm password" Text="{Binding User.ConfirmPassword}"/>
-            
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,16,0,0">
-                <CheckBox Content="Log in automatically" Margin="0,0,8,0" IsChecked="{Binding User.AutoLogin}"/>
-                <CheckBox Content="Require password to log in" IsChecked="{Binding User.RequirePasswordOnLogin}"/>
+        <StackPanel Grid.Row="1" Margin="16" Spacing="16" HorizontalAlignment="Center" VerticalAlignment="Center">
+			<StackPanel Margin="16">
+				<TextBlock Text="Create User Account" Classes="HeadlineMedium" HorizontalAlignment="Center" FontWeight="Bold" FontSize="16" />
+				<TextBlock Text="Set up your primary user account for Linux." Classes="BodyMedium" HorizontalAlignment="Center"/>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal" Spacing="16" HorizontalAlignment="Center">
+				<uc:TextFieldControl Variant="Outlined" BorderRadius="8" Label="Full Name" Text="{Binding User.FullName, Mode=TwoWay}"/>
+				<uc:TextFieldControl Variant="Outlined" BorderRadius="8" Label="Username" Text="{Binding User.Username, Mode=TwoWay}"/>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal" Spacing="16" HorizontalAlignment="Center">
+				<uc:TextFieldControl Variant="Outlined" BorderRadius="8" Label="Password" Text="{Binding User.Password, Mode=TwoWay}" IsPassword="True"/>
+				<uc:TextFieldControl Variant="Outlined" BorderRadius="8" Label="Confirm Password" Text="{Binding User.ConfirmPassword, Mode=TwoWay}" IsPassword="True"/>
+			</StackPanel>
+            <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Center" VerticalAlignment="Center">
+				<uc:SwitchControl IsChecked="{Binding User.AutoLogin, Mode=TwoWay}"/>
+                <TextBlock Text="Log in automatically" VerticalAlignment="Center"/>
             </StackPanel>
         </StackPanel>
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="16">
-            <Button Content="Back" Classes="Text"/>
-            <Button Content="Next" Classes="Filled" Margin="8,0,0,0"/>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="16" HorizontalAlignment="Stretch">
+            <Button Content="Back" Classes="Outlined" Command="{Binding BackCommand}" HorizontalAlignment="Left"/>
+            <Button Content="Next" Classes="Filled" Command="{Binding NextCommand}" IsEnabled="{Binding CanProceed}" HorizontalAlignment="Right"/>
         </StackPanel>
     </Grid>
 </UserControl>

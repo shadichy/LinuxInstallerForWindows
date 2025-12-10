@@ -6,28 +6,40 @@ using LinuxInstaller.Models; // Add this using directive
 
 namespace LinuxInstaller.ViewModels;
 
-public partial class PartitionOptionPickerViewModel : ObservableObject, INavigatableViewModel
+public partial class PartitionOptionPickerViewModel : NavigatableViewModelBase
 {
     private readonly InstallationConfigService _installationConfigService; // Injected service
 
     [ObservableProperty]
-    private WorkflowType _selectedWorkflow = WorkflowType.None; // Default to None
+    private PartitionWorkflowType _selectedWorkflow = PartitionWorkflowType.None; // Default to None
 
-    public PartitionOptionPickerViewModel(InstallationConfigService installationConfigService)
+    public PartitionOptionPickerViewModel(NavigationService navigationService, InstallationConfigService installationConfigService) : base(navigationService)
     {
         _installationConfigService = installationConfigService;
     }
 
     [RelayCommand]
-    private void SelectWorkflow(WorkflowType workflowType)
+    private void SelectWorkflow(PartitionWorkflowType workflowType)
     {
         SelectedWorkflow = workflowType;
-        _installationConfigService.SelectedWorkflow = workflowType;
-        // The MainViewModel's CanGoNext property will re-evaluate automatically
-        // because it observes changes on the current page's INavigatableViewModel properties.
+        _installationConfigService.SelectedPartitionWorkflow = workflowType;
+
+        if (workflowType == PartitionWorkflowType.Automatic)
+        {
+            Navigation.Next(2);
+        } 
+        else if (workflowType == PartitionWorkflowType.Manual)
+        {
+            Navigation.Next();
+        }
     }
 
-    // INavigatableViewModel Implementation
-    public bool CanProceed => SelectedWorkflow != WorkflowType.None; // Can proceed only if a workflow is selected
-    public bool CanGoBack => true; // Assume always can go back
+    public override bool CanProceed => SelectedWorkflow != PartitionWorkflowType.None;
+    public override bool CanGoBack => true;
+
+    [RelayCommand]
+    public void Back()
+    {
+        Navigation.Previous();
+    }
 }

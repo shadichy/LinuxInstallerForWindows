@@ -1,0 +1,28 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:uc="using:LinuxInstaller.UserControls"
+        mc:Ignorable="d" d:DesignWidth="400"
+        x:Class="LinuxInstaller.Views.MultiOptionDialogView"
+        x:CompileBindings="False"
+        Title="{Binding Title}"
+        CanResize="False" SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterOwner">
+	<StackPanel Margin="16">
+		<TextBlock Text="{Binding ContentText}" TextWrapping="Wrap" Margin="0,0,0,16" />
+		<ItemsControl ItemsSource="{Binding Options}" HorizontalAlignment="Center" VerticalAlignment="Center">
+			<ItemsControl.ItemTemplate>
+				<DataTemplate>
+					<uc:ButtonControl Content="{Binding Label}"
+									  Command="{Binding DataContext.SelectOptionCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+									  CommandParameter="{Binding}"
+									  ButtonStyles="{Binding ButtonStyles}"
+									  Margin="8"
+									  HorizontalAlignment="Center" 
+									  VerticalAlignment="Center"/>
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
+		</ItemsControl>
+	</StackPanel>
+</Window>

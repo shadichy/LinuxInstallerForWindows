@@ -3,22 +3,40 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:LinuxInstaller.ViewModels"
-             xmlns:uc="using:LinuxInstaller.UserControls"
              xmlns:models="using:LinuxInstaller.Models"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:i="using:Avalonia.Xaml.Interactivity"
+             xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
              x:Class="LinuxInstaller.Views.WorkflowSelectionView"
              x:DataType="vm:WorkflowSelectionViewModel">
-    <Design.DataContext>
-        <vm:WorkflowSelectionViewModel/>
-    </Design.DataContext>
-    <StackPanel>
-        <TextBlock Text="Select a Distribution" FontSize="24" HorizontalAlignment="Center" Margin="20"/>
-        <ListBox ItemsSource="{Binding Distros}" SelectedItem="{Binding SelectedDistro}">
-            <ListBox.ItemTemplate>
-                <DataTemplate x:DataType="models:Distro">
-                    <uc:DistroListItemControl DistroName="{Binding Name}" IsSelected="{Binding IsSelected}"/>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-    </StackPanel>
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel Spacing="16" HorizontalAlignment="Center">
+            <TextBlock Text="Install Linux headlessly" FontSize="28" FontWeight="Bold" HorizontalAlignment="Center" Foreground="{StaticResource OnSurfaceBrush}"/>
+            <TextBlock Text="Get started in just a few clicks." HorizontalAlignment="Center" Foreground="{StaticResource OnSurfaceVariantBrush}"/>
+            <StackPanel Orientation="Horizontal" Spacing="0" Margin="0,16,0,16">
+                <Button Classes="Large Filled" Command="{Binding SelectWorkflowCommand}" CommandParameter="{x:Static models:InstallWorkflowType.Distro}">
+                    <i:Interaction.Behaviors>
+                        <ia:EventTriggerBehavior EventName="PointerEntered">
+                            <ia:InvokeCommandAction Command="{Binding SelectDistroHoverCommand}"/>
+                        </ia:EventTriggerBehavior>
+                    </i:Interaction.Behaviors>
+                    <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+						<TextBlock Classes="Icon" Text="&#xE2C0;" Foreground="{StaticResource OnPrimaryBrush}" FontSize="24"/>
+                        <TextBlock Text="Select Distro" Foreground="{StaticResource OnPrimaryBrush}" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <Button Classes="Large Tonal" Command="{Binding SelectWorkflowCommand}" CommandParameter="{x:Static models:InstallWorkflowType.Iso}">
+                    <i:Interaction.Behaviors>
+                        <ia:EventTriggerBehavior EventName="PointerEntered">
+                            <ia:InvokeCommandAction Command="{Binding SelectIsoHoverCommand}"/>
+                        </ia:EventTriggerBehavior>
+                    </i:Interaction.Behaviors>
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+						<TextBlock Classes="Icon" Text="&#xE2C8;" Foreground="{StaticResource OnSurfaceBrush}" FontSize="24"/>
+                        <TextBlock Text="Select ISO" Foreground="{StaticResource OnSurfaceBrush}" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+            <TextBlock Text="{Binding HoverText}" HorizontalAlignment="Center" Foreground="{StaticResource OnSurfaceVariantBrush}"/>
+        </StackPanel>
+    </Grid>
 </UserControl>

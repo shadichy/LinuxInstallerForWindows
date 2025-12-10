@@ -1,0 +1,79 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:uc="using:LinuxInstaller.UserControls"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:collections="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+             mc:Ignorable="d"
+             x:Class="LinuxInstaller.UserControls.TileCardControl"
+             x:DataType="uc:TileCardControl"
+             x:Name="self">
+
+	<Design.DataContext>
+		<uc:TileCardControl Title="Sample Title" Icon="&#xE8B6;">
+			<uc:TileCardControl.Content>
+				<collections:List x:TypeArguments="collections:KeyValuePair(sys:String, sys:String)">
+					<collections:KeyValuePair Key="Key 1" Value="Value 1"/>
+					<collections:KeyValuePair Key="Key 2" Value="Value 2"/>
+				</collections:List>
+			</uc:TileCardControl.Content>
+		</uc:TileCardControl>
+	</Design.DataContext>
+
+	<Border Background="{DynamicResource SurfaceLowestBrush}" CornerRadius="16" ClipToBounds="True" Padding="16">
+		<Grid ColumnDefinitions="Auto,*,Auto" Background="Transparent">
+
+			<!-- Column 1: Icon -->
+			<TextBlock Name="IconBlock"
+					   Grid.Column="0"
+					   Text="{Binding Icon, ElementName=self}"
+                       Classes="Icon Outlined"
+					   VerticalAlignment="Top"
+					   FontSize="24"
+					   FontWeight="Bold"
+					   Foreground="{DynamicResource PrimaryBrush}"/>
+
+			<!-- Column 3: Action Button -->
+			<Button Name="ActionButton"
+					Grid.Column="2"
+                    Content="{Binding ActionLabel, ElementName=self}"
+                    Command="{Binding ActionCallback, ElementName=self}"
+                    Classes="Text"
+					VerticalAlignment="Top"
+                    Background="Transparent"
+					BorderThickness="0"/>
+
+			<!-- Style to hide Icon and ActionButton when not provided -->
+			<Grid.Styles>
+				<Style Selector="TextBlock#IconBlock[Text='']">
+					<Setter Property="IsVisible" Value="False"/>
+				</Style>
+				<Style Selector="Button#ActionButton[Content={x:Null}]">
+					<Setter Property="IsVisible" Value="False"/>
+				</Style>
+				<Style Selector="Button#ActionButton[Content='']">
+					<Setter Property="IsVisible" Value="False"/>
+				</Style>
+			</Grid.Styles>
+
+			<!-- Column 2: Title and Content -->
+			<Grid Grid.Column="1" RowDefinitions="Auto,*" Margin="16,0">
+				<!-- Row 1: Title -->
+				<TextBlock Grid.Row="0" Text="{Binding Title, ElementName=self}" Classes="Title" FontWeight="Bold" FontSize="18"/>
+
+				<!-- Row 2: Content (Key-Value Pairs) -->
+				<ItemsControl Grid.Row="1" ItemsSource="{Binding Content, ElementName=self}" Margin="0,8,0,0">
+					<ItemsControl.ItemTemplate>
+						<DataTemplate>
+							<StackPanel Orientation="Horizontal" Spacing="4">
+								<TextBlock Text="{Binding Key, StringFormat={}{0}:}" FontWeight="Bold"/>
+								<TextBlock Text="{Binding Value}"/>
+							</StackPanel>
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl>
+			</Grid>
+		</Grid>
+	</Border>
+</UserControl>
