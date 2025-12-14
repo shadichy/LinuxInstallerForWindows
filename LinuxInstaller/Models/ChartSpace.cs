@@ -1,12 +1,10 @@
-using System;
-
 namespace LinuxInstaller.Models;
 
 public abstract class ChartSpace
 {
-    public required UInt64 Start { get; set; }
-    public required UInt64 Size { get; set; }
-    public UInt64 End => Start + Size;
+    public required ulong Start { get; set; }
+    public required ulong Size { get; set; }
+    public ulong End => Start + Size;
 }
 
 public sealed class ChartFreeSpace : ChartSpace

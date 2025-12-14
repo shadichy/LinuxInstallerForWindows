@@ -104,10 +104,7 @@ public partial class SelectControl : UserControl, INotifyPropertyChanged
         get => _borderRadius;
         set
         {
-            if (SetAndRaise(ref _borderRadius, value))
-            {
-                OnPropertyChanged(nameof(ICornerRadius));
-            }
+            if (SetAndRaise(ref _borderRadius, value)) OnPropertyChanged(nameof(ICornerRadius));
         }
 
     }
@@ -124,10 +121,7 @@ public partial class SelectControl : UserControl, INotifyPropertyChanged
     {
         SelectedItem = item;
         var toggleButton = this.FindDescendantOfType<ToggleButton>();
-        if (toggleButton != null)
-        {
-            toggleButton.IsChecked = false;
-        }
+        if (toggleButton != null) toggleButton.IsChecked = false;
     }
 }
 

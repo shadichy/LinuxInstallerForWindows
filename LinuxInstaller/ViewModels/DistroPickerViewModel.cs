@@ -1,14 +1,15 @@
+using Avalonia.Controls.ApplicationLifetimes;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using LinuxInstaller.Models;
 using LinuxInstaller.Services;
 using LinuxInstaller.ViewModels.Interfaces;
+using LinuxInstaller.Views;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using Avalonia.Controls.ApplicationLifetimes;
-using LinuxInstaller.Views;
 
 namespace LinuxInstaller.ViewModels;
 
@@ -37,9 +38,9 @@ public partial class DistroPickerViewModel : NavigatableViewModelBase
     {
         _distroService = distroService;
         _installationConfigService = installationConfigService;
-        _distros = new ObservableCollection<Distro>();
+        _distros = [];
         _searchText = string.Empty;
-        _allDistros = new List<Distro>();
+        _allDistros = [];
         _ = LoadDistros();
     }
 
@@ -53,14 +54,9 @@ public partial class DistroPickerViewModel : NavigatableViewModelBase
     partial void OnSearchTextChanged(string value)
     {
         // This is a basic text search. Could be improved with more advanced filtering.
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            Distros = new ObservableCollection<Distro>(_allDistros);
-        }
-        else
-        {
-            Distros = new ObservableCollection<Distro>(_allDistros.Where(d => d.DistroName.Contains(value, System.StringComparison.OrdinalIgnoreCase)));
-        }
+        IEnumerable<Distro> result = _allDistros;
+        if (!string.IsNullOrWhiteSpace(value)) result = _allDistros.Where(d => d.DistroName.Contains(value, System.StringComparison.OrdinalIgnoreCase));
+        Distros = new ObservableCollection<Distro>(result);
     }
 
 
@@ -79,20 +75,18 @@ public partial class DistroPickerViewModel : NavigatableViewModelBase
         var dialog = new MultiOptionDialogView();
         dialog.DataContext = new MultiOptionDialogViewModel<PartitionWorkflowType>("Partitioning Options", "How would you like to manage your disk partitions?", options, dialog);
 
-        if (Avalonia.Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        if (Avalonia.Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop) return;
+        var result = await dialog.ShowDialog<PartitionWorkflowType>(desktop.MainWindow!);
+
+        _installationConfigService.SelectedPartitionWorkflow = result;
+
+        if (result == PartitionWorkflowType.Automatic)
         {
-            var result = await dialog.ShowDialog<PartitionWorkflowType>(desktop.MainWindow);
-
-            _installationConfigService.SelectedPartitionWorkflow = result;
-
-            if (result == PartitionWorkflowType.Automatic)
-            {
-                Navigation.Next(2);
-            }
-            else if (result == PartitionWorkflowType.Manual)
-            {
-                Navigation.Next();
-            }
+            Navigation.Next(2);
+        }
+        else if (result == PartitionWorkflowType.Manual)
+        {
+            Navigation.Next();
         }
     }
 

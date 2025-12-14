@@ -147,11 +147,9 @@ public partial class DistroListItemControl : UserControl, INotifyPropertyChanged
             try
             {
                 var uri = new Uri("avares://LinuxInstaller/Assets/Icons/cloud_download.png");
-                using (var stream = AssetLoader.Open(uri))
-                {
-                    IconSource = new Bitmap(stream);
-                    Debug.WriteLine("Successfully loaded fallback icon.");
-                }
+                using var stream = AssetLoader.Open(uri);
+                IconSource = new Bitmap(stream);
+                Debug.WriteLine("Successfully loaded fallback icon.");
             }
             catch (Exception fallbackEx)
             {

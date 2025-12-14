@@ -26,11 +26,11 @@ public class DiskpartService
         }
 
         // TODO: Implement real parsing of the 'stdout' string from diskpart to build the List<Disk>.
-        return new List<Disk>
-        {
-            new Disk { Id = "disk0", Name = "Disk 0", Size = 1_000_204_886_016, IsBootable = true },
-            new Disk { Id = "disk1", Name = "Disk 1", Size = 2_000_398_934_016, IsBootable = false }
-        };
+        return
+        [
+            new() { Id = "disk0", Name = "Disk 0", Size = 1_000_204_886_016, IsBootable = true, Partitions = [] },
+            new() { Id = "disk1", Name = "Disk 1", Size = 2_000_398_934_016, IsBootable = false, Partitions = [] }
+        ];
     }
 
     public async Task<List<string>> ListVolumesAsync()
@@ -42,12 +42,12 @@ public class DiskpartService
         }
 
         // TODO: Implement real parsing of the 'stdout' string from diskpart to build a structured list of volumes.
-        return new List<string>
-        {
+        return
+        [
             "Volume 0, C, NTFS, Partition, 931 GB",
             "Volume 1, D, NTFS, Partition, 1863 GB",
             "Volume 2, , FAT32, Partition, 500 MB, System"
-        };
+        ];
     }
 
     public async Task<(int exitCode, string stdout, string stdErr)> ExecuteScriptAsync(string scriptContent)
@@ -67,23 +67,21 @@ public class DiskpartService
             StandardOutputEncoding = Encoding.UTF8
         };
 
-        using (var process = new Process { StartInfo = startInfo })
-        {
-            var outputBuilder = new StringBuilder();
-            var errorBuilder = new StringBuilder();
+        using var process = new Process { StartInfo = startInfo };
+        var outputBuilder = new StringBuilder();
+        var errorBuilder = new StringBuilder();
 
-            process.OutputDataReceived += (sender, args) => outputBuilder.AppendLine(args.Data);
-            process.ErrorDataReceived += (sender, args) => errorBuilder.AppendLine(args.Data);
+        process.OutputDataReceived += (sender, args) => outputBuilder.AppendLine(args.Data);
+        process.ErrorDataReceived += (sender, args) => errorBuilder.AppendLine(args.Data);
 
-            process.Start();
-            process.BeginOutputReadLine();
-            process.BeginErrorReadLine();
+        process.Start();
+        process.BeginOutputReadLine();
+        process.BeginErrorReadLine();
 
-            await process.WaitForExitAsync();
+        await process.WaitForExitAsync();
 
-            File.Delete(scriptFile);
+        File.Delete(scriptFile);
 
-            return (process.ExitCode, outputBuilder.ToString(), errorBuilder.ToString());
-        }
+        return (process.ExitCode, outputBuilder.ToString(), errorBuilder.ToString());
     }
 }

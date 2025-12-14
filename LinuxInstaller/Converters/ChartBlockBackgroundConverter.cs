@@ -17,42 +17,38 @@ public class ChartBlockBackgroundConverter : IMultiValueConverter
         SolidColorBrush? primary = primaryBrush as SolidColorBrush;
         Color color = primary!.Color;
 
-        if (values[0] is ChartSpace currentItem)
+        if (values[0] is not ChartSpace currentItem) return new SolidColorBrush(color, 0.36);
+
+        if (values.Count == 2 && values[1] is ChartSpace selectedItem && currentItem == selectedItem)
         {
-            if (values.Count == 2 && values[1] is ChartSpace selectedItem && currentItem == selectedItem)
-            {
-                Application.Current!.TryFindResource("StripesBrush", out var brush);
-                return brush;
-            }
-
-            double opacity = 0.36; // Default for unknown/partition                                                                                                                         
-
-            if (currentItem is ChartFreeSpace)
-            {
-                opacity = 0.12;
-            }
-            else if (currentItem is ChartPartition chartPartition && chartPartition.Partition != null)
-            {
-                switch (chartPartition.Partition.FileSystem.ToUpper())
-                {
-                    case "FAT32":
-                        opacity = 0.64;
-                        break;
-                    case "EXFAT":
-                        opacity = 0.72;
-                        break;
-                    case "NTFS":
-                        opacity = 0.96;
-                        break;
-                    default:
-                        opacity = 0.36;
-                        break;
-                }
-            }
-            // Create a new SolidColorBrush with the calculated opacity                                                                                                                     
-            return new SolidColorBrush(color, opacity);
+            Application.Current!.TryFindResource("StripesBrush", out var brush);
+            return brush;
         }
-        return new SolidColorBrush(color, 0.36);
+
+        if (currentItem is ChartFreeSpace) return new SolidColorBrush(color, 0.12);
+
+        double opacity = 0.36; // Default for unknown/partition
+
+        if (currentItem is ChartPartition chartPartition && chartPartition.Partition != null)
+        {
+            switch (chartPartition.Partition.FileSystem.ToUpper())
+            {
+                case "FAT32":
+                    opacity = 0.64;
+                    break;
+                case "EXFAT":
+                    opacity = 0.72;
+                    break;
+                case "NTFS":
+                    opacity = 0.96;
+                    break;
+                default:
+                    opacity = 0.36;
+                    break;
+            }
+        }
+        // Create a new SolidColorBrush with the calculated opacity                                                                                                                     
+        return new SolidColorBrush(color, opacity);
     }
 
 

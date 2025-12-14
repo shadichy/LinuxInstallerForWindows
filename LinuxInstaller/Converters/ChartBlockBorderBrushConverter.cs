@@ -1,7 +1,6 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Data.Converters;
-using Avalonia.Media;
 using LinuxInstaller.Models;
 using System;
 using System.Collections.Generic;

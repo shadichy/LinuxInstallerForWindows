@@ -84,7 +84,6 @@ public partial class InstallationSummaryViewModel : NavigatableViewModelBase
             if (PartitionPlan != null)
             {
                 content.Add(new("Target Disk", PartitionPlan.TargetDisk.Name));
-                content.Add(new("Shrink Size", $"{PartitionPlan.ShrinkSizeInMB} MB"));
                 // TODO: Add planned Linux partitions to the summary
             }
             return content;
@@ -99,7 +98,7 @@ public partial class InstallationSummaryViewModel : NavigatableViewModelBase
 
         if (Avalonia.Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            bool result = await dialog.ShowDialog<bool>(owner: desktop.MainWindow);
+            bool result = await dialog.ShowDialog<bool>(owner: desktop.MainWindow!);
             if (result)
             {
                 Navigation.Next();

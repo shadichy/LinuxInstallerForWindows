@@ -113,15 +113,13 @@ public partial class ButtonControl : UserControl, INotifyPropertyChanged
         ShapeProperty.Changed.AddClassHandler<ButtonControl>((x, e) => x.OnShapeChanged(e));
         ButtonStylesProperty.Changed.AddClassHandler<ButtonControl>((x, e) => x.OnButtonStylesChanged(e));
     }
-    
+
     private void OnButtonStylesChanged(AvaloniaPropertyChangedEventArgs e)
     {
-        if (e.NewValue is ButtonStyles newStyles)
-        {
-            Variant = newStyles.Variant;
-            Size = newStyles.Size;
-            Shape = newStyles.Shape;
-        }
+        if (e.NewValue is not ButtonStyles newStyles) return;
+        Variant = newStyles.Variant;
+        Size = newStyles.Size;
+        Shape = newStyles.Shape;
     }
 
     private void OnVariantChanged(AvaloniaPropertyChangedEventArgs e)

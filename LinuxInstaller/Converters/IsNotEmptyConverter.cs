@@ -8,10 +8,7 @@ public class IsNotEmptyConverter : IValueConverter
 {
     public object? Convert(object? value, Type _t, object? _p, CultureInfo _c)
     {
-        if (value is string s)
-        {
-            return !string.IsNullOrEmpty(s);
-        }
+        if (value is string s) return !string.IsNullOrEmpty(s);
         return value != null;
     }
 

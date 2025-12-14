@@ -9,10 +9,7 @@ public class KeyGestureConverter : IValueConverter
 {
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        if (value is KeyGesture gesture)
-        {
-            return gesture.ToString();
-        }
+        if (value is KeyGesture gesture) return gesture.ToString();
         return string.Empty;
     }
 

@@ -9,12 +9,12 @@ namespace LinuxInstaller.Services;
 
 public class NavigationService
 {
-    private readonly BehaviorSubject<UInt16> _currentPageIndex = new(0);
-    private readonly List<UInt16> _pageHistory = new() { 0 };
+    private readonly BehaviorSubject<ushort> _currentPageIndex = new(0);
+    private readonly List<ushort> _pageHistory = [0];
     private readonly ObservableCollection<KeyValuePair<string, NavigatableViewModelBase>> _routes = [];
 
-    public IObservable<UInt16> CurrentPageIndexObservable => _currentPageIndex;
-    public UInt16 CurrentPageIndex => _pageHistory.Last();
+    public IObservable<ushort> CurrentPageIndexObservable => _currentPageIndex;
+    public ushort CurrentPageIndex => _pageHistory.Last();
 
     public int PageCount => _routes.Count;
 
@@ -23,15 +23,12 @@ public class NavigationService
     public void SetupRoutes(IEnumerable<KeyValuePair<string, NavigatableViewModelBase>> pages)
     {
         _routes.Clear();
-        foreach (var page in pages)
-        {
-            _routes.Add(page);
-        }
+        foreach (var page in pages) _routes.Add(page);
     }
 
-    public void Next(UInt16 count = 1)
+    public void Next(ushort count = 1)
     {
-        var nextPageIndex = (UInt16)(CurrentPageIndex + count);
+        var nextPageIndex = (ushort)(CurrentPageIndex + count);
         if (nextPageIndex < PageCount)
         {
             _pageHistory.Add(nextPageIndex);
@@ -39,7 +36,7 @@ public class NavigationService
         }
     }
 
-    public void Previous(UInt16 count = 1)
+    public void Previous(ushort count = 1)
     {
         if (_pageHistory.Count > count)
         {
@@ -48,7 +45,7 @@ public class NavigationService
         }
     }
 
-    public void Goto(UInt16 index)
+    public void Goto(ushort index)
     {
         if (index < PageCount)
         {
@@ -60,10 +57,7 @@ public class NavigationService
     public void Goto(string routeName)
     {
         var index = _routes.ToList().FindIndex(r => r.Key == routeName);
-        if (index >= 0)
-        {
-            Goto((UInt16)index);
-        }
+        if (index >= 0) Goto((ushort)index);
     }
 
     public void Reset()

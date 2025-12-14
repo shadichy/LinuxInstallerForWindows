@@ -45,15 +45,9 @@ public class SystemAnalysisService
     public async Task<int> GetBitLockerStatus(string driveLetter = "C:")
     {
         IEnumerable<BitLockerStatus> _status = _bitLockerStatuses.Where((obj) => obj.Drive == driveLetter);
-        if (_status.Any())
-        {
-            return _status.First().Status;
-        }
-        else
-        {
-            await InitializeBitLockerStatus(driveLetter);
-            return await GetBitLockerStatus(driveLetter);
-        }
+        if (_status.Any()) return _status.First().Status;
+        await InitializeBitLockerStatus(driveLetter);
+        return await GetBitLockerStatus(driveLetter);
     }
 
     private string _bootMode = string.Empty;
@@ -68,10 +62,7 @@ public class SystemAnalysisService
 
     public async Task<string> GetBootMode()
     {
-        if (string.IsNullOrWhiteSpace(_bootMode))
-        {
-            await InitializeBootMode();
-        }
+        if (string.IsNullOrWhiteSpace(_bootMode)) await InitializeBootMode();
         return _bootMode;
     }
 
@@ -87,10 +78,7 @@ public class SystemAnalysisService
 
     public async Task<bool> GetSecureBootStatus()
     {
-        if (!_isSecureBootEnabled)
-        {
-            await InitializeSecureBootStatus();
-        }
+        if (!_isSecureBootEnabled) await InitializeSecureBootStatus();
         return _isSecureBootEnabled;
     }
 }
