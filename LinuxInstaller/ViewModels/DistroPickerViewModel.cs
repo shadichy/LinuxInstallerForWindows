@@ -17,6 +17,9 @@ public partial class DistroPickerViewModel : NavigatableViewModelBase
     private readonly DistroService _distroService;
     private readonly InstallationConfigService _installationConfigService;
 
+    public string Title => "Select a Distribution";
+    public string Subtitle => "Choose a Linux distribution to install on your machine.";
+
     [ObservableProperty]
     private ObservableCollection<Distro> _distros;
 
@@ -69,8 +72,8 @@ public partial class DistroPickerViewModel : NavigatableViewModelBase
 
         var options = new List<DialogOption<PartitionWorkflowType>>
         {
+            new() { Label = "Manual Partitioning", Value = PartitionWorkflowType.Manual, ButtonStyles = new() { Variant = ButtonVariant.Tonal, Size = ButtonSize.Large } },
             new() { Label = "Automatic Partitioning", Value = PartitionWorkflowType.Automatic, ButtonStyles = new() { Variant = ButtonVariant.Filled, Size = ButtonSize.Large } },
-            new() { Label = "Manual Partitioning", Value = PartitionWorkflowType.Manual, ButtonStyles = new() { Variant = ButtonVariant.Tonal, Size = ButtonSize.Large } }
         };
 
         var dialog = new MultiOptionDialogView();
@@ -126,7 +129,7 @@ public partial class DistroPickerViewModel : NavigatableViewModelBase
     }
 
     [RelayCommand]
-    private void GoBack()
+    private void Back()
     {
         Navigation.Previous();
     }

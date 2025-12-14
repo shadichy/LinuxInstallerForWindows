@@ -1,0 +1,35 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:uc="using:LinuxInstaller.UserControls"
+             mc:Ignorable="d" d:DesignHeight="50" d:DesignWidth="800"
+             x:Class="LinuxInstaller.UserControls.PageHeaderControl"
+             x:Name="self">
+	<Grid ColumnDefinitions="Auto,*,Auto">
+		<Button Grid.Column="0"
+				Classes="Icon"
+				Foreground="{StaticResource PrimaryBrush}"
+                Command="{Binding BackCommand, ElementName=self}"
+                HorizontalAlignment="Left"
+				VerticalAlignment="Top">
+			<TextBlock Classes="Icon"
+					   Text="&#xE5C4;"
+					   FontSize="24"
+					   VerticalAlignment="Top"/>
+		</Button>
+		<StackPanel Grid.Column="1" VerticalAlignment="Center">
+			<TextBlock Text="{Binding Title, ElementName=self}"
+					   Classes="HeadlineMedium"
+					   Margin="0,8"
+					   FontSize="18"
+					   FontWeight="Bold"
+					   Foreground="{StaticResource OnSurfaceBrush}"/>
+			<TextBlock Text="{Binding Subtitle, ElementName=self}"
+					   Classes="BodyMedium"
+					   Foreground="{StaticResource OnSurfaceVariantBrush}"
+					   IsVisible="{Binding Subtitle, ElementName=self, Converter={StaticResource IsNotEmptyConverter}}"/>
+		</StackPanel>
+		<ContentPresenter Grid.Column="2" Content="{Binding RightContent, ElementName=self}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+	</Grid>
+</UserControl>

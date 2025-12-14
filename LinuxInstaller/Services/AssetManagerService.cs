@@ -5,15 +5,6 @@ namespace LinuxInstaller.Services;
 
 public class AssetManagerService
 {
-    public void CopyPrebuiltConfigs(string targetPath)
-    {
-        Directory.CreateDirectory(targetPath);
-
-        CopyResource("LinuxInstaller.prebuilt.stage1.cfg", Path.Combine(targetPath, "stage1.cfg"));
-        CopyResource("LinuxInstaller.prebuilt.stage2.cfg", Path.Combine(targetPath, "stage2.cfg"));
-        CopyResource("LinuxInstaller.prebuilt.install.conf", Path.Combine(targetPath, "install.conf"));
-    }
-
     public void CopyBundledBootloader(string espPath)
     {
         string targetDir = Path.Combine(espPath, "EFI", "MyCustomInstaller");

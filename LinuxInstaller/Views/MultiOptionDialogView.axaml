@@ -12,6 +12,11 @@
 	<StackPanel Margin="16">
 		<TextBlock Text="{Binding ContentText}" TextWrapping="Wrap" Margin="0,0,0,16" />
 		<ItemsControl ItemsSource="{Binding Options}" HorizontalAlignment="Center" VerticalAlignment="Center">
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<StackPanel Orientation="Horizontal"/>
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>
 			<ItemsControl.ItemTemplate>
 				<DataTemplate>
 					<uc:ButtonControl Content="{Binding Label}"
@@ -19,7 +24,7 @@
 									  CommandParameter="{Binding}"
 									  ButtonStyles="{Binding ButtonStyles}"
 									  Margin="8"
-									  HorizontalAlignment="Center" 
+									  HorizontalAlignment="Center"
 									  VerticalAlignment="Center"/>
 				</DataTemplate>
 			</ItemsControl.ItemTemplate>

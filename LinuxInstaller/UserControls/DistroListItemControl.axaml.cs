@@ -57,8 +57,8 @@ public partial class DistroListItemControl : UserControl, INotifyPropertyChanged
     public static readonly StyledProperty<string> DescriptionProperty =
         AvaloniaProperty.Register<DistroListItemControl, string>(nameof(Description));
 
-    public static readonly StyledProperty<long> SizeProperty =
-        AvaloniaProperty.Register<DistroListItemControl, long>(nameof(Size));
+    public static readonly StyledProperty<ulong> SizeProperty =
+        AvaloniaProperty.Register<DistroListItemControl, ulong>(nameof(Size));
 
     public static readonly StyledProperty<bool> IsSelectedProperty =
         AvaloniaProperty.Register<DistroListItemControl, bool>(nameof(IsSelected));
@@ -98,7 +98,7 @@ public partial class DistroListItemControl : UserControl, INotifyPropertyChanged
         set => SetValue(DescriptionProperty, value);
     }
 
-    public long Size
+    public ulong Size
     {
         get => GetValue(SizeProperty);
         set => SetValue(SizeProperty, value);

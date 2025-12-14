@@ -10,38 +10,39 @@
              x:DataType="vm:DistroPickerViewModel"
              d:DesignWidth="400" d:DesignHeight="600"
              x:Name="distroPickerView">
-    <Design.DataContext>
-        <vm:DistroPickerViewModel/>
-    </Design.DataContext>
-    <UserControl.Resources>
-        <DataTemplate x:Key="DistroItemTemplate" x:DataType="models:Distro">
-            <uc:DistroListItemControl DistroName="{Binding DistroName}"
+	<Design.DataContext>
+		<vm:DistroPickerViewModel/>
+	</Design.DataContext>
+	<UserControl.Resources>
+		<DataTemplate x:Key="DistroItemTemplate" x:DataType="models:Distro">
+			<uc:DistroListItemControl DistroName="{Binding DistroName}"
 									  Version="{Binding Version}"
                                       Description="{Binding Description}"
                                       Size="{Binding Size}"
                                       IconUrl="{Binding IconUrl}"
                                       IsSelected="{Binding IsSelected}"
                                       SelectCommand="{Binding DataContext.SelectDistroCommand, ElementName=distroPickerView}"/>
-        </DataTemplate>
-    </UserControl.Resources>
-    <Grid RowDefinitions="Auto,*,Auto" Classes="Card" Background="{StaticResource SurfaceContainerBrush}">
-        <!-- Header -->
-        <StackPanel Grid.Row="0" Margin="16">
-            <TextBlock Text="Select a Distribution" Classes="HeadlineMedium" FontSize="18" FontWeight="Bold" Foreground="{StaticResource OnSurfaceBrush}"/>
-			<TextBlock Text="Choose a Linux distribution to install on your machine." Classes="BodyMedium" Foreground="{StaticResource OnSurfaceVariantBrush}"/>
-            <!-- Search Box with Icon -->
+		</DataTemplate>
+	</UserControl.Resources>
+	<Grid RowDefinitions="Auto,*,Auto" Classes="Card">
+
+		<StackPanel Grid.Row="0" Margin="16" Spacing="16">
+
+			<uc:PageHeaderControl Grid.Row="0"
+								  Title="{Binding Title}"
+								  Subtitle="{Binding Subtitle}"
+								  BackCommand="{Binding BackCommand}"/>
+
 			<uc:TextFieldControl Variant="Outlined"
 								 LeadingIcon="&#xE8B6;"
 								 Label="Search for distributions (e.g., Ubuntu, Fedora...)"
 								 Text="{Binding SearchText, Mode=TwoWay}"
-								 Margin="0,8,0,0"
-								 BorderRadius="36"
-								 />
-        </StackPanel>
+								 BorderRadius="36"/>
+		</StackPanel>
 
-        <!-- Distro List -->
-        <ScrollViewer Grid.Row="1" Margin="16,0" Classes="DistroListScrollViewer">
-            <ListBox ItemsSource="{Binding Distros}" SelectedItem="{Binding SelectedDistro, Mode=TwoWay}"
+		<!-- Distro List -->
+		<ScrollViewer Grid.Row="1" Margin="16,0" Classes="DistroListScrollViewer">
+			<ListBox ItemsSource="{Binding Distros}" SelectedItem="{Binding SelectedDistro, Mode=TwoWay}"
                      SelectionMode="Single"
                      ItemTemplate="{StaticResource DistroItemTemplate}">
 				<ListBox.Styles>
@@ -51,11 +52,6 @@
 					</Style>
 				</ListBox.Styles>
 			</ListBox>
-        </ScrollViewer>
-
-        <!-- Footer Buttons -->
-        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="16">
-            <Button Content="Back" Classes="Outlined" Foreground="{StaticResource PrimaryBrush}" Command="{Binding GoBackCommand}" HorizontalAlignment="Left"/>
-        </StackPanel>
-    </Grid>
+		</ScrollViewer>
+	</Grid>
 </UserControl>

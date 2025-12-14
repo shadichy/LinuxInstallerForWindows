@@ -34,8 +34,6 @@ namespace LinuxInstaller
             services.AddTransient<InstallationSummaryViewModel>();
             services.AddTransient<LoadingViewModel>();
             services.AddTransient<PartitionEditorViewModel>();
-            services.AddTransient<PartitionOptionPickerViewModel>();
-            services.AddTransient<PreFlightCheckViewModel>();
             services.AddTransient<UserCreationViewModel>();
             services.AddTransient<WorkflowSelectionViewModel>();
         }

@@ -16,7 +16,7 @@ public class DiskpartService
         // TODO: A real implementation should parse stdout to confirm success, not just rely on exit code.
         return result.exitCode == 0 && string.IsNullOrEmpty(result.stdErr);
     }
-    
+
     public async Task<List<Disk>> ListDisksAsync()
     {
         var (exitCode, stdout, stdErr) = await ExecuteScriptAsync("list disk");
@@ -24,7 +24,7 @@ public class DiskpartService
         {
             throw new System.Exception($"Diskpart failed to list disks: {stdErr}");
         }
-        
+
         // TODO: Implement real parsing of the 'stdout' string from diskpart to build the List<Disk>.
         return new List<Disk>
         {
@@ -32,7 +32,7 @@ public class DiskpartService
             new Disk { Id = "disk1", Name = "Disk 1", Size = 2_000_398_934_016, IsBootable = false }
         };
     }
-    
+
     public async Task<List<string>> ListVolumesAsync()
     {
         var (exitCode, stdout, stdErr) = await ExecuteScriptAsync("list volume");
@@ -40,7 +40,7 @@ public class DiskpartService
         {
             throw new System.Exception($"Diskpart failed to list volumes: {stdErr}");
         }
-        
+
         // TODO: Implement real parsing of the 'stdout' string from diskpart to build a structured list of volumes.
         return new List<string>
         {
@@ -52,6 +52,7 @@ public class DiskpartService
 
     public async Task<(int exitCode, string stdout, string stdErr)> ExecuteScriptAsync(string scriptContent)
     {
+        return (0, "", "");
         // This is a functional wrapper, but running diskpart has security implications
         // and requires administrator privileges.
         string scriptFile = Path.Combine(Path.GetTempPath(), $"diskpart_{Path.GetRandomFileName()}.txt");
@@ -73,13 +74,13 @@ public class DiskpartService
 
             process.OutputDataReceived += (sender, args) => outputBuilder.AppendLine(args.Data);
             process.ErrorDataReceived += (sender, args) => errorBuilder.AppendLine(args.Data);
-            
+
             process.Start();
             process.BeginOutputReadLine();
             process.BeginErrorReadLine();
-            
+
             await process.WaitForExitAsync();
-            
+
             File.Delete(scriptFile);
 
             return (process.ExitCode, outputBuilder.ToString(), errorBuilder.ToString());

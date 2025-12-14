@@ -4,7 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="using:LinuxInstaller.ViewModels"
         xmlns:views="using:LinuxInstaller.Views"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="500"
         x:Class="LinuxInstaller.Views.MainView"
         x:DataType="vm:MainViewModel"
         Title="Linux Installer"
@@ -19,14 +19,8 @@
 			<DataTemplate DataType="vm:WorkflowSelectionViewModel">
 				<views:WorkflowSelectionView/>
 			</DataTemplate>
-			<DataTemplate DataType="vm:PreFlightCheckViewModel">
-				<views:PreFlightCheckView/>
-			</DataTemplate>
 			<DataTemplate DataType="vm:DistroPickerViewModel">
 				<views:DistroPickerView/>
-			</DataTemplate>
-			<DataTemplate DataType="vm:PartitionOptionPickerViewModel">
-				<views:PartitionOptionPickerView/>
 			</DataTemplate>
 			<DataTemplate DataType="vm:PartitionEditorViewModel">
 				<views:PartitionEditorView/>

@@ -19,6 +19,9 @@ public partial class InstallationSummaryViewModel : NavigatableViewModelBase
         _installationConfigService = installationConfigService;
     }
 
+    public string Title => "Installation Summary";
+    public string Subtitle => "Review your selections before proceeding.";
+
     public Distro? SelectedDistro => _installationConfigService.SelectedDistro;
     public PartitionWorkflowType SelectedWorkflow => _installationConfigService.SelectedPartitionWorkflow;
     public UserInfo UserInfo => _installationConfigService.UserInfo;
@@ -93,7 +96,7 @@ public partial class InstallationSummaryViewModel : NavigatableViewModelBase
     {
         var dialog = new ConfirmationDialogView();
         dialog.DataContext = new ConfirmationDialogViewModel("This will start the installation process.\nAre you sure you want to continue?", dialog);
-        
+
         if (Avalonia.Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             bool result = await dialog.ShowDialog<bool>(owner: desktop.MainWindow);
@@ -105,11 +108,11 @@ public partial class InstallationSummaryViewModel : NavigatableViewModelBase
     }
 
     [RelayCommand]
-    private void GoBack()
+    private void Back()
     {
         Navigation.Previous();
     }
-    
+
     // INavigatableViewModel Implementation
     public override bool CanProceed => true; // Assume always can proceed to start installation
     public override bool CanGoBack => true; // Assume always can go back to review/edit

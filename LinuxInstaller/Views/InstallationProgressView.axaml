@@ -17,7 +17,6 @@
         </StackPanel>
 
         <StackPanel Grid.Row="1" Margin="16" VerticalAlignment="Center">
-            <!-- ProgressBarControl will go here -->
             <TextBlock Text="Current Step: Copying files..." Classes="BodyLarge" Margin="0,16,0,8"/>
             <TextBlock Text="Progress: 50%" Classes="BodySmall"/>
         </StackPanel>
