@@ -82,8 +82,18 @@ public class MaterialColorScheme
         { "SurfaceLowest", 100 }, { "OnSurfaceLowest", 10 },
         { "SurfaceLow", 96 }, { "OnSurfaceLow", 10 },
         { "SurfaceHigh", 94 }, { "OnSurfaceHigh", 10 },
-        { "SurfaceHighest", 92 }, { "OnSurfaceHighest", 10 }
+        { "SurfaceHighest", 92 }, { "OnSurfaceHighest", 10 },
+        // New Surface Variants
+        { "SurfaceDim", 87 },
+        { "SurfaceBright", 98 },
+        // New Surface Containers
+        { "SurfaceContainer", 92 }, // Default SurfaceContainer
+        { "SurfaceContainerLowest", 100 },
+        { "SurfaceContainerLow", 96 },
+        { "SurfaceContainerHigh", 90 },
+        { "SurfaceContainerHighest", 88 }
     };
+
 
     public MaterialColorScheme(Color seedRgb)
     {
@@ -186,6 +196,17 @@ public class MaterialColorScheme
     public Color OnSurfaceHigh => _schemeColors["OnSurfaceHigh"];
     public Color SurfaceHighest => _schemeColors["SurfaceHighest"];
     public Color OnSurfaceHighest => _schemeColors["OnSurfaceHighest"];
+
+    // New Surface Variants
+    public Color SurfaceDim => _schemeColors["SurfaceDim"];
+    public Color SurfaceBright => _schemeColors["SurfaceBright"];
+
+    // New Surface Containers
+    public Color SurfaceContainer => _schemeColors["SurfaceContainer"];
+    public Color SurfaceContainerLowest => _schemeColors["SurfaceContainerLowest"];
+    public Color SurfaceContainerLow => _schemeColors["SurfaceContainerLow"];
+    public Color SurfaceContainerHigh => _schemeColors["SurfaceContainerHigh"];
+    public Color SurfaceContainerHighest => _schemeColors["SurfaceContainerHighest"];
 
     // Surface Variant
     public Color SurfaceVariant => _schemeColors["SurfaceVariant"];

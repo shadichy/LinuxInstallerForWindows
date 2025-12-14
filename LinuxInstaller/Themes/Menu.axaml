@@ -1,0 +1,71 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ac="using:Avalonia.Controls">
+    <Style Selector="MenuFlyoutPresenter">
+        <Setter Property="Background" Value="{DynamicResource SurfaceContainerBrush}"/>
+        <Setter Property="CornerRadius" Value="8"/>
+        <Setter Property="Padding" Value="8"/>
+        <Setter Property="MinWidth" Value="112"/>
+        <Setter Property="MaxWidth" Value="280"/>
+    </Style>
+
+    <Style Selector="MenuItem">
+        <Setter Property="Padding" Value="12"/>
+        <Setter Property="CornerRadius" Value="4"/>
+        <Setter Property="Template">
+            <ControlTemplate x:DataType="ac:MenuItem">
+                <Border Name="PART_Container"
+                        Padding="{TemplateBinding Padding}"
+                        Background="Transparent"
+                        CornerRadius="{TemplateBinding CornerRadius}">
+                    <Grid ColumnDefinitions="Auto,*,Auto">
+                        <ContentPresenter Name="PART_Icon"
+                                          Grid.Column="0"
+                                          Content="{TemplateBinding Icon}"
+                                          VerticalAlignment="Center"
+                                          Margin="0,0,12,0"
+                                          IsVisible="{Binding Icon, Converter={StaticResource IsNotEmptyConverter}}"/>
+                        <ContentPresenter Name="PART_Header"
+                                          Grid.Column="1"
+                                          Content="{TemplateBinding Header}"
+                                          VerticalAlignment="Center"/>
+                        <TextBlock Name="PART_InputGestureText"
+                                   Grid.Column="2"
+                                   Text="{Binding InputGesture, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource KeyGestureConverter}}"
+                                   VerticalAlignment="Center"
+                                   Margin="12,0,0,0" />
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+
+		<!-- States -->
+        <Style Selector="^:pointerover /template/ Border">
+            <Setter Property="Background" Value="{DynamicResource SurfaceContainerHighBrush}"/>
+        </Style>
+        <Style Selector="^:selected /template/ Border">
+            <Setter Property="Background" Value="{DynamicResource SecondaryContainerBrush}"/>
+        </Style>
+        <Style Selector="^:selected:pointerover /template/ Border">
+            <Setter Property="Background" Value="{DynamicResource SecondaryContainerBrush}"/>
+        </Style>
+        <Style Selector="^:disabled">
+            <Setter Property="Opacity" Value="0.5"/>
+        </Style>
+    </Style>
+
+	<!-- Styles for Buttons acting as MenuItems -->
+    <Style Selector="Button">
+        <Style Selector="^.MenuItem">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="CornerRadius" Value="4"/>
+            <Setter Property="Margin" Value="0" />
+            <Style Selector="^:pointerover /template/ ContentPresenter">
+                <Setter Property="Background" Value="{DynamicResource SurfaceContainerHighBrush}"/>
+            </Style>
+        </Style>
+    </Style>
+</Styles>

@@ -78,36 +78,38 @@
 	</Styles.Resources>
 
 	<!-- States based on ToggleButton's PseudoClasses -->
-	<Style Selector="uc|SwitchControl:checked /template/ Border#Track">
-		<Setter Property="Background" Value="{DynamicResource PrimaryBrush}"/>
-		<Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"/>
-	</Style>
-	<Style Selector="uc|SwitchControl:checked /template/ Border#ThumbWrapper">
-		<Setter Property="RenderTransform" Value="translateX(22px)" />
-	</Style>
-	<Style Selector="uc|SwitchControl /template/ Border#ThumbWrapper:pointerover">
-		<Setter Property="Background" Value="Transparent"/>
-	</Style>
-	<Style Selector="uc|SwitchControl:checked /template/ Border#ThumbVisual">
-		<Setter Property="Background" Value="{DynamicResource OnPrimaryBrush}"/>
-		<Setter Property="Width" Value="24"/>
-		<Setter Property="Height" Value="24"/>
-		<Setter Property="CornerRadius" Value="12"/>
-		<Setter Property="Margin" Value="2"/>
-	</Style>
-	<Style Selector="uc|SwitchControl:checked /template/ Border#StateOverlay">
-		<Setter Property="Background" Value="{DynamicResource PrimaryBrush}"/>
-	</Style>
+	<Style Selector="uc|SwitchControl">
+		<Style Selector="^:checked /template/ Border#Track">
+			<Setter Property="Background" Value="{DynamicResource PrimaryBrush}"/>
+			<Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"/>
+		</Style>
+		<Style Selector="^:checked /template/ Border#ThumbWrapper">
+			<Setter Property="RenderTransform" Value="translateX(22px)" />
+		</Style>
+		<Style Selector="^ /template/ Border#ThumbWrapper:pointerover">
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+		<Style Selector="^:checked /template/ Border#ThumbVisual">
+			<Setter Property="Background" Value="{DynamicResource OnPrimaryBrush}"/>
+			<Setter Property="Width" Value="24"/>
+			<Setter Property="Height" Value="24"/>
+			<Setter Property="CornerRadius" Value="12"/>
+			<Setter Property="Margin" Value="2"/>
+		</Style>
+		<Style Selector="^:checked /template/ Border#StateOverlay">
+			<Setter Property="Background" Value="{DynamicResource PrimaryBrush}"/>
+		</Style>
 
-	<Style Selector="uc|SwitchControl:pointerover /template/ Border#StateOverlay">
-		<Setter Property="Opacity" Value="0.08"/>
-	</Style>
+		<Style Selector="^:pointerover /template/ Border#StateOverlay">
+			<Setter Property="Opacity" Value="0.08"/>
+		</Style>
 
-	<Style Selector="uc|SwitchControl:pressed /template/ Border#StateOverlay">
-		<Setter Property="Opacity" Value="0.12"/>
-	</Style>
+		<Style Selector="^:pressed /template/ Border#StateOverlay">
+			<Setter Property="Opacity" Value="0.12"/>
+		</Style>
 
-	<Style Selector="uc|SwitchControl:disabled">
-		<Setter Property="Opacity" Value="0.38"/>
+		<Style Selector="^:disabled">
+			<Setter Property="Opacity" Value="0.38"/>
+		</Style>
 	</Style>
 </Styles>
