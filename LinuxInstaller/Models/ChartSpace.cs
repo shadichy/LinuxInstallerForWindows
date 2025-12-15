@@ -13,5 +13,15 @@ public sealed class ChartFreeSpace : ChartSpace
 
 public sealed class ChartPartition : ChartSpace
 {
-    public required Partition Partition { get; set; }
+    public required PlannedPartition Partition { get; set; }
+
+    public static ChartPartition FromPartition(PlannedPartition partition)
+    {
+        return new ChartPartition
+        {
+            Start = partition.StartOffset,
+            Size = partition.Size,
+            Partition = partition
+        };
+    }
 }

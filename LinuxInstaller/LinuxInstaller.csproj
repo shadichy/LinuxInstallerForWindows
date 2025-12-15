@@ -16,6 +16,7 @@
     <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.9" />
     <PackageReference Include="Avalonia.Xaml.Interactions" Version="11.3.0.6" />
     <PackageReference Include="Avalonia.Xaml.Interactivity" Version="11.3.0.6" />
+    <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.1.1" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
     <PackageReference Include="Splat.Microsoft.Extensions.DependencyInjection" Version="17.1.1" />

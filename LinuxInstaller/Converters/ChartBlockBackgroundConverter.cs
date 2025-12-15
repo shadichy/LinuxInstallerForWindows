@@ -31,15 +31,15 @@ public class ChartBlockBackgroundConverter : IMultiValueConverter
 
         if (currentItem is ChartPartition chartPartition && chartPartition.Partition != null)
         {
-            switch (chartPartition.Partition.FileSystem.ToUpper())
+            switch (chartPartition.Partition.FileSystem)
             {
-                case "FAT32":
+                case FileSystem.FAT32:
                     opacity = 0.64;
                     break;
-                case "EXFAT":
+                case FileSystem.EXFAT:
                     opacity = 0.72;
                     break;
-                case "NTFS":
+                case FileSystem.NTFS:
                     opacity = 0.96;
                     break;
                 default:

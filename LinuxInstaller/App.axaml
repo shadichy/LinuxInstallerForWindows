@@ -23,6 +23,7 @@
         <converters:ChartBlockBorderThicknessConverter x:Key="ChartBlockBorderThicknessConverter"/>
         <converters:ChartBlockBorderBrushConverter x:Key="ChartBlockBorderBrushConverter"/>
         <converters:ChartBlockBackgroundConverter x:Key="ChartBlockBackgroundConverter"/>
+		<converters:FileSystemValueConverter x:Key="FileSystemValueConverter"/>
 
         <Pen x:Key="StripesPen" Brush="{DynamicResource Tertiary}" Thickness="1"/>
 
@@ -43,7 +44,6 @@
                 </GeometryDrawing>
             </DrawingBrush.Drawing>
         </DrawingBrush>
-
 	</Application.Resources>
 
 	<Application.Styles>

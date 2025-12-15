@@ -1,0 +1,64 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:LinuxInstaller.ViewModels"
+        xmlns:uc="using:LinuxInstaller.UserControls"
+        mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="380"
+        x:Class="LinuxInstaller.Views.PartitionDialogView"
+        x:DataType="vm:PartitionDialogViewModel"
+        Title="{Binding Title}"
+        WindowStartupLocation="CenterOwner"
+        SizeToContent="WidthAndHeight">
+
+	<Design.DataContext>
+		<vm:PartitionDialogViewModel/>
+	</Design.DataContext>
+
+	<StackPanel Margin="16" Spacing="12">
+		<!-- Row 1: Partition Name -->
+		<StackPanel>
+			<TextBlock Text="Partition Name"/>
+			<uc:TextFieldControl Variant="Outlined" Text="{Binding TargetPartition.Name, Mode=TwoWay}"/>
+		</StackPanel>
+
+		<Grid RowDefinitions="*,*,*" ColumnDefinitions="*,*" RowSpacing="12" ColumnSpacing="16">
+			<!-- Row 2: Partition Size and Unit Selector -->
+			<StackPanel Grid.Row="0" Grid.Column="0">
+				<TextBlock Text="Partition Size"/>
+				<uc:TextFieldControl Variant="Outlined" ValueDecimal="{Binding Size, Mode=TwoWay}" IsNumeric="True" MinValue="0" MaxValue="{Binding MaxSize}"/>
+			</StackPanel>
+			<StackPanel Grid.Row="0" Grid.Column="1">
+				<TextBlock Text="Unit"/>
+				<uc:SelectControl Variant="Outlined" ItemsSource="{Binding AvailableSizeUnits}" SelectedItem="{Binding SelectedSizeUnit}"/>
+			</StackPanel>
+
+			<!-- Row 3: Free space before and after -->
+			<StackPanel Grid.Row="1" Grid.Column="0">
+				<TextBlock Text="Free Space Before"/>
+				<uc:TextFieldControl Variant="Outlined" ValueDecimal="{Binding FreeSpaceBefore}" IsNumeric="True" MinValue="0" MaxValue="{Binding MaxSize}" IsEnabled="{Binding IsNew}"/>
+			</StackPanel>
+			<StackPanel Grid.Row="1" Grid.Column="1">
+				<TextBlock Text="Free Space After"/>
+				<uc:TextFieldControl Variant="Outlined" ValueDecimal="{Binding FreeSpaceAfter}" IsNumeric="True" MinValue="0" MaxValue="{Binding MaxSize}"/>
+			</StackPanel>
+
+			<!-- Row 4: File System and Mount Point -->
+			<StackPanel Grid.Row="2" Grid.Column="0">
+				<TextBlock Text="File System"/>
+				<uc:SelectControl Variant="Outlined" ItemsSource="{Binding AvailableFileSystems}"
+								  SelectedItem="{Binding TargetPartition.FileSystem, Converter={StaticResource FileSystemValueConverter}}" />
+			</StackPanel>
+			<StackPanel Grid.Row="2" Grid.Column="1">
+				<TextBlock Text="Mount Point"/>
+				<uc:TextFieldControl Variant="Outlined" Text="{Binding TargetPartition.MountPoint, Mode=TwoWay}"/>
+			</StackPanel>
+		</Grid>
+
+		<!-- Buttons -->
+		<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+			<Button Content="Cancel" Classes="Outlined" Command="{Binding CancelCommand}" IsCancel="True"/>
+			<Button Content="OK" Classes="Filled" Command="{Binding OkCommand}" IsDefault="True"/>
+		</StackPanel>
+	</StackPanel>
+</Window>

@@ -27,9 +27,9 @@ public class PartitionService
                 IsBootable = true,
                 Partitions =
                 [
-                    new() { Id = "p1", Name = "ESP", Size = 500UL * 1024 * 1024, StartOffset = 1024UL * 1024, FileSystem = "FAT32", IsBoot = true, IsSystem = true },
-                    new() { Id = "p2", Name = "Windows (C:)", Size = 800_000_000_000UL, StartOffset = 525_336_576UL, FileSystem = "NTFS", IsBoot = false, IsSystem = true },
-                    new() { Id = "p3", Name = "Recovery", Size = 1_000_000_000UL, StartOffset = 800_525_336_576UL, FileSystem = "NTFS", IsBoot = false, IsSystem = true }
+                    new() { Id = "p1", Name = "ESP", Size = 500UL * 1024 * 1024, StartOffset = 1024UL * 1024, FileSystem = FileSystem.FAT32, IsBoot = true, IsSystem = true },
+                    new() { Id = "p2", Name = "Windows (C:)", Size = 800_000_000_000UL, StartOffset = 525_336_576UL, FileSystem = FileSystem.NTFS, IsBoot = false, IsSystem = true },
+                    new() { Id = "p3", Name = "Recovery", Size = 1_000_000_000UL, StartOffset = 800_525_336_576UL, FileSystem = FileSystem.NTFS, IsBoot = false, IsSystem = true }
                 ]
             },
             new() {
@@ -50,9 +50,9 @@ public class PartitionService
         {
             var partitions = new List<Partition>
             {
-                new() { Id = "p1", Name = "ESP", Size = 500UL * 1024 * 1024, StartOffset = 1024UL * 1024, FileSystem = "FAT32", IsBoot = true, IsSystem = true },
-                new() { Id = "p2", Name = "Windows (C:)", Size = 800_000_000_000UL, StartOffset = 525_336_576UL, FileSystem = "NTFS", IsBoot = false, IsSystem = true },
-                new() { Id = "p3", Name = "Recovery", Size = 1_000_000_000UL, StartOffset = 800_525_336_576UL, FileSystem = "NTFS", IsBoot = false, IsSystem = true }
+                new() { Id = "p1", Name = "ESP", Size = 500UL * 1024 * 1024, StartOffset = 1024UL * 1024, FileSystem = FileSystem.FAT32, IsBoot = true, IsSystem = true },
+                new() { Id = "p2", Name = "Windows (C:)", Size = 800_000_000_000UL, StartOffset = 525_336_576UL, FileSystem = FileSystem.NTFS, IsBoot = false, IsSystem = true },
+                new() { Id = "p3", Name = "Recovery", Size = 1_000_000_000UL, StartOffset = 800_525_336_576UL, FileSystem = FileSystem.NTFS, IsBoot = false, IsSystem = true }
             };
             return partitions;
         }

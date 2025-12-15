@@ -21,9 +21,6 @@ public partial class PartitionEditorViewModel : NavigatableViewModelBase
     private ObservableCollection<Disk> _disks;
 
     [ObservableProperty]
-    private ObservableCollection<Partition> _partitions;
-
-    [ObservableProperty]
     private ObservableCollection<ChartSpace> _diskLayoutChart;
 
     [ObservableProperty]
@@ -32,18 +29,29 @@ public partial class PartitionEditorViewModel : NavigatableViewModelBase
     [NotifyPropertyChangedFor(nameof(CanDeletePartition))]
     private ChartSpace? _selectedChartSpace;
 
+    [ObservableProperty]
+    private PartitionPlan _plan = new();
+
     // SelectedDisk is now managed by InstallationConfigService.PartitionPlan.TargetDisk
     public Disk? SelectedDisk
     {
-        get => _installationConfigService.PartitionPlan.TargetDisk;
+        get => Plan.TargetDisk;
         set
         {
-            var oldDisk = _installationConfigService.PartitionPlan.TargetDisk;
+            var oldDisk = Plan.TargetDisk;
+
+            if (oldDisk == null)
+            {
+                Plan.TargetDisk = value;
+                OnPropertyChanged(); // Notify UI that SelectedDisk has changed
+                RefreshSelectedPart(value);
+            }
+
             if (oldDisk == value) return;
 
             if (_installationConfigService.PartitionPlan.PartitionHistory.Count == 1)
             {
-                _installationConfigService.PartitionPlan.TargetDisk = value;
+                Plan.TargetDisk = value;
                 OnPropertyChanged(); // Notify UI that SelectedDisk has changed
                 RefreshSelectedPart(value);
                 return;
@@ -54,18 +62,21 @@ public partial class PartitionEditorViewModel : NavigatableViewModelBase
 
             if (Avalonia.Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop) return;
 
-            dialog.ShowDialog<bool>(desktop.MainWindow!).ContinueWith(task =>
+            Avalonia.Controls.Window? mainWindow = desktop.MainWindow;
+            if (mainWindow == null) return;
+
+            dialog.ShowDialog<bool>(mainWindow).ContinueWith(task =>
             {
                 if (task.Result)
                 {
-                    _installationConfigService.PartitionPlan.TargetDisk = value;
+                    Plan.TargetDisk = value;
                     OnPropertyChanged(); // Notify UI that SelectedDisk has changed
                     RefreshSelectedPart(value);
                 }
                 else
                 {
                     // User cancelled, so revert the selection
-                    _installationConfigService.PartitionPlan.TargetDisk = oldDisk;
+                    Plan.TargetDisk = oldDisk;
                     OnPropertyChanged();
                 }
             }, TaskScheduler.FromCurrentSynchronizationContext());
@@ -77,7 +88,6 @@ public partial class PartitionEditorViewModel : NavigatableViewModelBase
         _partitionService = partitionService;
         _installationConfigService = installationConfigService;
         _disks = [];
-        _partitions = [];
         _diskLayoutChart = [];
 
         // Load initial data
@@ -107,12 +117,10 @@ public partial class PartitionEditorViewModel : NavigatableViewModelBase
     {
         if (disk != null)
         {
-            Partitions = new ObservableCollection<Partition>(disk.Partitions);
             UpdateChart();
         }
         else
         {
-            Partitions = [];
             DiskLayoutChart = [];
         }
     }
@@ -122,7 +130,7 @@ public partial class PartitionEditorViewModel : NavigatableViewModelBase
         if (SelectedDisk == null) return;
 
         var newLayout = new ObservableCollection<ChartSpace>();
-        var sortedPartitions = Partitions.OrderBy(p => p.StartOffset).ToList();
+        var sortedPartitions = Plan.PartitionHistory.Last().OrderBy(p => p.StartOffset).ToList();
         ulong lastPosition = 0;
 
         foreach (var partition in sortedPartitions)
@@ -152,7 +160,7 @@ public partial class PartitionEditorViewModel : NavigatableViewModelBase
     }
 
     // INavigatableViewModel Implementation
-    public override bool CanProceed => _installationConfigService.PartitionPlan.IsValid;
+    public override bool CanProceed => Plan.IsValid;
     public override bool CanGoBack => true;
 
     // TODO: Add commands for creating, deleting, and editing partitions.
@@ -168,6 +176,7 @@ public partial class PartitionEditorViewModel : NavigatableViewModelBase
     [RelayCommand]
     public void Next()
     {
+        _installationConfigService.PartitionPlan = Plan;
         Navigation.Next();
     }
 
@@ -179,15 +188,46 @@ public partial class PartitionEditorViewModel : NavigatableViewModelBase
     [RelayCommand]
     public async Task AddPartition()
     {
+        var dialog = new PartitionDialogView();
+        dialog.DataContext = new PartitionDialogViewModel(dialog, SelectedChartSpace!, Plan.PartitionHistory.Last().Count, Plan.IsValid);
+
+        if (Avalonia.Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop) return;
+
+        var newPartition = await dialog.ShowDialog<PlannedPartition>(desktop.MainWindow!);
+        if (newPartition == null) return;
+
+        Plan.AddPartition(newPartition);
+        UpdateChart(); // Refresh the chart
+        OnPropertyChanged(nameof(CanProceed));
     }
 
     [RelayCommand]
-    public async Task EditPartition(Partition partition)
+    public async Task EditPartition()
     {
+        var partition = ((ChartPartition)SelectedChartSpace!).Partition;
+        var dialog = new PartitionDialogView();
+        dialog.DataContext = new PartitionDialogViewModel(dialog, SelectedChartSpace!);
+
+        if (Avalonia.Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop) return;
+
+        var updatedPartition = await dialog.ShowDialog<PlannedPartition>(desktop.MainWindow!);
+        if (updatedPartition == null) return;
+
+        // Preserve properties that should not be changed by the dialog
+        updatedPartition.Id = partition.Id;
+        updatedPartition.StartOffset = partition.StartOffset;
+
+        Plan.EditPartition(partition, updatedPartition);
+        UpdateChart(); // Refresh the chart
+        OnPropertyChanged(nameof(CanProceed));
     }
 
     [RelayCommand]
-    public async Task DeletePartition(Partition partition)
+    public void DeletePartition()
     {
+        var partition = ((ChartPartition)SelectedChartSpace!).Partition;
+        Plan.DeletePartition(partition);
+        UpdateChart(); // Refresh the chart
+        OnPropertyChanged(nameof(CanProceed));
     }
 }
