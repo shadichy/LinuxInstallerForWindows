@@ -1,6 +1,4 @@
 using System;
-using System.Buffers.Text;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace LinuxInstaller.Models;
 

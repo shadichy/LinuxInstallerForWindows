@@ -1,6 +1,3 @@
-using Avalonia.Controls;
-using System.Collections.Generic;
-
 namespace LinuxInstaller.Models;
 
 public class DialogOption<T>

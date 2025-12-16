@@ -17,6 +17,11 @@ namespace LinuxInstaller.UserControls;
 
 public partial class DistroListItemControl : UserControl, INotifyPropertyChanged
 {
+    public DistroListItemControl()
+    {
+        InitializeComponent();
+    }
+
     public event PropertyChangedEventHandler? PropertyChanged;
 
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
@@ -31,38 +36,21 @@ public partial class DistroListItemControl : UserControl, INotifyPropertyChanged
         OnPropertyChanged(propertyName);
         return true;
     }
-    
-    static DistroListItemControl()
-    {
-        DistroNameProperty.Changed.AddClassHandler<DistroListItemControl>((x, e) => x.OnPropertyChanged(nameof(Identifier)));
-        VersionProperty.Changed.AddClassHandler<DistroListItemControl>((x, e) => x.OnPropertyChanged(nameof(Identifier)));
-        IconUrlProperty.Changed.AddClassHandler<DistroListItemControl>(async (x, e) => await x.LoadIcon(e.NewValue as string));
-    }
 
-    // TODO: The 'IsSelected' property should be properly bound and updated when the item is clicked.
-    // This typically involves handling input events (e.g., PointerPressed) on the control.
-    // Also, the IconSource should be bound to an actual image path or resource.
     public static readonly StyledProperty<IImage?> IconSourceProperty =
         AvaloniaProperty.Register<DistroListItemControl, IImage?>(nameof(IconSource));
-
     public static readonly StyledProperty<string?> IconUrlProperty =
         AvaloniaProperty.Register<DistroListItemControl, string?>(nameof(IconUrl));
-
     public static readonly StyledProperty<string> DistroNameProperty =
         AvaloniaProperty.Register<DistroListItemControl, string>(nameof(DistroName));
-
     public static readonly StyledProperty<string> VersionProperty =
         AvaloniaProperty.Register<DistroListItemControl, string>(nameof(Version));
-
     public static readonly StyledProperty<string> DescriptionProperty =
         AvaloniaProperty.Register<DistroListItemControl, string>(nameof(Description));
-
     public static readonly StyledProperty<ulong> SizeProperty =
         AvaloniaProperty.Register<DistroListItemControl, ulong>(nameof(Size));
-
     public static readonly StyledProperty<bool> IsSelectedProperty =
         AvaloniaProperty.Register<DistroListItemControl, bool>(nameof(IsSelected));
-
     public static readonly StyledProperty<ICommand?> SelectCommandProperty =
         AvaloniaProperty.Register<DistroListItemControl, ICommand?>(nameof(SelectCommand));
 
@@ -71,54 +59,48 @@ public partial class DistroListItemControl : UserControl, INotifyPropertyChanged
         get => GetValue(IconSourceProperty);
         set => SetValue(IconSourceProperty, value);
     }
-
     public string? IconUrl
     {
         get => GetValue(IconUrlProperty);
         set => SetValue(IconUrlProperty, value);
     }
-
     public string DistroName
     {
         get => GetValue(DistroNameProperty);
         set => SetValue(DistroNameProperty, value);
     }
-
     public string Version
     {
         get => GetValue(VersionProperty);
         set => SetValue(VersionProperty, value);
     }
-
     public string Identifier => (DistroName ?? "") + " " + (Version ?? "");
-
     public string Description
     {
         get => GetValue(DescriptionProperty);
         set => SetValue(DescriptionProperty, value);
     }
-
     public ulong Size
     {
         get => GetValue(SizeProperty);
         set => SetValue(SizeProperty, value);
     }
-
     public bool IsSelected
     {
         get => GetValue(IsSelectedProperty);
         set => SetValue(IsSelectedProperty, value);
     }
-
     public ICommand? SelectCommand
     {
         get => GetValue(SelectCommandProperty);
         set => SetValue(SelectCommandProperty, value);
     }
-
-    public DistroListItemControl()
+    
+    static DistroListItemControl()
     {
-        InitializeComponent();
+        DistroNameProperty.Changed.AddClassHandler<DistroListItemControl>((x, e) => x.OnPropertyChanged(nameof(Identifier)));
+        VersionProperty.Changed.AddClassHandler<DistroListItemControl>((x, e) => x.OnPropertyChanged(nameof(Identifier)));
+        IconUrlProperty.Changed.AddClassHandler<DistroListItemControl>(async (x, e) => await x.LoadIcon(e.NewValue as string));
     }
 
     private void InitializeComponent()

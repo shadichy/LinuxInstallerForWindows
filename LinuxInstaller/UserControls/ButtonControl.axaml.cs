@@ -24,65 +24,53 @@ public partial class ButtonControl : UserControl, INotifyPropertyChanged
     // Content, Command, and CommandParameter properties
     public static readonly StyledProperty<object?> ContentProperty =
         AvaloniaProperty.Register<ButtonControl, object?>(nameof(Content));
+    public static readonly StyledProperty<ICommand?> CommandProperty =
+        AvaloniaProperty.Register<ButtonControl, ICommand?>(nameof(Command));
+    public static readonly StyledProperty<object?> CommandParameterProperty =
+        AvaloniaProperty.Register<ButtonControl, object?>(nameof(CommandParameter));
+    // Variant Property
+    public static readonly StyledProperty<ButtonVariant> VariantProperty =
+        AvaloniaProperty.Register<ButtonControl, ButtonVariant>(nameof(Variant), ButtonVariant.Text);
+    // Size Property
+    public static readonly StyledProperty<ButtonSize> SizeProperty =
+        AvaloniaProperty.Register<ButtonControl, ButtonSize>(nameof(Size), ButtonSize.Medium);
+    // Shape Property
+    public static readonly StyledProperty<ButtonShape> ShapeProperty =
+        AvaloniaProperty.Register<ButtonControl, ButtonShape>(nameof(Shape), ButtonShape.Pill);
+    // Combined ButtonStyles Property
+    public static readonly StyledProperty<ButtonStyles> ButtonStylesProperty =
+        AvaloniaProperty.Register<ButtonControl, ButtonStyles>(nameof(ButtonStyles), new ButtonStyles());
 
     public object? Content
     {
         get => GetValue(ContentProperty);
         set => SetValue(ContentProperty, value);
     }
-
-    public static readonly StyledProperty<ICommand?> CommandProperty =
-        AvaloniaProperty.Register<ButtonControl, ICommand?>(nameof(Command));
-
     public ICommand? Command
     {
         get => GetValue(CommandProperty);
         set => SetValue(CommandProperty, value);
     }
-
-    public static readonly StyledProperty<object?> CommandParameterProperty =
-        AvaloniaProperty.Register<ButtonControl, object?>(nameof(CommandParameter));
-
     public object? CommandParameter
     {
         get => GetValue(CommandParameterProperty);
         set => SetValue(CommandParameterProperty, value);
     }
-
-    // Variant Property
-    public static readonly StyledProperty<ButtonVariant> VariantProperty =
-        AvaloniaProperty.Register<ButtonControl, ButtonVariant>(nameof(Variant), ButtonVariant.Text);
-
     public ButtonVariant Variant
     {
         get => GetValue(VariantProperty);
         set => SetValue(VariantProperty, value);
     }
-
-    // Size Property
-    public static readonly StyledProperty<ButtonSize> SizeProperty =
-        AvaloniaProperty.Register<ButtonControl, ButtonSize>(nameof(Size), ButtonSize.Medium);
-
     public ButtonSize Size
     {
         get => GetValue(SizeProperty);
         set => SetValue(SizeProperty, value);
     }
-
-    // Shape Property
-    public static readonly StyledProperty<ButtonShape> ShapeProperty =
-        AvaloniaProperty.Register<ButtonControl, ButtonShape>(nameof(Shape), ButtonShape.Pill);
-
     public ButtonShape Shape
     {
         get => GetValue(ShapeProperty);
         set => SetValue(ShapeProperty, value);
     }
-
-    // Combined ButtonStyles Property
-    public static readonly StyledProperty<ButtonStyles> ButtonStylesProperty =
-        AvaloniaProperty.Register<ButtonControl, ButtonStyles>(nameof(ButtonStyles), new ButtonStyles());
-
     public ButtonStyles ButtonStyles
     {
         get => GetValue(ButtonStylesProperty);
