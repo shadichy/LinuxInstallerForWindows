@@ -19,14 +19,20 @@ public partial class TileCardControl : UserControl
     public static readonly StyledProperty<string?> TitleProperty =
         AvaloniaProperty.Register<TileCardControl, string?>(nameof(Title));
 
-    public static readonly StyledProperty<IEnumerable<KeyValuePair<string, string>>?> ContentProperty =
-        AvaloniaProperty.Register<TileCardControl, IEnumerable<KeyValuePair<string, string>>?>(nameof(Content));
+    public static readonly StyledProperty<IEnumerable<KeyValuePair<string, string>>?> DescriptionsProperty =
+        AvaloniaProperty.Register<TileCardControl, IEnumerable<KeyValuePair<string, string>>?>(nameof(Descriptions));
+
+    public static readonly StyledProperty<string?> ActionIconProperty =
+        AvaloniaProperty.Register<TileCardControl, string?>(nameof(ActionIcon));
 
     public static readonly StyledProperty<string?> ActionLabelProperty =
         AvaloniaProperty.Register<TileCardControl, string?>(nameof(ActionLabel));
 
     public static readonly StyledProperty<ICommand?> ActionCallbackProperty =
         AvaloniaProperty.Register<TileCardControl, ICommand?>(nameof(ActionCallback));
+
+    public static readonly StyledProperty<object?> ExtraContentProperty =
+        AvaloniaProperty.Register<PageHeaderControl, object?>(nameof(ExtraContent));
 
     public string? Icon
     {
@@ -40,10 +46,16 @@ public partial class TileCardControl : UserControl
         set => SetValue(TitleProperty, value);
     }
 
-    public IEnumerable<KeyValuePair<string, string>>? Content
+    public IEnumerable<KeyValuePair<string, string>>? Descriptions
     {
-        get => GetValue(ContentProperty);
-        set => SetValue(ContentProperty, value);
+        get => GetValue(DescriptionsProperty);
+        set => SetValue(DescriptionsProperty, value);
+    }
+
+    public string? ActionIcon
+    {
+        get => GetValue(ActionIconProperty);
+        set => SetValue(ActionIconProperty, value);
     }
 
     public string? ActionLabel
@@ -57,7 +69,13 @@ public partial class TileCardControl : UserControl
         get => GetValue(ActionCallbackProperty);
         set => SetValue(ActionCallbackProperty, value);
     }
-    
+
+    public object? ExtraContent
+    {
+        get => GetValue(ExtraContentProperty);
+        set => SetValue(ExtraContentProperty, value);
+    }
+
     private void InitializeComponent()
     {
         AvaloniaXamlLoader.Load(this);

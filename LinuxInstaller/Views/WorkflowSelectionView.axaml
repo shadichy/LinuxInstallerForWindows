@@ -13,7 +13,7 @@
             <TextBlock Text="Install Linux headlessly" FontSize="28" FontWeight="Bold" HorizontalAlignment="Center" Foreground="{StaticResource OnSurfaceBrush}"/>
             <TextBlock Text="Get started in just a few clicks." HorizontalAlignment="Center" Foreground="{StaticResource OnSurfaceVariantBrush}"/>
             <StackPanel Orientation="Horizontal" Spacing="0" Margin="0,16,0,16">
-                <Button Classes="Large Filled" Command="{Binding SelectWorkflowCommand}" CommandParameter="{x:Static models:InstallWorkflowType.Distro}">
+				<Button Classes="Large Filled" Command="{Binding SelectDistroWorkflowCommand}">
                     <i:Interaction.Behaviors>
                         <ia:EventTriggerBehavior EventName="PointerEntered">
                             <ia:InvokeCommandAction Command="{Binding SelectDistroHoverCommand}"/>
@@ -24,8 +24,8 @@
                         <TextBlock Text="Select Distro" Foreground="{StaticResource OnPrimaryBrush}" VerticalAlignment="Center"/>
                     </StackPanel>
                 </Button>
-                <Button Classes="Large Tonal" Command="{Binding SelectWorkflowCommand}" CommandParameter="{x:Static models:InstallWorkflowType.Iso}">
-                    <i:Interaction.Behaviors>
+				<Button Classes="Large Tonal" Command="{Binding SelectIsoWorkflowCommand}" CommandParameter="{Binding $parent[UserControl]}">
+					<i:Interaction.Behaviors>
                         <ia:EventTriggerBehavior EventName="PointerEntered">
                             <ia:InvokeCommandAction Command="{Binding SelectIsoHoverCommand}"/>
                         </ia:EventTriggerBehavior>

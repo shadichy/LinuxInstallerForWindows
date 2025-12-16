@@ -8,7 +8,6 @@ using LinuxInstaller.ViewModels.Interfaces;
 using System.Linq;
 using Avalonia.Controls.ApplicationLifetimes;
 using LinuxInstaller.Views;
-using LinuxInstaller.ViewModels;
 
 namespace LinuxInstaller.ViewModels;
 

@@ -13,6 +13,13 @@ namespace LinuxInstaller.Services
             set => SetProperty(ref _selectedInstallWorkflow, value);
         }
 
+        private string? _selectedIsoPath;
+        public string? SelectedIsoPath
+        {
+            get => _selectedIsoPath;
+            set => SetProperty(ref _selectedIsoPath, value);
+        }
+
         private Distro? _selectedDistro;
         public Distro? SelectedDistro
         {

@@ -7,6 +7,9 @@ using System.Collections.Generic;
 using LinuxInstaller.Views;
 using Avalonia.Controls.ApplicationLifetimes;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
+using System.Linq;
+using LinuxInstaller.Converters;
 
 namespace LinuxInstaller.ViewModels;
 
@@ -32,50 +35,6 @@ public partial class InstallationSummaryViewModel : NavigatableViewModelBase
     public bool IsUserInfoAvailable => UserInfo != null;
     public bool IsPartitionPlanAvailable => PartitionPlan != null;
 
-    public List<KeyValuePair<string, string>> DistroSummaryContent
-    {
-        get
-        {
-            var content = new List<KeyValuePair<string, string>>();
-            if (SelectedDistro != null)
-            {
-                content.Add(new("Name", SelectedDistro.DistroName));
-                content.Add(new("Description", SelectedDistro.Description));
-                content.Add(new("Size", $"{SelectedDistro.Size} bytes"));
-            }
-            return content;
-        }
-    }
-
-    public List<KeyValuePair<string, string>> WorkflowSummaryContent
-    {
-        get
-        {
-            var content = new List<KeyValuePair<string, string>>();
-            if (IsWorkflowSelected)
-            {
-                content.Add(new("Type", SelectedWorkflow.ToString()));
-            }
-            return content;
-        }
-    }
-
-    public List<KeyValuePair<string, string>> UserSummaryContent
-    {
-        get
-        {
-            var content = new List<KeyValuePair<string, string>>();
-            if (UserInfo != null)
-            {
-                content.Add(new("Full Name", UserInfo.FullName));
-                content.Add(new("Username", UserInfo.Username));
-                content.Add(new("Auto Login", UserInfo.AutoLogin.ToString()));
-                content.Add(new("Require Password", UserInfo.RequirePasswordOnLogin.ToString()));
-            }
-            return content;
-        }
-    }
-
     public List<KeyValuePair<string, string>> PartitionSummaryContent
     {
         get
@@ -83,11 +42,101 @@ public partial class InstallationSummaryViewModel : NavigatableViewModelBase
             var content = new List<KeyValuePair<string, string>>();
             if (PartitionPlan != null)
             {
-                content.Add(new("Target Disk", PartitionPlan.TargetDisk.Name));
-                // TODO: Add planned Linux partitions to the summary
+                content.Add(new("Target Disk", PartitionPlan.TargetDisk!.Name));
+                foreach (var part in PartitionPlan.PartitionHistory.Last().Where(p => !string.IsNullOrWhiteSpace(p.MountPoint)))
+                {
+                    content.Add(new($"Mountpoint {part.MountPoint}", $"{part.Name} - {FS.ToString(part.FileSystem)} - {FileSizeConverter.ToUnit(part.Size)}"));
+                }
             }
             return content;
         }
+    }
+
+    public ObservableCollection<SummaryItem> SummaryItems
+    {
+        get
+        {
+            if (_installationConfigService.SelectedInstallWorkflow == InstallWorkflowType.Iso)
+            {
+                return [
+                    new SummaryItem
+                    {
+                        Title = "Selected ISO Image",
+                        Icon = "\uE019",
+                        Content = [
+                            new KeyValuePair<string, string>("Path", _installationConfigService.SelectedIsoPath!)
+                        ],
+                        Action = new() {
+                            Label = "Edit",
+                            Icon = "\uE3C9",
+                            Callback = BackToStartCommand,
+                        }
+                    }
+                ];
+            }
+            return [
+                new SummaryItem
+                {
+                    Title = "Distro",
+                    Icon = "\uE019",
+                    Content = [
+                        new KeyValuePair<string, string>("Name", SelectedDistro!.DistroName),
+                        new KeyValuePair<string, string>("Description", SelectedDistro!.Description),
+                        new KeyValuePair<string, string>("Size", $"{FileSizeConverter.ToUnit(SelectedDistro!.Size)}")
+                    ],
+                    Action = new() {
+                        Label = "Edit",
+                        Icon = "\uE3C9",
+                        Callback = GoToDistroPickerCommand,
+                    }
+                },
+                new SummaryItem
+                {
+                    Title = "User Account",
+                    Icon = "\uE31E",
+                    Content = [
+                        new KeyValuePair<string, string>("Full Name", UserInfo.FullName ?? UserInfo.Username),
+                        new KeyValuePair<string, string>("Username", UserInfo.Username),
+                        new KeyValuePair<string, string>("Auto Login", UserInfo.AutoLogin.ToString()),
+                    ],
+                    Action = new() {
+                        Label = "Edit",
+                        Icon = "\uE3C9",
+                        Callback = GoToUserEditCommand,
+                    }
+                },
+                new SummaryItem
+                {
+                    Title = "Partitions",
+                    Icon = "\uE161",
+                    Content = PartitionSummaryContent,
+                    Action = new() {
+                        Label = "Edit",
+                        Icon = "\uE3C9",
+                        Callback = GoToDistroPickerCommand,
+                    }
+                }
+            ];
+        }
+        set { }
+    }
+
+    [RelayCommand]
+    private void BackToStart()
+    {
+        Navigation.Reset();
+    }
+
+    [RelayCommand]
+    private void GoToDistroPicker()
+    {
+        Navigation.Goto("distroPicker");
+    }
+
+    [RelayCommand]
+    private void GoToUserEdit()
+    {
+        Navigation.Goto("userCreation");
     }
 
     [RelayCommand]

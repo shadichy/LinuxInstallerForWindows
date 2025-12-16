@@ -23,7 +23,7 @@ public class FileSizeConverter : IValueConverter
             i++;
         }
 
-        return $"{bytes / (double)(scale):F1} {scaleUnits[i]}";
+        return $"{(bytes / (double)scale):F2} {scaleUnits[i]}";
     }
 
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)

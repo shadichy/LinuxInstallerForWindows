@@ -20,32 +20,27 @@
 							  Margin="16"/>
 
 		<ScrollViewer Grid.Row="1" Margin="16,0">
-			<StackPanel Orientation="Vertical" Spacing="16">
-				<!-- Distribution Summary -->
-				<uc:TileCardControl Title="Distribution"
-                                    Icon="&#xE019;"
-                                    IsVisible="{Binding IsDistroSelected}"
-                                    Content="{Binding DistroSummaryContent}"/>
 
-				<!-- User Account Summary -->
-				<uc:TileCardControl Title="User Account"
-                                    Icon="&#xE31E;"
-                                    IsVisible="{Binding IsUserInfoAvailable}"
-                                    Content="{Binding UserSummaryContent}"/>
-
-				<!-- Partitions Summary -->
-				<uc:TileCardControl Title="Partitions"
-                                    Icon="&#xE161;"
-                                    IsVisible="{Binding IsPartitionPlanAvailable}"
-                                    Content="{Binding PartitionSummaryContent}"/>
-
-				<!-- Workflow Type Summary -->
-				<uc:TileCardControl Title="Installation Type"
-                                    Icon="&#xE31E;"
-                                    IsVisible="{Binding IsWorkflowSelected}"
-                                    Content="{Binding WorkflowSummaryContent}"/>
-
-			</StackPanel>
+			<ListBox Name="PART_Summary" ItemsSource="{Binding SummaryItems}">
+				<ListBox.Styles>
+					<Style Selector="ListBoxItem">
+						<Setter Property="Background" Value="Transparent"/>
+						<Setter Property="Padding" Value="0,0,0,16"/>
+					</Style>
+				</ListBox.Styles>
+				<ListBox.ItemTemplate>
+					<DataTemplate x:DataType="models:SummaryItem">
+						<StackPanel>
+							<uc:TileCardControl Title="{Binding Title}"
+												Icon="{Binding Icon}"
+												Descriptions="{Binding Content}"
+												ActionLabel="{Binding Action.Label}"
+												ActionIcon="{Binding Action.Icon}"
+												ActionCallback="{Binding Action.Callback}"/>
+						</StackPanel>
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+			</ListBox>
 		</ScrollViewer>
 
 		<Border Grid.Row="2" Background="{StaticResource ErrorBrush}" Padding="8" CornerRadius="8" Margin="16">

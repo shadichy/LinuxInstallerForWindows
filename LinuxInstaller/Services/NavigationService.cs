@@ -62,7 +62,6 @@ public class NavigationService
 
     public void Reset()
     {
-        _routes.Clear();
         _pageHistory.Clear();
         _pageHistory.Add(0);
         _currentPageIndex.OnNext(0);
