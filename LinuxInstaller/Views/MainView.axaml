@@ -37,6 +37,9 @@
 			<DataTemplate DataType="vm:LoadingViewModel">
 				<views:LoadingView/>
 			</DataTemplate>
+			<DataTemplate DataType="vm:InstallationFinishViewModel">
+				<views:InstallationFinishView/>
+			</DataTemplate>
 		</ContentControl.DataTemplates>
 	</ContentControl>
 
