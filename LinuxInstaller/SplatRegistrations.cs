@@ -36,6 +36,7 @@ namespace LinuxInstaller
             services.AddTransient<PartitionEditorViewModel>();
             services.AddTransient<UserCreationViewModel>();
             services.AddTransient<WorkflowSelectionViewModel>();
+            services.AddTransient<InstallationFinishViewModel>();
         }
 
     }

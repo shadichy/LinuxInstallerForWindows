@@ -5,24 +5,26 @@
              xmlns:vm="using:LinuxInstaller.ViewModels"
              mc:Ignorable="d"
              x:Class="LinuxInstaller.Views.InstallationProgressView"
-             d:DesignWidth="400" d:DesignHeight="600">
+			 x:DataType="vm:InstallationProgressViewModel"
+             d:DesignWidth="400" d:DesignHeight="300">
     <Design.DataContext>
         <vm:InstallationProgressViewModel/>
     </Design.DataContext>
-    <Grid RowDefinitions="Auto,*,Auto" Classes="Card">
-        <StackPanel Grid.Row="0" Margin="16">
-            <PathIcon Data="{StaticResource IconInstall}" Width="48" Height="48" HorizontalAlignment="Center"/>
-            <TextBlock Text="Installation in Progress" Classes="HeadlineMedium" HorizontalAlignment="Center" Margin="0,8,0,0"/>
-            <TextBlock Text="Please wait while the system is being configured." Classes="BodyMedium" HorizontalAlignment="Center"/>
-        </StackPanel>
-
-        <StackPanel Grid.Row="1" Margin="16" VerticalAlignment="Center">
-            <TextBlock Text="Current Step: Copying files..." Classes="BodyLarge" Margin="0,16,0,8"/>
-            <TextBlock Text="Progress: 50%" Classes="BodySmall"/>
-        </StackPanel>
-
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="16">
-            <Button Content="Cancel" Classes="Text"/>
-        </StackPanel>
+    <Grid Classes="Card" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel Spacing="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="32">
+            <Border CornerRadius="100" Background="{StaticResource PrimaryContainerBrush}" Padding="16" Width="80" Height="80">
+                <Image Source="avares://LinuxInstaller/Assets/Icons/Logo.png" Width="48" Height="48"/>
+            </Border>
+            <TextBlock Text="Installation in progress" Classes="HeadlineLarge" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Foreground="{StaticResource OnSurfaceBrush}" />
+			<ProgressBar
+				Height="4"
+				CornerRadius="2"
+				IsIndeterminate="True"
+				HorizontalAlignment="Stretch"
+				VerticalAlignment="Center"
+				IsVisible="True"
+				Foreground="{StaticResource PrimaryBrush}"/>
+            <TextBlock Text="{Binding StatusText}" Classes="HeadlineMedium" HorizontalAlignment="Center" Foreground="{StaticResource OnSurfaceVariantBrush}" />
+        </StackPanel> 
     </Grid>
 </UserControl>
