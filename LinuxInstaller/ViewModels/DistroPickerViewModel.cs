@@ -6,8 +6,10 @@ using LinuxInstaller.Services;
 using LinuxInstaller.ViewModels.Interfaces;
 using LinuxInstaller.Views;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,6 +19,7 @@ public partial class DistroPickerViewModel : NavigatableViewModelBase
 {
     private readonly DistroService _distroService;
     private readonly InstallationConfigService _installationConfigService;
+    private readonly PartitionService _partitionService;
 
     public string Title => "Select a Distribution";
     public string Subtitle => "Choose a Linux distribution to install on your machine.";
@@ -34,7 +37,7 @@ public partial class DistroPickerViewModel : NavigatableViewModelBase
     private List<Distro> _allDistros;
     private Distro? _previouslySelectedDistro;
 
-    public DistroPickerViewModel(NavigationService navigationService, DistroService distroService, InstallationConfigService installationConfigService) : base(navigationService)
+    public DistroPickerViewModel(NavigationService navigationService, DistroService distroService, InstallationConfigService installationConfigService, PartitionService partitionService) : base(navigationService)
     {
         _distroService = distroService;
         _installationConfigService = installationConfigService;
@@ -42,6 +45,7 @@ public partial class DistroPickerViewModel : NavigatableViewModelBase
         _searchText = string.Empty;
         _allDistros = [];
         _ = LoadDistros();
+        _partitionService = partitionService;
     }
 
     private async Task LoadDistros()
@@ -57,6 +61,61 @@ public partial class DistroPickerViewModel : NavigatableViewModelBase
         IEnumerable<Distro> result = _allDistros;
         if (!string.IsNullOrWhiteSpace(value)) result = _allDistros.Where(d => d.DistroName.Contains(value, System.StringComparison.OrdinalIgnoreCase));
         Distros = new ObservableCollection<Distro>(result);
+    }
+
+    public bool AutoPartition()
+    {
+        // Stage 1: check for free space on all disks, requiring at least 16GB
+        // Stage 2: check for existing partitions that can be shrunk to create 16GB of free space
+        var disks = _partitionService.GetAvailableDisks();
+        foreach (var disk in disks)
+        {
+            List<ChartFreeSpace> spaces = [];
+            ulong lastOffset = 0;
+            foreach (var partition in disk.Partitions)
+            {
+                if (partition.StartOffset > lastOffset)
+                {
+                    spaces.Add(new ChartFreeSpace
+                    {
+                        Start = lastOffset,
+                        Size = partition.StartOffset - lastOffset,
+                    });
+                }
+                lastOffset = partition.EndOffset;
+            }
+            if (disk.Size > lastOffset)
+            {
+                spaces.Add(new ChartFreeSpace
+                {
+                    Start = lastOffset,
+                    Size = disk.Size - lastOffset,
+                });
+            }
+
+            foreach (var space in spaces)
+            {
+                if (space.Size > 16UL * 1024UL * 1024UL)
+                {
+                    PartitionPlan plan = new() { TargetDisk = disk};
+                    plan.Reset();
+                    plan.AddPartition(new()
+                    {
+                        Id = $"new-part-{disk.Partitions.Count}",
+                        Name = "New Partition",
+                        Size = space.Size,
+                        StartOffset = space.Start,
+                        FileSystem = FileSystem.LINUX,
+                        MountPoint = "/",
+                        IsSystem = false,
+                    });
+                    _installationConfigService.PartitionPlan = plan;
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
 
@@ -82,6 +141,7 @@ public partial class DistroPickerViewModel : NavigatableViewModelBase
 
         if (result == PartitionWorkflowType.Automatic)
         {
+            AutoPartition();
             Navigation.Next(2);
         }
         else if (result == PartitionWorkflowType.Manual)
